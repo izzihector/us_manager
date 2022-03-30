@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <menuitem id="bs_sarinah_product.menu_item_product_aproval_stock"
+              name="Products (To Approve)"
+              parent="stock.menu_stock_inventory_control"
+              action="bs_sarinah_product.action_window_product_approval"
+              groups="bs_sarinah_product.group_product_approval"
+              sequence="0"/>
+  </data>
+</odoo>

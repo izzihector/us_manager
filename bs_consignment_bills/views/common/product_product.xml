@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_consignment_bills.form_product_product" model="ir.ui.view">
+      <field name="name">Product Product Form View</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="product.product_normal_form_view"/>
+      <field name="arch" type="xml">
+        <div name="options" position="inside">
+          <div>
+            <field name="is_consignment"/>
+            <label for="is_consignment"/>
+          </div>
+        </div>
+        <field name="barcode" position="after">
+          <field name="owner_id"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

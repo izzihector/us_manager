@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mcs_pos_loyalty_mcs_pos_loyalty,mcs_pos_loyalty.mcs_pos_loyalty,model_mcs_pos_loyalty_mcs_pos_loyalty,base.group_user,1,1,1,1

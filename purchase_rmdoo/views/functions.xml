@@ -1,0 +1,5 @@
+<odoo>
+    <data noupdate="0">
+<!--        <function id="init_purchase_rmdoo" model="res.config.settings" name="init_purchase_rmdoo"/>-->
+    </data>
+</odoo>

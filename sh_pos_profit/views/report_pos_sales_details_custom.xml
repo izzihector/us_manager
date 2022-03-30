@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="inherit_view_pos_details_wizard" model="ir.ui.view">
+			<field name="name">pos.details.wizard.form.inherit</field>
+			<field name="model">pos.details.wizard</field>
+			<field name="inherit_id" ref="point_of_sale.view_pos_details_wizard" />
+			<field name="arch" type="xml">
+				<xpath expr="//group[1]" position="after">
+					<group>
+						<group>
+							<field name="branch_id" />
+							<field name="filter_product_owner" />
+							<field name="product_owner_id" attrs="{'invisible': [('filter_product_owner','=',False)]}" />
+						</group>
+					</group>
+				</xpath>
+
+				<field name="pos_config_ids" position="replace">
+					<field name="pos_config_ids" mode="tree" colspan="5" nolabel="1">
+						<tree string="Point of Sale Configuration">
+							<field name="name" />
+							<field name="branch_id" />
+							<field name="picking_type_id" />
+							<field name="company_id" options="{'no_create': True}" groups="base.group_multi_company" />
+						</tree>
+					</field>
+				</field>
+			</field>
+		</record>
+
+		<template id="report_pos_sales_details_inherit" inherit_id="point_of_sale.report_saledetails">
+			<!-- <xpath expr="//strong[1]" position="after">
+				<div style="margin: 0 auto !important; width: 500px !important; margin-top: 5px !important;">
+					<span style="font-size: 13px;"><t t-esc="pos_session_name" /></span>
+				</div>
+			</xpath> -->
+			<!-- Heading of Table -->
+			<xpath expr="//table[hasclass('table','table-sm')][1]//thead//tr/th[1]" position="after">
+				<th>Owner</th>
+				<th>POS</th>
+			</xpath>
+			<!-- <xpath expr="//table[hasclass('table','table-sm')][1]//thead//tr/th[3]" position="replace">
+				<th style="text-align: right !important;">Price Unit</th>
+			</xpath> -->
+			<xpath expr="//table[hasclass('table','table-sm')][1]//thead//tr/th[5]" position="after">
+				<th style="text-align: right !important;">Subtotal</th>
+				<th style="text-align: right !important;">Discount</th>
+				<th style="text-align: right !important;">Total</th>
+			</xpath>
+			<!-- Fetch Value from the table -->
+			<xpath expr="//table[hasclass('table','table-sm')][1]//tbody//tr/td[1]" position="after">
+				<td>
+					<t t-esc="line['owner_name']" />
+				</td>
+				<td>
+					<t t-esc="line['pos_name']" />
+				</td>
+			</xpath>
+			<!-- <xpath expr="//table[hasclass('table','table-sm')][1]//tbody//tr/td[3]" position="after">
+				<td style="text-align: right !important;">
+					<t t-esc="line['price_unit']" />
+				</td>
+			</xpath> -->
+			<xpath expr="//table[hasclass('table','table-sm')][1]//tbody//tr/td[5]" position="after">
+				<td style="text-align: right !important;">
+					<t t-esc="line['quantity'] * line['price_unit']"  t-options="{'widget': 'float', 'precision': currency_precision}"/>
+				</td>
+				<td style="text-align: right !important;">
+					<t t-esc="(line['quantity'] * line['price_unit'] * line['discount']) / 100"  t-options="{'widget': 'float', 'precision': currency_precision}"/>
+				</td>
+				<td style="text-align: right !important;">
+					<t t-esc="(line['quantity'] * line['price_unit']) - ((line['quantity'] * line['price_unit'] * line['discount']) / 100)"  t-options="{'widget': 'float', 'precision': currency_precision}"/>
+				</td>
+			</xpath>
+			<!-- calculation of all total columns -->
+			<xpath expr="//table[hasclass('table','table-sm')][1]//thead" position="after">
+				<t t-set="subtotal_total" t-value="0.0" />
+				<t t-set="discount_total" t-value="0.0" />
+				<t t-set="total" t-value="0.0" />
+			</xpath>
+			<xpath expr="//table[hasclass('table','table-sm')][1]//tbody//tr[1]/td[1]" position="before">
+				<t t-set="subtotal_total" t-value="subtotal_total + (line['quantity'] * line['price_unit'])" />
+				<t t-set="discount_total" t-value="discount_total + ((line['quantity'] * line['price_unit'] * line['discount']) / 100)" />
+				<t t-set="total" t-value="total + ((line['quantity'] * line['price_unit']) - ((line['quantity'] * line['price_unit'] * line['discount']) / 100))" />
+			</xpath>
+			<xpath expr="//table[hasclass('table','table-sm')][1]//tbody//tr[1]" position="after">
+				<td colspan="5">
+					<b>Total</b>
+				</td>
+				<!-- <td></td>
+				<td></td> -->
+				<td style="text-align: right !important;">
+					<t t-esc="subtotal_total"  t-options="{'widget': 'float', 'precision': currency_precision}"/>
+				</td>
+				<td style="text-align: right !important;">
+					<t t-esc="discount_total"  t-options="{'widget': 'float', 'precision': currency_precision}"/>
+				</td>
+				<td>
+					<t t-esc="total"  t-options="{'widget': 'float', 'precision': currency_precision}"/>
+				</td>
+			</xpath>
+		</template>
+	</data>
+</odoo>         

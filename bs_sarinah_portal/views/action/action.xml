@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record model="ir.actions.server" id="bs_sarinah_portal.create_pricelist_action">
+      <field name="name">Validate Pricelist</field>
+      <field name="model_id" ref="product.model_product_supplierinfo"/>
+      <field name="binding_model_id" ref="product.model_product_supplierinfo"/>
+      <field name="state">code</field>
+      <field name="code">
+        records and records.action_create_pricelist()
+      </field>
+    </record>
+    <record model="ir.actions.server" id="bs_sarinah_portal.send_portal_email_action">
+      <field name="name">Send Grant Portal Email</field>
+      <field name="model_id" ref="base.model_res_partner"/>
+      <field name="binding_model_id" ref="base.model_res_partner"/>
+      <field name="state">code</field>
+      <field name="code">
+        records and records.action_send_portal_email()
+      </field>
+    </record>
+  </data>
+</odoo>

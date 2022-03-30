@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- START:Total P/O By Vendor -->
+        <record id="view_total_po_vendor_inquiry_form" model="ir.ui.view">
+            <field name="name">Total P/O by Vendors</field>
+            <field name="model">vendor.purchase.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <button name="list_view" position="before">
+                    <button class="btn-primary" name="pick_print"
+                        string="Print" type="object"/>
+                </button>
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Total P/O by Vendors</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="partner_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="state"/>
+                    </group>
+                </xpath>
+                <!-- <xpath expr="//notebook/page[field[@name='lines']]" position="replace"/> -->
+                <!-- <xpath expr="//notebook/page[field[@name='pivot']]" position="after">
+                    <page string="Detail">
+                        <field name="lines" default_order="partner_id">
+                            <tree>
+                                <field name="name" string="P/O"/>
+                                <field name="date_order"/>
+                                <field name="partner_id" string="Vendor"/>
+                                <field name="date_planned" string="Date Planned"/>
+                                <field name="user_id" string="Reserved Qty"/>
+                                <field name="origin"/>
+                                <field name="amount_untaxed"/>
+                                <field name="amount_total"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath> -->
+                <field name="lines" position="inside">
+                    <!-- <tree>
+                        <field name="name" string="Code PO"/>
+                        <field name="date_order" string="Date Order" widget="date"/>
+                        <field name="partner_id"/>
+                        <field name="date_planned"/>
+                        <field name="user_id" string="Purchase Rep"/>
+                        <field name="origin" string="Source Doc"/>
+                        <field name="amount_untaxed"/>
+                        <field name="amount_total"/>
+                        sum="Total" widget="monetary"/>
+                    </tree> -->
+                </field>
+            </field>
+        </record>
+        <record id="action_total_po_vendor_inquiry" model="ir.actions.act_window">
+            <field name="name">Total P/O by Vendors</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vendor.purchase.inquiry</field>
+            <field name="view_mode">form</field>
+            <!-- <field name="domain">[()] -->
+            <!-- <field name="context">{"group_by":"partner_id"}</field> -->
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_total_po_vendor_inquiry_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_total_po_vendor_inquiry"
+            id="menu_total_po_vendor" name="Total P/O by Vendors"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="104"/>
+        <!-- END:Total P/O By Vendor -->
+        <!-- START:Purchase Outstandings Inquiries -->
+        <!-- <record id="view_form_print_detail_outstanding_inquiry" model="ir.ui.view">
+            <field name="name">Print Detail Outstanding</field>
+            <field name="model">purchase.outstanding.inquiry.wizard</field>
+            <field name="arch" type="xml">
+                <form> -->
+        <!-- <sheet> -->
+        <!-- <group>
+                        <group>
+                            <field name="select_print"/>
+                        </group>
+                        <group>
+                            <field name="paper"/> -->
+        <!-- <field name="orientation"/> -->
+        <!-- </group>
+                    </group>
+                    <field name="lines_print" position="inside">
+                        <tree> -->
+        <!-- <field name="lines"/> -->
+        <!-- </tree>
+                    </field> -->
+        <!-- </sheet> -->
+        <!-- <footer>
+                        <button class="btn-primary" name="do_print"
+                            string="Print" type="object"/>
+                        <button class="btn-default" special="cancel" string="Cancel"/>
+                    </footer> -->
+        <!-- <label string="">
+                    <field name="paper"/> -->
+        <!-- </form>
+            </field>
+        </record> -->
+        <record id="view_tree_list_detail_outstanding_inquiry" model="ir.ui.view">
+            <field name="name">List Detail View Outstanding</field>
+            <field name="model">purchase.order.line</field>
+<!--            <field name="sequence">100</field>-->
+            <field name="arch" type="xml">
+                <tree decoration-danger="overdue==True" decoration-info="overdue==False">
+                    <field name="order_id"/>
+                    <field name="name"/>
+                    <field name="date_planned" widget="date"/>
+                    <field name="partner_id"/>
+                    <field name="product_qty"/>
+                    <field name="qty_received"/>
+                    <field name="balance_received"/>
+                    <field invisible="1" name="overdue"/>
+                    <!-- <field name="status_due"/> -->
+                </tree>
+            </field>
+        </record>
+        <record id="view_outstandings_inquiry_form" model="ir.ui.view">
+            <field name="name">Purchase Order Outstandings</field>
+            <field name="model">purchase.outstanding.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <button name="list_view" position="before">
+                    <button class="btn-primary" name="pick_print"
+                        string="Print" type="object"/>
+                </button>
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Purchase Order Outstandings</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="purchase_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="partner_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="is_overdue"/>
+                        <!-- <field name="overdue"/> -->
+                    </group>
+                </xpath>
+                <!-- <xpath expr="//notebook/page[field[@name='lines']]" position="replace"/>
+                <xpath expr="//notebook/page[field[@name='pivot']]" position="after">
+                    <page string="Detail">
+                        <field name="lines">
+                            <tree decoration-danger="overdue==True" decoration-info="overdue==False">
+                                <field name="order_id" string="P/O"/>
+                                <field name="name"/>
+                                <field name="date_planned" string="Date Planned"/>
+                                <field name="partner_id" string="Vendor"/>
+                                <field name="product_qty" string="Reserved Qty"/>
+                                <field name="qty_received"/>
+                                <field name="balance_received"/>
+                                <field invisible="1" name="overdue"/>
+                                <field name="status_due"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath> -->
+                <field name="lines" position="inside">
+                    <tree decoration-danger="overdue==True" decoration-info="overdue==False">
+                        <field name="order_id" string="P/O"/>
+                        <field name="name" string="Product"/>
+                        <field name="date_planned" widget="date"/>
+                        <field name="partner_id" string="Vendor"/>
+                        <field name="product_qty" string="Qty"/>
+                        <field name="qty_received"/>
+                        <field name="balance_received"/>
+                        <field invisible="0" name="overdue"/>
+                        <!-- <field name="status_due"/> -->
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_outstandings_inquiry" model="ir.actions.act_window">
+            <field name="name">Purchase Order Outstandings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.outstanding.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_outstandings_inquiry_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_outstandings_inquiry"
+            id="menu_outstandings_inquiries"
+            name="Purchase Order Outstandings"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="103"/>
+        <!-- END:Purchase Outstandings Inquiry -->
+        <!-- START:Purchase Request Inquiries -->
+        <record id="view_replenish_request_inquiry_form" model="ir.ui.view">
+            <field name="name">Purchase Request Inquiries</field>
+            <field name="model">replenish.request.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <button name="list_view" position="before">
+                    <button class="btn-primary" name="pick_print"
+                        string="Print" type="object"/>
+                    <button name="list_header_view"
+                        string="List Header View" type="object"/>
+                </button>
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Purchase Request Inquiries</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="replenish_request_ids"
+                            options="{'no_create_edit':1}"
+                            string="P/R Code" widget="many2many_tags"/>
+                        <field name="confirm_uids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="warehouse_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="state"/>
+                    </group>
+                </xpath>
+                <field name="write_uids" position="after">
+                    <field name="product_ids"
+                        options="{'no_create_edit':1}" widget="many2many_tags"/>
+                </field>
+                <xpath expr="//notebook/page[field[@name='pivot']]" position="replace"/>
+                <xpath expr="//notebook/page[1]" position="before">
+                    <page string="Graph">
+                        <group>
+                            <group string="Request per Product">
+                                <field name="html" nolabel="1"/>
+                            </group>
+                            <group string="Request per State">
+                                <field name="html2" nolabel="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="pivot" nolabel="1"/>
+                        </group>
+                    </page>
+                    <page string="Header">
+                        <field name="headers" position="inside">
+                            <tree decoration-muted="state=='cancel'"
+                                decoration-success="state=='confirm'" decoration-warning="state=='draft'">
+                                <field name="name" string="P/R"/>
+                                <field name="create_uid" string="Request By"/>
+                                <field name="request_department_id" string="Department"/>
+                                <field name="confirm_uid"/>
+                                <field name="date_ordered"
+                                    string="Date Order" widget="date"/>
+                                <field name="date_planned"
+                                    string="Date Planned" widget="date"/>
+                                <field name="warehouse_id"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree decoration-muted="state=='cancel'"
+                        decoration-success="state=='confirm'" decoration-warning="state=='draft'">
+                        <field name="replenish_request_id" string="P/R"/>
+                        <field name="product_id"/>
+                        <field name="date_ordered" string="Date Order" widget="date"/>
+                        <field name="date_planned" string="Date Planned" widget="date"/>
+                        <field name="quantity" string="Request Qty"/>
+                        <field name="qty_purchase" string="Purchase Qty"/>
+                        <field name="qty_received" string="Received Qty"/>
+                        <field name="product_uom_id"/>
+                        <field name="price_estimation" string="Est. Price"/>
+                        <field name="amount_estimation"
+                            string="Subtotal" sum="Total" widget="monetary"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_replenish_request_inquiry" model="ir.actions.act_window">
+            <field name="name">Purchase Request Inquiries</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">replenish.request.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_replenish_request_inquiry_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_replenish_request_inquiry"
+            id="menu_mp_request_inquiries"
+            name="Purchase Request Inquiries"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="101"/>
+        <!-- END:Purchase Request Inquiries -->
+        <!-- START:Purchase Agreement Inquiries  -->
+        <record id="view_purchase_requisition_inquiry_form" model="ir.ui.view">
+            <field name="name">Purchase Agreement Inquiries</field>
+            <field name="model">purchase.requisition.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <button name="list_view" position="before">
+                    <button class="btn-primary" name="pick_print"
+                        string="Print" type="object"/>
+                    <button name="list_header_view"
+                        string="List Header View" type="object"/>
+                </button>
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Purchase Agreement Inquiries</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="requisition_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="agreement_type_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                    </group>
+                </xpath>
+                <field name="write_uids" position="after">
+                    <field name="state"/>
+                </field>
+                <!-- <xpath expr="//notebook/page[field[@name='pivot']]" position="replace"/>
+                <xpath expr="//notebook/page[1]" position="before">
+                    <page string="Pivot">
+                        <field name="pivot"/>
+                    </page>
+                    <page string="Header">
+                        <field name="headers"/>
+                    </page>
+                </xpath> -->
+                <xpath expr="//notebook/page[field[@name='pivot']]" position="after">
+                    <page string="Header">
+                        <field name="headers" position="inside">
+                            <tree>
+                                <field name="name" string="P/A"/>
+                                <field name="user_id" string="Representative"/>
+                                <field name="ordering_date"/>
+                                <field name="date_end" string="Deadline Date"/>
+                                <field name="origin"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="requisition_id" string="P/A"/>
+                        <field name="schedule_date"
+                            string="Scheduled Date" widget="date"/>
+                        <field name="product_id"/>
+                        <field name="product_qty" string="Qty"/>
+                        <field name="qty_ordered" string="Ordered Qty"/>
+                        <field name="product_uom_id" string="UoM"/>
+                        <field name="price_unit" sum="Total" widget="monetary"/>
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_purchase_requisition_inquiry" model="ir.actions.act_window">
+            <field name="name">Purchase Agreement Inquiries</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.requisition.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_purchase_requisition_inquiry_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_purchase_requisition_inquiry"
+            id="menu_cft_bo_inquiries"
+            name="Purchase Agreement Inquiries"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="102"/>
+        <!-- END:Purchase Agreement Inquiries -->
+        <!-- START:Price History -->
+        <record id="view_price_history_inquiry_form" model="ir.ui.view">
+            <field name="name">Price History by P/O</field>
+            <field name="model">price.history.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <button name="list_view" position="before">
+                    <button class="btn-primary" name="pick_print"
+                        string="Print" type="object"/>
+                </button>
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Price History by P/O</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="purchase_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="user_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="partner_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                    </group>
+                </xpath>
+                <xpath expr="//notebook/page[field[@name='pivot']]" position="replace"/>
+                <xpath expr="//notebook/page[1]" position="before">
+                    <page string="Graph">
+                        <separator string="Price Before Discount"/>
+                        <field name="html"/>
+                        <field name="pivot"/>
+                    </page>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="date_order" widget="date"/>
+                        <field name="partner_id" string="Vendor"/>
+                        <field name="order_id"/>
+                        <field name="product_id" string="P/O"/>
+                        <field name="price_unit"
+                            string="Price Before Discount" widget="monetary"/>
+<!--                        <field name="price_unit_disc" widget="monetary"/>-->
+<!--                        <field name="price_unit_dif" widget="monetary"/>-->
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_price_history_inquiry" model="ir.actions.act_window">
+            <field name="name">Price History by P/O</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">price.history.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_price_history_inquiry_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_price_history_inquiry"
+            id="menu_purchase_histories" name="Price History by P/O"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="111"/>
+        <!-- END:Price History -->
+        <!-- START:Discount History -->
+        <record id="view_po_discount_history_inquiry_form" model="ir.ui.view">
+            <field name="name">P/O Discount Accumulation</field>
+            <field name="model">price.history.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">P/O Discount Accumulation</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="purchase_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="user_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="partner_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                    </group>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="date_order" widget="date"/>
+                        <field name="partner_id" string="Vendor"/>
+                        <field name="order_id" string="P/O"/>
+                        <field name="product_id"/>
+                        <field name="price_unit"
+                            string="Price Before Discount" widget="monetary"/>
+<!--                        <field name="price_unit_disc" widget="monetary"/>-->
+<!--                        <field name="price_unit_dif" widget="monetary"/>-->
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_po_discount_history_inquiry" model="ir.actions.act_window">
+            <field name="name">P/O Discount Accumulation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">price.history.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'default_name':'P/O Discount Accumulation'}</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_po_discount_history_inquiry_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_po_discount_history_inquiry"
+            id="menu_purchase_discount_histories"
+            name="P/O Discount Accumulation"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="106"/>
+        <!-- END:Discount History -->
+        <!-- START:Purchase Accumulated by Product -->
+        <record id="view_purchase_acc_item_form" model="ir.ui.view">
+            <field name="name">Purchase Accumulated by Product</field>
+            <field name="model">purchase.acc.item</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Purchase Accumulated by Product</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="partner_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="state"/>
+                    </group>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="order_id" string="P/O"/>
+                        <field name="name" string="Product"/>
+                        <field name="date_planned" widget="date"/>
+                        <field name="partner_id" string="Vendor"/>
+                        <field name="price_unit" string="Unit Price"/>
+                        <field name="product_qty" string="Qty"/>
+                        <field name="qty_received"/>
+                        <field name="qty_invoiced"/>
+                    </tree>
+                </field>
+                <!-- <xpath expr="//notebook/page[field[@name='lines']]" position="replace"/>
+                <xpath expr="//notebook/page[field[@name='pivot']]" position="after">
+                    <page string="Detail">
+                        <field name="lines"/>
+                    </page>
+                </xpath> -->
+            </field>
+        </record>
+        <record id="action_purchase_acc_item" model="ir.actions.act_window">
+            <field name="name">Purchase Accumulated by Product</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.acc.item</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_purchase_acc_item_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_purchase_acc_item"
+            id="menu_purchase_acc_items" name="By Product"
+            parent="menu_purchase_acc" sequence="501"/>
+        <!-- END:Purchase Accumulated by Product -->
+        <!-- START:Purchase Accumulated by Vendors -->
+        <record id="view_purchase_acc_vendor_form" model="ir.ui.view">
+            <field name="name">Purchase Accumulated by Vendors</field>
+            <field name="model">purchase.acc.vendor</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Purchase Accumulated by Vendors</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="partner_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="state"/>
+                    </group>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="order_id" string="P/O"/>
+                        <field name="name" string="Product"/>
+                        <field name="date_planned" widget="date"/>
+                        <field name="partner_id" string="Vendor"/>
+                        <field name="price_unit" string="Unit Price"/>
+                        <field name="product_qty" string="Qty"/>
+                        <field name="qty_received"/>
+                        <field name="qty_invoiced"/>
+                    </tree>
+                </field>
+                <!-- <xpath expr="//notebook/page[field[@name='lines']]" position="replace"/>
+                <xpath expr="//notebook/page[field[@name='pivot']]" position="after">
+                    <page string="Detail">
+                        <field name="lines"/>
+                    </page>
+                </xpath> -->
+            </field>
+        </record>
+        <record id="action_purchase_acc_vendor" model="ir.actions.act_window">
+            <field name="name">Purchase Accumulated by Vendors</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.acc.vendor</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_purchase_acc_vendor_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_purchase_acc_vendor"
+            id="menu_purchase_acc_vendor" name="By Vendors"
+            parent="menu_purchase_acc" sequence="502"/>
+        <!-- END:Purchase Accumulated by Vendors -->
+        <!-- START: Inventory Stock - Purchase Received -->
+        <record id="view_stock_report_pivot_purchase_received_form" model="ir.ui.view">
+            <field name="name">Purchase Received</field>
+            <field name="model">inventorypurchasereceived.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Purchase Received</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="location_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="purchase_line_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="partner_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="state"/>
+                        <field name="is_value"/>
+                    </group>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="date" widget="date"/>
+                        <field name="purchase_line_id"/>
+                        <field name="product_id" string="Product"/>
+                        <field name="partner_id" string="Vendor"/>
+                        <field name="location_dest_id"/>
+                        <field name="product_uom_qty"/>
+                        <field name="reserved_availability"/>
+                        <field name="quantity_done"/>
+                        <field name="product_uom" string="UoM"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_stock_report_pivot_purchase_received" model="ir.actions.act_window">
+            <field name="name">Purchase Received</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inventorypurchasereceived.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_stock_report_pivot_purchase_received_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_stock_report_pivot_purchase_received"
+            id="menu_stock_report_pivot_purchase_received"
+            name="Purchases Received"
+            parent="base_rmdoo.menu_stock_report_pivot" sequence="13"/>
+        <!-- END: Inventory Stock - Purchase Received -->
+        <!-- START: Inventory Stock - Purchase Return -->
+        <record id="view_stock_report_pivot_purchase_return_form" model="ir.ui.view">
+            <field name="name">Purchase Return</field>
+            <field name="model">inventorypurchasereturn.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Purchase Return</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="location_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="purchase_line_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="partner_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="state"/>
+                        <field name="is_value"/>
+                    </group>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="date" widget="date"/>
+                        <field name="purchase_line_id"/>
+                        <field name="product_id"/>
+                        <field name="location_id"/>
+                        <field name="partner_id" string="Vendor"/>
+                        <field name="product_uom_qty"/>
+                        <field name="reserved_availability"/>
+                        <field name="quantity_done"/>
+                        <field name="product_uom" string="UoM"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_stock_report_pivot_purchase_return" model="ir.actions.act_window">
+            <field name="name">Purchase Return</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inventorypurchasereturn.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_stock_report_pivot_purchase_return_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_stock_report_pivot_purchase_return"
+            id="menu_stock_report_pivot_purchase_return"
+            name="Purchases Return"
+            parent="base_rmdoo.menu_stock_report_pivot" sequence="14"/>
+        <!-- END: Inventory Stock - Purchase Return -->
+        <!-- START: Received Not yet Billed -->
+        <record id="view_purchase_receivenotbill_form" model="ir.ui.view">
+            <field name="name">Received Not Yet Billed</field>
+            <field name="model">receivednotbill.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Received Not Yet Billed</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="partner_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="purchase_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <!-- <field name="state"/> -->
+                    </group>
+                </xpath>
+                <!-- <xpath expr="//notebook/page[field[@name='lines']]" position="replace"/>
+                <xpath expr="//notebook/page[field[@name='pivot']]" position="after">
+                    <page string="Detail">
+                        <field name="lines"/>
+                    </page>
+                </xpath> -->
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="order_id" string="P/O"/>
+                        <field name="name" string="Product"/>
+                        <field name="date_planned" widget="date"/>
+                        <field name="partner_id" string="Vendor"/>
+                        <field name="product_qty" string="Qty"/>
+                        <field name="qty_invoiced"/>
+                        <field name="balance_invoiced"/>
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_purchase_receivenotbill" model="ir.actions.act_window">
+            <field name="name">Received Not Yet Billed</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">receivednotbill.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_purchase_receivenotbill_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_purchase_receivenotbill"
+            id="menu_purchase_receivebilled"
+            name="Received Not yet Billed"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="105"/>
+        <!-- END: Received Not yet Billed -->
+        <!-- START: P/O vs Receipt -->
+        <record id="view_purchase_povsreceipt_form" model="ir.ui.view">
+            <field name="name">P/O vs Receipt</field>
+            <field name="model">purchase.povsreceipt.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">P/O vs Receipt</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="partner_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="purchase_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <!-- <field name="state"/> -->
+                    </group>
+                </xpath>
+                <!-- <xpath expr="//notebook/page[field[@name='lines']]" position="replace"/>
+                <xpath expr="//notebook/page[field[@name='pivot']]" position="after">
+                    <page string="Detail">
+                        <field name="lines"/>
+                    </page>
+                </xpath> -->
+                <xpath expr="//page[1]" position="before">
+                    <page string="Graph">
+                        <!-- <h2 style="text-align:center">Average Sales Realization (%)</h2> -->
+                        <field name="html"/>
+                    </page>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="order_id" string="P/O"/>
+                        <field name="name" string="Product"/>
+                        <field name="date_planned" widget="date"/>
+                        <field name="partner_id" string="Vendor"/>
+                        <field name="product_qty" string="Qty"/>
+                        <field name="qty_received"/>
+                        <field name="balance_received"/>
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_purchase_povsreceipt" model="ir.actions.act_window">
+            <field name="name">P/O vs Receipt</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.povsreceipt.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_purchase_povsreceipt_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_purchase_povsreceipt"
+            id="menu_purchase_poreceipt" name="P/O vs Receipt"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="112"/>
+        <!-- END: P/O vs Receipt -->
+    </data>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_portal.form_product_category" model="ir.ui.view">
+      <field name="name">Product Category Form View</field>
+      <field name="model">product.category</field>
+      <field name="inherit_id" ref="product.product_category_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//group[@name='first']" position="replace">
+          <group name="first" col="2">
+            <field name="parent_id" class="oe_inline"/>
+            <field name="level" invisible="1"/>
+            <field name="code" class="oe_inline" attrs="{'required': [('level', '=', 3)], 'invisible': [('level', '!=', 3)]}"/>
+            <field name="sequence_padding" class="oe_inline" required="1"/>
+            <field name="consignment_margin" class="oe_inline"/>
+            <field name="is_available_on_portal" class="oe_inline"/>
+          </group>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="hk_wishlist_api.list">
+      <field name="name">hk_wishlist_api list</field>
+      <field name="model">hk_wishlist_api.hk_wishlist_api</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="hk_wishlist_api.action_window">
+      <field name="name">hk_wishlist_api window</field>
+      <field name="res_model">hk_wishlist_api.hk_wishlist_api</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="hk_wishlist_api.action_server">
+      <field name="name">hk_wishlist_api server</field>
+      <field name="model_id" ref="model_hk_wishlist_api_hk_wishlist_api"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="hk_wishlist_api" id="hk_wishlist_api.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="hk_wishlist_api.menu_1" parent="hk_wishlist_api.menu_root"/>
+    <menuitem name="Menu 2" id="hk_wishlist_api.menu_2" parent="hk_wishlist_api.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="hk_wishlist_api.menu_1_list" parent="hk_wishlist_api.menu_1"
+              action="hk_wishlist_api.action_window"/>
+    <menuitem name="Server to list" id="hk_wishlist_api" parent="hk_wishlist_api.menu_2"
+              action="hk_wishlist_api.action_server"/>
+-->
+  </data>
+</odoo>

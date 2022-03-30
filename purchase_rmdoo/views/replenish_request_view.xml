@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<!-- Replenish Request -->
+		<record id="view_product_replenish_request_tree"
+			model="ir.ui.view">
+			<field name="name">Replenish Request Tree</field>
+			<field name="model">product.replenish.request</field>
+			<field name="inherit_id"
+				ref="base_rmdoo.view_product_replenish_request_tree" />
+			<field name="arch" type="xml">
+				<field name="group_id" position="before">
+					<field name="replenish_request_id" />
+				</field>
+				<field name="quantity" position="after">
+						<field name="qty_purchase" />
+						<field name="qty_received" />
+				</field>
+			</field>
+		</record>
+		<record id="view_replenish_request_product_form"
+			model="ir.ui.view">
+			<field name="name">Purchase Request Product</field>
+			<field name="model">replenish.request.product</field>
+			<field name="arch" type="xml">
+				<form string="Purchase Request Product">
+					<group>
+						<field name="is_ga" invisible="1"/>
+						<field name="product_id" domain="[('is_ga','=', is_ga)]"/>
+						<field name="quantity"/>
+						<field name="price_estimation" widget="monetary"/>
+						<field name="currency_id" invisible=""/>
+					</group>
+					<footer>
+						<button class="oe_highlight" default_focus="1"
+							name="add_product" string="Add Product" type="object" />
+						<button class="btn btn-secondary" special="cancel"
+							string="Cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+		<record id="view_replenish_request_form" model="ir.ui.view">
+			<field name="name">Purchase Request</field>
+			<field name="model">replenish.request</field>
+			<field name="arch" type="xml">
+				<form string="Purchase Request">
+					<header>
+						<button
+							attrs="{'invisible':[('state','not in',('approve','part_confirm'))]}"
+							class="btn-primary" groups="purchase.group_purchase_user"
+							name="launch_replenishment" string="Confirm" type="object" />
+						<button
+							attrs="{'invisible':[('state','not in',('draft'))]}"
+							class="btn-primary" name="approve" string="Approve" type="object" />
+						<button
+							attrs="{'invisible':[('state','not in',('draft','approve'))]}"
+							name="cancel" string="Cancel" type="object" />
+						<button
+							attrs="{'invisible':[('state','not in',('cancel'))]}"
+							name="reopen" string="Re-open" type="object" />
+						<button
+							attrs="{'invisible':[('state','not in',('part_confirm','confirm'))]}"
+							name="open_quant" string="Inventory Report" type="object" />
+						<button
+							attrs="{'invisible':[('state','not in',('part_confirm','confirm'))]}"
+							name="open_move" string="Stock Move" type="object" />
+						<field name="state" readonly="1"
+							statusbar_visible="draft,approve,confirm" widget="statusbar" />
+					</header>
+					<sheet>
+						<h1 attrs="{'invisible':[('name','=','/')]}">
+							<field name="name" />
+						</h1>
+						<group>
+							<group>
+								<field
+									attrs="{'readonly': [('state','not in',('draft'))]}"
+									name="request_department_id" />
+								<field
+									attrs="{'readonly': [('state','not in',('draft'))]}"
+									name="date_ordered" />
+								<field
+									attrs="{'readonly': [('state','not in',('draft'))]}"
+									name="date_planned" />
+								<field
+									attrs="{'readonly': [('state','not in',('draft'))]}"
+									name="is_ga" invisible="1"/>
+							</group>
+							<group>
+								<field
+									attrs="{'invisible':[('create_uid','=',False)],'readonly':['|',('create_uid','!=',False),('state','not in',('draft'))]}"
+									name="create_uid" />
+								<field
+									attrs="{'invisible':[('confirm_uid','=',False)],'readonly':['|',('confirm_uid','!=',False),('state','not in',('draft'))]}"
+									name="confirm_uid" />
+								<field
+									attrs="{'readonly': [('state','not in',('draft'))]}"
+									groups="stock.group_stock_multi_warehouses" name="warehouse_id" />
+								<field
+									attrs="{'readonly': [('state','not in',('draft'))]}"
+									groups="base.group_multi_company" name="company_id"/>
+								<field
+									attrs="{'readonly': [('state','not in',('draft'))]}"
+									groups="base.group_multi_currency" name="currency_id"/>
+							</group>
+						</group>
+						<group>
+							<div class="alert alert-info" role="alert">
+								Use
+								<strong>Product Note</strong>
+								if you do not know exact name of product or you request a new
+								product.
+								<br />
+								Use
+								<strong>Product</strong>
+								if you know exact name of product.
+							</div>
+						</group>
+						<notebook>
+							<page string="Product Note">
+								<field name="product_note_ids">
+									<tree editable="top">
+										<field name="name" />
+										<field name="product_id"
+											groups="purchase.group_purchase_user"
+											domain="[('uom_po_id.category_id','=',uom_category_id),('type','=','product'),('route_ids','!=',False)]"
+											context="{'default_name':name,'default_uom_po_id':uom_id,'default_type':'product'}" />
+										<field name="qty" />
+										<field name="uom_id" />
+										<field invisible="1" name="uom_category_id" />
+										<field name="state" readonly="1" />
+										<button
+											attrs="{'invisible':[('state','not in',('draft','approve'))]}"
+											icon="fa-check" name="confirm" string="Confirm" type="object" />
+										<button
+											attrs="{'invisible':[('state','not in',('draft','approve'))]}"
+											icon="fa-ban" name="cancel" string="Cancel" type="object" />
+									</tree>
+								</field>
+							</page>
+							<page string="Product">
+								<field
+									attrs="{'readonly': [('state','not in',('draft'))]}"
+									name="product_replenish_ids">
+									<tree create="0" decoration-muted="state=='cancel'"
+										decoration-success="state=='confirm'"
+										decoration-warning="state=='draft'">
+										<field
+											attrs="{'invisible':[('group_id','=',False)],'readonly':[('group_id','!=',False)]}"
+											name="group_id" string="Code" />
+										<field name="request_department_id" invisible="1"/>
+										<field invisible="1" name="product_tmpl_id" />
+										<field invisible="1" name="product_has_variants" />
+										<field
+											attrs="{'readonly': [('product_has_variants', '=', False)]}"
+											domain="[('product_tmpl_id', '=', product_tmpl_id)]"
+											name="product_id" />
+										<field invisible="1" name="product_uom_category_id" />
+										<field name="date_ordered" invisible="1"/>
+										<field name="date_planned" invisible="1"/>
+										<field groups="stock.group_stock_multi_warehouses"
+											name="warehouse_id" invisible="1"/>
+										<field name="quantity" />
+                                        <field name="qty_purchase" />
+                                        <field name="qty_received" />
+										<field
+											domain="[('category_id', '=', product_uom_category_id)]"
+											groups="uom.group_uom" name="product_uom_id" />
+										<field
+											name="price_estimation" widget="monetary" />
+										<field
+											name="amount_estimation" sum="Total" widget="monetary" />
+										<field name="state" />
+										<button
+											attrs="{'invisible':[('state','not in',('draft'))]}"
+											icon="fa-check" name="approve" string="Approve" type="object" />
+										<button
+											attrs="{'invisible':[('state','not in',('draft'))]}"
+											icon="fa-ban" name="cancel" string="Cancel" type="object" />
+									</tree>
+								</field>
+								<button
+									attrs="{'invisible':[('state','not in',('draft'))]}"
+									name="add_product" string="Add Product" type="object" />
+							</page>
+							<page string="Internal Note">
+								<field name="note" />
+							</page>
+						</notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" />
+						<field name="activity_ids" widget="mail_activity" />
+						<field name="message_ids" widget="mail_thread" />
+					</div>
+				</form>
+			</field>
+		</record>
+		<record id="view_replenish_request_tree" model="ir.ui.view">
+			<field name="name">Replenish Request Tree</field>
+			<field name="model">replenish.request</field>
+			<field name="arch" type="xml">
+				<tree decoration-muted="state=='cancel'"
+					decoration-success="state=='confirm'"
+					decoration-warning="state=='draft'"
+					string="Replenish request wizard">
+					<field name="name" />
+					<field name="create_uid" readonly="1" />
+					<field name="request_department_id" />
+					<field
+						attrs="{'invisible':[('confirm_uid','=',False)],'readonly':[('confirm_uid','!=',False)]}"
+						name="confirm_uid" />
+					<field name="date_ordered" />
+					<field name="date_planned" />
+					<field groups="stock.group_stock_multi_warehouses"
+						name="warehouse_id" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+<!--		<record id="view_replenish_request_niaga_form" model="ir.ui.view">-->
+<!--			<field name="name">Purchase Request Niaga</field>-->
+<!--			<field name="model">replenish.request</field>-->
+<!--			<field name="inherit_id" ref="purchase_rmdoo.view_replenish_request_form"/>-->
+<!--			<field name="mode">primary</field>-->
+<!--			<field name="arch" type="xml">-->
+<!--				<field name="is_ga" position="attributes">-->
+<!--					<attribute name="invisible"></attribute>-->
+<!--				</field>-->
+<!--			</field>-->
+<!--		</record>-->
+
+		<record id="replenish_request" model="ir.actions.act_window">
+			<field name="name">Purchase Request</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">replenish.request</field>
+			<field name="view_mode">tree,form,pivot</field>
+			<field name="view_id"
+				ref="purchase_rmdoo.view_replenish_request_tree" />
+			<!-- <field name="domain">[('state','=','to approve'),('confirm2_uid','=',False)]</field> -->
+			<!-- <field name="search_view_id" ref="purchase.view_purchase_order_filter"/> -->
+			<field name="help" type="html">
+				<p class="o_view_nocontent_smiling_face"> Create a purchase request
+				</p>
+			</field>
+			<field
+				eval="[(5,0,0),(0,0,{'view_mode':'tree','view_id':ref('purchase_rmdoo.view_replenish_request_tree')}),(0,0,{'view_mode':'form','view_id':ref('purchase_rmdoo.view_replenish_request_form')})]"
+				name="view_ids" />
+		</record>
+		<record id="replenish_request_to_confirm"
+			model="ir.actions.act_window">
+			<field name="name">Purchase Request to Confirm</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">replenish.request</field>
+			<field name="view_mode">tree,form,pivot</field>
+			<field name="view_id"
+				ref="purchase_rmdoo.view_replenish_request_tree" />
+			<field name="domain">[('state','=','approve')]</field>
+			<!-- <field name="search_view_id" ref="purchase.view_purchase_order_filter"/> -->
+			<field name="help" type="html">
+				<p class="o_view_nocontent_smiling_face"> Create a purchase request
+				</p>
+			</field>
+			<field
+				eval="[(5,0,0),(0,0,{'view_mode':'tree','view_id':ref('purchase_rmdoo.view_replenish_request_tree')}),(0,0,{'view_mode':'form','view_id':ref('purchase_rmdoo.view_replenish_request_form')})]"
+				name="view_ids" />
+		</record>
+
+		<record id="action_window_replenish_request_niaga" model="ir.actions.act_window">
+			<field name="name">Purchase Request Niaga</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">replenish.request</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('is_ga', '=', False)]</field>
+			<field name="context">{
+            'default_is_ga': False,
+				    'form_view_ref': 'purchase_rmdoo.view_replenish_request_form',
+						'tree_view_ref': 'purchase_rmdoo.view_replenish_request_tree',
+    	}</field>
+		</record>
+
+		<record id="action_window_replenish_request_non_niaga" model="ir.actions.act_window">
+			<field name="name">Purchase Request Non-Niaga</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">replenish.request</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('is_ga', '=', True)]</field>
+			<field name="context">{
+            'default_is_ga': True,
+						'form_view_ref': 'purchase_rmdoo.view_replenish_request_form',
+						'tree_view_ref': 'purchase_rmdoo.view_replenish_request_tree',
+    	}</field>
+		</record>
+		<menuitem groups="base.group_user" id="menu_replenish_root"
+			name="Purchase Request" sequence="26"
+			web_icon="purchase_rmdoo,static/src/img/icon.png" />
+		<menuitem groups="base.group_user"
+			id="menu_replenish_operation" name="Operation"
+			parent="menu_replenish_root" sequence="10" />
+<!--		<menuitem action="replenish_request" groups="base.group_user"-->
+<!--			id="menu_replenish_request" name="Purchase Request"-->
+<!--			parent="menu_replenish_operation" sequence="10" />-->
+		<menuitem action="replenish_request_to_confirm"
+			groups="purchase.group_purchase_user"
+			id="menu_replenish_request_to_confirm"
+			name="Purchase Request to Confirm" parent="menu_purchase_approval"
+			sequence="200" />
+		<menuitem groups="base.group_user"
+			id="menu_replenish_request_parent" name="Purchase Request"
+			parent="menu_replenish_operation" sequence="20" />
+		<menuitem action="action_window_replenish_request_niaga" groups="base.group_user"
+			id="menu_replenish_request_niaga" name="Purchase Request Niaga"
+			parent="menu_replenish_request_parent" sequence="10" />
+		<menuitem action="action_window_replenish_request_non_niaga" groups="base.group_user"
+			id="menu_replenish_request_non_niaga" name="Purchase Request Non-Niaga"
+			parent="menu_replenish_request_parent" sequence="10" />
+
+		<!-- MATERIAL REQUEST -->
+		<record id="view_material_request_form" model="ir.ui.view">
+			<field name="name">stock.picking.form</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form" />
+			<field name="mode">primary</field>
+			<field name="arch" type="xml">
+				<field name="location_id" position="attributes">
+					<attribute name="domain">[('usage','=','internal')]</attribute>
+				</field>
+				<field name="location_dest_id" position="attributes">
+					<attribute name="domain">[('usage','=','internal')]</attribute>
+				</field>
+				<field name="picking_type_id" position="attributes">
+					<attribute name="domain">[('code','=','internal')]</attribute>
+				</field>
+				<field name="partner_id" position="attributes">
+					<attribute name="string">Request By</attribute>
+					<attribute name="domain">[('customer','=',False),('supplier','=',False)]
+					</attribute>
+				</field>
+				<field name="owner_id" position="replace" />
+			</field>
+		</record>
+		<record id="action_material_request"
+			model="ir.actions.act_window">
+			<field name="name">Material Request</field>
+			<field name="res_model">stock.picking</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_mode">tree,pivot,kanban,form,calendar</field>
+			<field name="domain">[('picking_type_id.code','=','internal'),('location_id.usage','=','internal'),('location_dest_id.usage','=','internal')]
+			</field>
+			<field name="context">{'contact_display':'partner_address'}</field>
+			<field name="search_view_id"
+				ref="stock.view_picking_internal_search" />
+			<field
+				eval="[(5,0,0),(0,0,{'view_mode':'tree','view_id':ref('stock.vpicktree')}),(0,0,{'view_mode':'form','view_id':ref('view_material_request_form')})]"
+				name="view_ids" />
+			<field name="help" type="html">
+				<p class="o_view_nocontent_smiling_face"> Define a new transfer
+				</p>
+			</field>
+		</record>
+<!--		<menuitem action="action_material_request"-->
+<!--			groups="base.group_user" id="menu_material_request"-->
+<!--			name="Material Request" parent="menu_replenish_operation"-->
+<!--			sequence="20" />-->
+	</data>
+</odoo>

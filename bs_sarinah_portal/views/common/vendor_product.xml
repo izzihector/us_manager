@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_portal.search_vendor_product" model="ir.ui.view">
+      <field name="name">Vendor Product Search View</field>
+      <field name="model">vendor.product</field>
+      <field name="inherit_id" ref="vendor_product_management.vendor_product_view_search"/>
+      <field name="arch" type="xml">
+        <filter name="not_assigned" position="replace">
+          <filter string="Need to Validate" name="not_validate" domain="[('state', '=', 'draft')]"/>
+        </filter>
+        <filter name="product_tmpl_id_group" position="after">
+          <filter name="groupby_state" string="Status" context="{'group_by' : 'state'}"/>
+        </filter>
+        <filter name="product_id_group" position="replace"/>
+        <filter name="product_tmpl_id_group" position="replace"/>
+      </field>
+    </record>
+
+    <record id="bs_sarinah_portal.tree_vendor_product" model="ir.ui.view">
+      <field name="name">Vendor Product Tree View</field>
+      <field name="model">vendor.product</field>
+      <field name="inherit_id" ref="vendor_product_management.vendor_product_view_tree"/>
+      <field name="arch" type="xml">
+        <field name="price_ids" position="after">
+          <field name="state"/>
+        </field>
+        <field name="price_ids" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+        <field name="vendor_quantity" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+      </field>
+    </record>
+
+    <record id="bs_sarinah_portal.form_vendor_product" model="ir.ui.view">
+      <field name="name">Vendor Product Form View</field>
+      <field name="model">vendor.product</field>
+      <field name="inherit_id" ref="vendor_product_management.vendor_product_view_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//sheet" position="before">
+          <header>
+            <button name="action_validate" string="Validate" class="oe_highlight" states="draft" type="object"
+                    groups="bs_sarinah_portal.group_validate_vendor_product"/>
+            <!-- <button name="action_draft" string="Set to Draft" states="validate" type="object"
+                    groups="bs_sarinah_portal.group_validate_vendor_product"/> -->
+            <field name="is_variant_need_update" invisible="1"/>
+            <button name="update_product_variant_on_validated_product" class="oe_highlight"
+                    string="Approve Variant Update" type="object"
+                    groups="bs_sarinah_portal.group_validate_vendor_product"
+                    attrs="{'invisible': ['|', ('is_variant_need_update', '=', False), ('state', 'not in', ['validate'])]}"/>
+<!--            <button name="action_confirm_pricelist" string="Regenerate Prices" states="validate" type="object"/>-->
+            <field name="state" widget="statusbar" statusbar_visible="draft,validate"/>
+          </header>
+        </xpath>
+        <xpath expr="//div[@name='button_box']" position="inside">
+          <button name="action_view_pricelist" type="object" icon="fa-list">
+            <div class="o_field_widget o_stat_info">
+              <span class="o_stat_value">
+                <field name="pricelist_item_count" widget="statinfo" nolabel="1" class="mr4"/>
+              </span>
+              <span class="o_stat_text">Pricelist</span>
+            </div>
+          </button>
+          <button name="action_view_variant" type="object" icon="fa-list">
+            <div class="o_field_widget o_stat_info">
+              <span class="o_stat_value">
+                <field name="product_variant_count" widget="statinfo" nolabel="1" class="mr4"/>
+              </span>
+              <span class="o_stat_text">Variants</span>
+            </div>
+          </button>
+        </xpath>
+        <xpath expr="//field[@name='company_id']" position="after">
+          <field name="sale_tax_id" widget="many2many_tags"/>
+        </xpath>
+        <xpath expr="//field[@name='price_ids']" position="attributes">
+          <attribute name="context">{'form_view_ref': 'bs_sarinah_portal.form_product_supplierinfo'}</attribute>
+        </xpath>
+        <xpath expr="//field[@name='price_ids']/tree" position="attributes">
+          <!-- <attribute name="editable">bottom</attribute> -->
+          <attribute name="decoration-warning">state == 'to_validate'</attribute>
+          <attribute name="decoration-success">state == 'validate'</attribute>
+        </xpath>
+        <xpath expr="//field[@name='price_ids']/form" position="replace">
+        </xpath>
+        <xpath expr="//field[@name='price_ids']/tree/field[@name='company_id']" position="after">
+          <field name="state" readonly="1" force_save="1"/>
+        </xpath>
+        <xpath expr="//field[@name='price_ids']/tree/field[@name='company_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='price_ids']/tree/field[@name='price']" position="before">
+          <field name="vendor_product_variant_id"/>
+          <field name="location_id" readonly="1" force_save="1"/>
+          <field name="branch_id" invisible="1"/>
+          <field name="pricelist_id" required="1" domain="[('branch_id', '=?', branch_id)]"/>
+        </xpath>
+        <xpath expr="//field[@name='price_ids']/tree/field[@name='price']" position="after">
+          <field name="price_after_margin" string="Price"/>
+        </xpath>
+        <xpath expr="//field[@name='price_ids']/tree/field[@name='price']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <field name="partner_id" position="attributes">
+          <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+        </field>
+        <field name="product_name" position="attributes">
+          <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+        </field>
+        <field name="product_code" position="attributes">
+          <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+        </field>
+        <field name="product_id" position="attributes">
+          <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+        </field>
+        <field name="product_tmpl_id" position="attributes">
+          <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+        </field>
+        <field name="delay" position="attributes">
+          <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+        </field>
+        <field name="company_id" position="attributes">
+          <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+        </field>
+        <field name="delay" position="after">
+          <field name="minimum_quantity"/>
+          <field name="product_uom_id"/>
+        </field>
+        <field name="product_code" position="after">
+          <field name="product_manufacture_code"/>
+          <field name="product_brand_id"/>
+          <field name="product_category_id"/>
+          <field name="product_brand_margin_id"/>
+          <div class="o_row o_td_label text-left">
+            <label for="margin_percentage" string="Margin"/>
+          </div>
+          <div class="o_row">
+            <field name="margin_percentage"/>
+            <span>%</span>
+          </div>
+        </field>
+        <field name="product_id" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+        <field name="product_tmpl_id" position="attributes">
+          <attribute name="states">validate</attribute>
+          <attribute name="readonly">1</attribute>
+          <attribute name="force_save">1</attribute>
+        </field>
+        <xpath expr="//notebook/page[1]" position="after">
+            <page string="Attributes">
+                <field name="attribute_line_ids" context="{'default_vendor_product_id': id}">
+                    <tree editable="bottom">
+                        <field name="vendor_product_id" invisible="1" force_save="1"/>
+                        <field name="attribute_id"/>
+                        <field name="value_ids" widget="many2many_tags"/>
+                    </tree>
+                </field>
+            </page>
+            <page string="Variants">
+                <field name="product_variant_ids">
+                    <tree create="0" write="0" decoration-warning="not product_id">
+                        <field name="product_id" invisible="1"/>
+                        <field name="display_name" string="Name"/>
+                        <field name="attribute_value_ids" widget="many2many_tags"/>
+                    </tree>
+                </field>
+            </page>
+            <page string="Images">
+                <group name="product_template_images" string="Product Images">
+                    <field name="image_ids" class="o_website_sale_image_list" context="{'default_name': product_name, 'default_product_id': id}" mode="kanban" options="{'create_text':'Add a Media'}" nolabel="1">
+                        <kanban string="Product Images" default_order="sequence">
+                            <field name="id"/>
+                            <field name="name"/>
+                            <field name="image_1920"/>
+                            <field name="sequence" widget="handle"/>
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <div class="card oe_kanban_global_click p-0">
+                                        <div class="o_squared_image">
+                                            <img class="card-img-top" t-att-src="kanban_image('vendor.product.image', 'image_1920', record.id.raw_value)" t-att-alt="record.name.value"/>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <h4 class="card-title p-2 m-0 bg-200">
+                                                <small><field name="name"/></small>
+                                            </h4>
+                                        </div>
+                                        <!-- below 100 Kb: good -->
+                                        <t t-if="record.image_1920.raw_value.length &lt; 100*1000">
+                                            <t t-set="size_status" t-value="'badge-success'"/>
+                                            <t t-set="message">Acceptable file size</t>
+                                        </t>
+                                        <!-- below 1000 Kb: decent -->
+                                        <t t-elif="record.image_1920.raw_value.length &lt; 1000*1000">
+                                            <t t-set="size_status" t-value="'badge-warning'" />
+                                            <t t-set="message">Huge file size. The image should be optimized/reduced.</t>
+                                        </t>
+                                        <!-- above 1000 Kb: bad -->
+                                        <t t-else="1">
+                                            <t t-set="size_status" t-value="'badge-danger'"/>
+                                            <t t-set="message">Optimization required! Reduce the image size or increase your compression settings.</t>
+                                        </t>
+                                        <span t-attf-class="badge #{size_status} o_product_image_size" t-esc="record.image_1920.value" t-att-title="message"/>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+                </group>
+            </page>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

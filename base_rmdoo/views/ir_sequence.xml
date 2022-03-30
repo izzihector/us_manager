@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="sequence_view" model="ir.ui.view">
+            <field name="model">ir.sequence</field>
+            <field name="inherit_id" ref="base.sequence_view"/>
+            <field name="arch" type="xml">
+                <field name="number_next_actual" position="after">
+                    <field
+                        attrs="{'invisible': [('use_date_range', '=', False)]}" name="reset" required="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

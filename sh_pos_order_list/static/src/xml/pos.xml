@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="OrderHistoryButton">
+        <span class="control-button" style="min-width: 10px !important;">
+            <div style="display: inline-block; vertical-align: middle; align-items: center; height: 33px; line-height: 30px;">
+                <i class="fa fa-history" aria-hidden="true"></i>
+            </div>
+            Order History
+        </span>
+    </t>
+    <t t-name="OrderScreenWidget">
+        <div class="orderlist-screen screen">
+            <div class="screen-content orderlist-screen">
+                <section class="top-content top-content_finalset1">
+                    <div class="order_set_width">
+                        <span class="button back">
+                            <i class="fa fa-angle-double-left"></i>
+                            Back
+                        </span>
+
+                        <span class="custom_searchbox">
+                            <input placeholder="Search Order" style="margin: 15px; border-radius: 20px; padding: 10px 15px; border: 1px solid #ccc;" />
+                            <span class="search-clear"></span>
+                        </span>
+                        <input type="date" name="date1" id="date1" style="margin: 15px; border-radius: 20px; padding: 10px 28px; border: 1px solid #ccc; position: absolute;" />
+                    </div>
+                </section>
+                <section class="full-content sh_order_list_full_content">
+                    <div class="window">
+                        <section class="subwindow">
+                            <div class="subwindow-container">
+                                <div class="subwindow-container-fix touch-scrollable scrollable-y order-list-scroll sh_order_screen">
+                                    <div>
+                                        <table class="order-list sh_order_list">
+                                            <thead class="bgcolorset">
+                                                <tr>
+                                                    <th style="width: 14%; padding-left: 10px;">Name</th>
+                                                    <th style="width: 29%;">Order Ref.</th>
+                                                    <th style="width: 17%;">Customer</th>
+                                                    <t t-if="widget.pos.config.floor_ids and widget.pos.config.floor_ids.length > 0">
+                                                        <th style="width: 7%;">Table</th>
+                                                    </t>
+                                                    <th style="width: 16%;">Date</th>
+                                                    <th style="width: 10%;" class="pos_order_total_header">Total</th>
+                                                    <th style="width: 7%;" class="pos_order_state_th">State</th>
+                                                    <t t-if="widget.pos.config.sh_enable_order_reprint">
+                                                        <th></th>
+                                                    </t>
+                                                    <t t-if="widget.pos.config.sh_enable_re_order">
+                                                        <th></th>
+                                                    </t>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="order-list-contents"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <div class="sh_pagination"></div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="OrderlistLine">
+        <tr t-att-data-id="each_order.id" class="sh_order_line" style="padding-left: 10px;">
+            <td>
+                <t t-esc="each_order.name" />
+            </td>
+            <td>
+                <t t-esc="each_order.pos_reference" />
+            </td>
+            <td>
+                <t t-if="each_order.partner_id and each_order.partner_id[1]">
+                    <t t-esc="each_order.partner_id[1]" />
+                </t>
+                <t t-elif="each_order.partner_id">
+                    <t t-esc="widget.pos.db.get_partner_by_id(each_order.partner_id).name" />
+                </t>
+                <t t-else="">
+                    -
+                </t>
+            </td>
+
+            <t t-if="widget.pos.config.floor_ids and widget.pos.config.floor_ids.length > 0">
+                <td>
+                    <t t-if="each_order.table_id[1]">
+                        <t t-esc="each_order.table_id[1]" />
+                    </t>
+                    <t t-elif="each_order.table">
+                        <t t-esc="each_order.table" />
+                    </t>
+                    <t t-else="">
+                        -
+                    </t>
+                </td>
+            </t>
+
+            <td>
+                <!-- <t t-esc="each_order.date_order" /> -->
+                <t t-if="each_order.sh_order_date">
+	            	<t t-esc="each_order.sh_order_date"/>
+	            </t>
+	            <t t-else="">
+	           	    <t t-esc="each_order.date_order" />
+	            </t>
+            </td>
+            <td class="pos_order_total_td">
+                <t t-esc="widget.format_currency(each_order.amount_total)" />
+            </td>
+            <td class="pos_order_state">
+                <t t-if="each_order.state == 'draft'">
+                    New
+                </t>
+                <t t-if="each_order.state == 'paid'">
+                    Paid
+                </t>
+                <t t-if="each_order.state == 'cancel'">
+                    Cancelled
+                </t>
+                <t t-if="each_order.state == 'done'">
+                    Posted
+                </t>
+                <t t-if="each_order.state == 'invoiced'">
+                    Invoiced
+                </t>
+            </td>
+            <t t-if="widget.pos.config.sh_enable_order_reprint">
+                <td>
+                    <i class="fa fa-print print_order" aria-hidden="true"></i>
+                </td>
+            </t>
+            <t t-if="widget.pos.config.sh_enable_re_order">
+                <td>
+                    <t t-if="each_order.state != 'done' and each_order.state != 'cancel'">
+                        <i class="fa fa-retweet re_order_icon" aria-hidden="true"></i>
+                    </t>
+                </td>
+            </t>
+        </tr>
+    </t>
+    <t t-name="OrderDetail">
+        <tr>
+            <td colspan="13">
+                <table class="inner_data_table">
+                    <tr t-att-id="order.pos_reference.split(' ')[1]" class="order_data_row order_data_header">
+                        <th>Product</th>
+                        <th>Qty.</th>
+                        <th>Discount (%)</th>
+                        <th>Unit Price</th>
+                        <th>Sub Total</th>
+                    </tr>
+
+                    <t t-if="order.sh_line_id">
+                        <t t-foreach="order.sh_line_id" t-as="pos_order_line">
+                            <t t-if="widget.pos.db.order_line_by_uid and widget.pos.db.order_line_by_uid[pos_order_line]">
+                                <tr t-att-id="widget.pos.db.order_line_by_uid[pos_order_line].sh_line_id" class="order_data_row order-data" style="border-bottom: 1px solid #ccc;">
+                                    <td>
+                                        <t t-if="widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_uid[pos_order_line].product_id)">
+                                            <t t-if="widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_uid[pos_order_line].product_id).display_name">
+                                                <t t-esc="widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_uid[pos_order_line].product_id).display_name" />
+                                            </t>
+                                        </t>
+                                    </td>
+                                    <!-- <td><t t-esc="widget.pos.db.order_line_by_uid[pos_order_line].quantity" /></td> -->
+                                    <td><t t-esc="widget.pos.db.order_line_by_uid[pos_order_line].qty" /></td>
+                                    <td><t t-esc="widget.pos.db.order_line_by_uid[pos_order_line].discount" /></td>
+                                    <td>
+                                        <t t-if="widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_uid[pos_order_line].product_id)">
+                                            <t t-if="widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_uid[pos_order_line].product_id).lst_price">
+                                                <t t-esc="widget.format_currency(widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_uid[pos_order_line].product_id).lst_price)" />
+                                            </t>
+                                        </t>
+                                    </td>
+                                    <td><t t-esc="widget.format_currency(widget.pos.db.order_line_by_uid[pos_order_line].qty * widget.pos.db.order_line_by_uid[pos_order_line].price_unit)" /></td>
+                                </tr>
+                            </t>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach="order.lines" t-as="pos_order_line">
+                            <t t-if="widget.pos.db.order_line_by_id and widget.pos.db.order_line_by_id[pos_order_line]">
+                                <tr t-att-id="widget.pos.db.order_line_by_id[pos_order_line].id" class="order_data_row order-data" style="border-bottom: 1px solid #ccc;">
+                                    <td>
+                                        <t t-esc="widget.pos.db.order_line_by_id[pos_order_line].product_id[1]" />
+                                        <t t-if="!widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_id[pos_order_line].product_id[0])">
+                                            <span style="color: red;"> ( Not available in POS . Please update product. )</span>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-if="widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_id[pos_order_line].product_id[0])">
+                                            <t t-esc="widget.pos.db.order_line_by_id[pos_order_line].qty" />
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-if="widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_id[pos_order_line].product_id[0])">
+                                            <t t-esc="widget.pos.db.order_line_by_id[pos_order_line].discount" />
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-if="widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_id[pos_order_line].product_id[0])">
+                                            <t t-if="widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_id[pos_order_line].product_id[0]).lst_price">
+                                                <t t-esc="widget.format_currency(widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_id[pos_order_line].product_id[0]).lst_price)" />
+                                            </t>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-if="widget.pos.db.get_product_by_id(widget.pos.db.order_line_by_id[pos_order_line].product_id[0])">
+                                            <t t-esc="widget.format_currency(widget.pos.db.order_line_by_id[pos_order_line].qty * widget.pos.db.order_line_by_id[pos_order_line].price_unit)" />
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </t>
+                </table>
+            </td>
+        </tr>
+    </t>
+</templates>

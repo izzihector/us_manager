@@ -1,0 +1,89 @@
+<odoo>
+    <data>
+        <!-- Purchase Order New Template A4 Portrait -->
+        <report file="purchase_rmdoo.report_purchaseorder_rmdoo"
+            id="purchase.action_report_purchase_order"
+            model="purchase.order"
+            name="purchase_rmdoo.report_purchaseorder_rmdoo"
+            paperformat="base_rmdoo.paperformat_rmdoo_a4_portrait"
+            print_report_name="(object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or 'Purchase Order - %s' % (object.name))"
+            report_type="qweb-pdf" string="Purchase Order A4"/>
+        <!-- Purchase Order New Template A5 Landscape -->
+        <report file="purchase_rmdoo.report_purchaseorder_rmdoo_a5"
+            id="purchase.action_report_purchase_order_a5"
+            model="purchase.order"
+            name="purchase_rmdoo.report_purchaseorder_rmdoo_a5"
+            paperformat="base_rmdoo.paperformat_rmdoo_a5_landscape"
+            print_report_name="(object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or 'Purchase Order - %s' % (object.name))"
+            report_type="qweb-pdf" string="Purchase Order A5"/>
+        <!-- Purchase Request -->
+        <report file="purchase_rmdoo.report_purchase_replenish"
+            id="action_report_purchase_replenish_inquiry"
+            model="replenish.request"
+            name="purchase_rmdoo.report_purchase_replenish"
+            paperformat="base_rmdoo.paperformat_rmdoo_a5_landscape"
+            print_report_name="'Purchase Request - %s' % (object.name) "
+            report_type="qweb-pdf" string="Purchase Request"/>
+        <!-- Purchase Outstanding -->
+        <report file="purchase_rmdoo.report_outstanding"
+            id="action_report_purchase_outstanding"
+            model="purchase.order"
+            name="purchase_rmdoo.report_outstanding"
+            paperformat="base_rmdoo.paperformat_rmdoo_a4_landscape"
+            print_report_name="'Purchase Outstanding - %s' % (object.name)"
+            report_type="qweb-pdf" string="Purchase Outstanding"/>
+        <!-- Purchase Outstanding Inquiries -->
+        <report
+            file="purchase_rmdoo.report_purchase_outstanding_inquiry"
+            id="action_report_purchase_outstanding_inquiry"
+            model="purchase.outstanding.inquiry"
+            name="purchase_rmdoo.report_purchase_outstanding"
+            paperformat="base_rmdoo.paperformat_rmdoo_a4_landscape"
+            print_report_name="'Purchase Outstanding Inquiry - %s' % (object.name)"
+            report_type="qweb-pdf" string="Purchase Outstanding Inquiry"/>
+        <!-- Purchase Total by Vendors Inquiries -->
+        <report file="purchase_rmdoo.report_totalbyvendor_inquiry"
+            id="action_report_totalbyvendor_inquiry"
+            model="vendor.purchase.inquiry"
+            name="purchase_rmdoo.report_totalbyvendor"
+            paperformat="base_rmdoo.paperformat_rmdoo_a4_landscape"
+            print_report_name="'Purchase Total by Vendors - %s' % (object.name)"
+            report_type="qweb-pdf" string="Purchase Total by Vendors"/>
+        <!-- Purchase Agreement Inquiries -->
+        <report file="purchase_rmdoo.report_purchase_agreement_inquiry"
+            id="action_report_purchase_agreement_inquiry"
+            model="purchase.requisition.inquiry"
+            name="purchase_rmdoo.report_purchase_agreement"
+            paperformat="base_rmdoo.paperformat_rmdoo_a4_landscape"
+            print_report_name="'Purchase Agreement - %s' % (object.name)"
+            report_type="qweb-pdf" string="Purchase Agreement Inquiry"/>
+        <!-- Purchase Replenish Request Inquiries -->
+        <report file="purchase_rmdoo.report_purchase_replenish_request"
+            id="action_report_purchase_replenish_request"
+            model="replenish.request.inquiry"
+            name="purchase_rmdoo.report_purchase_replenish_request"
+            paperformat="base_rmdoo.paperformat_rmdoo_a4_landscape"
+            print_report_name="'Replenish Request - %s' % (object.name)"
+            report_type="qweb-pdf" string="Replenish Request Inquiry"/>
+        <!-- Purchase History by PO -->
+        <report file="purchase_rmdoo.report_purchase_history"
+            id="action_report_purchase_history"
+            model="price.history.inquiry"
+            name="purchase_rmdoo.report_purchase_history"
+            paperformat="base_rmdoo.paperformat_rmdoo_a4_landscape"
+            print_report_name="'Purchase History - %s' % (object.name)"
+            report_type="qweb-pdf" string="Purchase History by PO"/>
+        <!-- <report 
+            string="Purchase Order" 
+            id="purchase.action_report_purchase_order" 
+            model="purchase.order" 
+            report_type="qweb-pdf"
+            paperformat="base_rmdoo.paperformat_rmdoo_a4_portrait"
+            name="purchase.report_purchaseorder" 
+            file="purchase.report_purchaseorder"
+            print_report_name="
+                (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
+                'Purchase Order - %s' % (object.name))"
+        /> -->
+    </data>
+</odoo>

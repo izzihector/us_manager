@@ -1,0 +1,79 @@
+Version Info:-
+
+12.0.1.6 :- conflict menu ids invoice and accounting.
+
+
+Date :- 20/05/2019
+version :- 12.0.2.2
+1)improve import bom feature which we recently done.
+
+2)add picking with or without lot number feature on picking import.
+
+3)import product customer with [product variant]
+
+4) improve index
+
+
+bi_import_product_customer
+Version:-12.0.2.3
+issue solve:-
+1 ) Check for Can Be Sold and Can Be Purchase values.
+2) Add On Hand Quantity Values while import product.
+3) Pass wrong invoice policy value while import variant.
+
+
+12.0.2.4
+--> Waring issue of vendor pricelist.
+
+12.0.2.5
+--> added options and removed csv option in import product and product variant according to bi_import_product_customer.
+--> updated product and product_variant Sample Files.
+
+12.0.2.6
+-> Issues Fixed During importing product with wrong category and updating products with empty barcode, internal reference, name.
+
+12.0.2.7
+-> Issues Fixed During importing picking, picking_id is not assigned to stock.move.line and qty reserved is assigned during create of stock.move.line which prevented validation of picking.
+
+12.0.2.8
+-> importing fixed for name and internal referance update.
+
+12.0.2.9
+-> added customer tax, vendor tax, tracking columns in import product template. 
+
+12.0.3.0
+==> add discount field in xls and csv for sale order, order line and invoice, invoice line.
+
+Version 12.0.3.1: (01/04/2020)
+		- Update product variant image from updated url.
+
+Version 12.0.3.2:
+--> Import Partner, create/update partner contact without parent issue solved.
+
+date :- 21st april 2020
+version 12.0.3.4
+--> Sale Order Line update lines instead of creating new line when same product is imported.
+--> Purchase Order Line update lines instead of creating new line when same product is imported.
+--> Import Vendor Pricelist, if product variant and template are different then warning is displayed.
+--> Import partner: all the individual are created.. please test with this attached file 
+--> import Vendor Price list ,Select Product By : Code and file formate CSV Its through the traceback..
+
+
+==>12.0.3.5: solved issue of numeric barcode and code in csv and xls.
+
+==>12.0.3.6:solved issue of traceback when barcode is not available.
+==>12.0.3.7 : added proper warning in all fiels for import and improved code of fiels.
+
+==>12.0.3.8 : fixed issue in invoice ,sale and payment file.
+==>11.0.4.9: Fixed the issue in Reference code it's take a float values.
+==> 12.0.3.10 : Fixed the issue when give same values with different attributes it will create now.
+==> 12.0.3.11 :Fixed the issue when updating internal refference it's taken float value.
+
+Version 12.0.4.0:
+	- Fixed the traceback issue, when import invoice and Date is not given on file.
+	- Fixed the traceback issue, when import Supplier and DELIVERY TIME, QUANTITY are not given on file.
+
+Version: 12.0.4.1 | Date : 29/12/2020
+-->  For Import Payment, add selection for "Payment Stage".
+
+=> 12.0.4.2 : Add French, Spanish , Arabic and Dutch translation in module also improved an index.

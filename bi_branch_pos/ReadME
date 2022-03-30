@@ -1,0 +1,13 @@
+Version:-
+
+Commit Date -22-05-2019 
+13.0.0.1 : Made changes in security file and overriden report with super().
+
+Version 13.0.0.2 : (28/12/20)
+-- Fixed the multi branch record issue to display only the selected branch records
+
+Version 13.0.0.3 : (08/01/21)
+-- Fixed the multi branch record issue
+
+Version 13.0.0.4 : (26/01/21)
+-- Added warning message while change the branch that is not active

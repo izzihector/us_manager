@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="OrderReceipt">
+<!--        <t t-jquery=".pos-receipt-contact" t-operation="before">-->
+        <!--          <t t-if="widget.pos.config.sh_pos_order_number">-->
+        <!--              <center>Order No.  <t t-esc="order.pos_order_number" /></center>-->
+        <!--          </t>-->
+        <!--        </t>-->
+
+        <t t-jquery=".pos-receipt">
+            this.removeAttr('class');
+            this.attr('t-attf-class', 'pos-receipt #{widget.pos.config.is_mobile_pos ? \'pos-receipt-mobile\' : \'\'}');
+        </t>
+        <t t-jquery=".pos-receipt-contact" t-operation="append">
+            <div>
+                <t t-if="widget.pos.get_order().invoice_number and widget.pos.config.sh_pos_receipt_invoice">
+                    <br/>
+                    <div>--------------------------------</div>
+                    INV number:
+                    <t t-esc="order.invoice_number"/>
+                    <div>--------------------------------</div>
+                </t>
+            </div>
+
+            <div class="sh_customer_detail">
+                <t t-if="widget.pos.config.sh_pos_receipt_customer_detail">
+                    <t t-if="receipt.client">
+                        <br/>
+                        <t t-if="widget.pos.config.sh_pos_receipt_customer_name">
+                            <div class="sh_customer_name">Customer : <t t-esc="receipt.client"/></div>
+                        </t>
+                        <t t-if="widget.pos.config.sh_pos_receipt_customer_address">
+                            <t t-if="widget.pos.get_order() and widget.pos.get_order().get_client() and widget.pos.db.partner_by_id[widget.pos.get_order().get_client().id].address">
+                                <div class="sh_customer_address">Address : <t
+                                        t-esc="widget.pos.db.partner_by_id[widget.pos.get_order().get_client().id].address"/></div>
+                            </t>
+                        </t>
+                        <t t-if="widget.pos.config.sh_pos_receipt_customer_mobile">
+                            <t t-if="widget.pos.get_order() and widget.pos.get_order().get_client() and widget.pos.db.partner_by_id[widget.pos.get_order().get_client().id].mobile">
+                                <div class="sh_customer_mobile">Mobile : <t
+                                        t-esc="widget.pos.db.partner_by_id[widget.pos.get_order().get_client().id].mobile"/></div>
+                            </t>
+                        </t>
+                        <t t-if="widget.pos.config.sh_pos_receipt_customer_phone">
+                            <t t-if="widget.pos.get_order() and widget.pos.get_order().get_client() and widget.pos.db.partner_by_id[widget.pos.get_order().get_client().id].phone">
+                                <div class="sh_customer_mobile">Phone : <t
+                                        t-esc="widget.pos.db.partner_by_id[widget.pos.get_order().get_client().id].phone"/></div>
+                            </t>
+                        </t>
+                        <t t-if="widget.pos.config.sh_pos_customer_vat">
+                            <t t-if="widget.pos.get_order() and widget.pos.get_order().get_client() and widget.pos.db.partner_by_id[widget.pos.get_order().get_client().id].vat">
+                               <t t-if="widget.pos.config.sh_pos_customer_vat_custom_name">
+                                   <t t-esc="widget.pos.config.sh_pos_customer_vat_custom_name"/>
+                                   :
+                               </t>
+                                <t t-else="">
+                                    Vat :
+                                </t>
+                                <t t-esc="widget.pos.db.partner_by_id[widget.pos.get_order().get_client().id].vat"/>
+
+                            </t>
+                        </t>
+                        <t t-if="widget.pos.config.sh_pos_receipt_customer_email">
+                            <t t-if="widget.pos.get_order() and widget.pos.get_order().get_client() and widget.pos.db.partner_by_id[widget.pos.get_order().get_client().id].email">
+                                <div class="sh_customer_mobile">Email : <t
+                                        t-esc="widget.pos.db.partner_by_id[widget.pos.get_order().get_client().id].email"/></div>
+                            </t>
+                        </t>
+                    </t>
+                </t>
+            </div>
+        </t>
+        <t t-jquery=".pos-receipt-order-data" t-operation="replace">
+            <div class="sh_receipt_footer">
+                <t t-esc="receipt.date.localestring"/>
+                <br/>
+                <t t-if="order.is_barcode_exit and widget.pos.config.sh_pos_receipt_bacode_qr and widget.pos.config.sh_pos_receipt_barcode_qr_selection == 'barcode'">
+                    <img t-att-src="'/report/barcode/Code128/'+order.barcode+'?width=200&amp;height=50'"
+                         class="barcode_class"/>
+                </t>
+                <t t-if="order.is_qr_exit and widget.pos.config.sh_pos_receipt_bacode_qr and widget.pos.config.sh_pos_receipt_barcode_qr_selection == 'qr'">
+                    <img t-att-src="'/report/barcode/QR/'+order.barcode+'?width=100'" class="qr_class"/>
+                </t>
+                <!--                <t t-if="!widget.pos.config.sh_pos_receipt_bacode_qr or (widget.pos.config.sh_pos_receipt_barcode_qr_selection == 'qr' and widget.pos.config.sh_pos_receipt_barcode_qr_selection == 'barcode')">-->
+                <!--                    <t t-esc="receipt.name" />-->
+                <!--                </t>-->
+            </div>
+
+            <div class="sh_receipt_footer"><t t-esc="receipt.name" /></div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        </t>
+
+
+        <t t-jquery="t[t-foreach='receipt.orderlines']" t-operation="replace">
+            <t t-foreach='receipt.orderlines' t-as='line'>
+                <div t-esc='line.name'/>
+<!--                    <t t-call="OrderReceiptWrappedProductNameLines"/>-->
+                    <t t-if="line.display_discount_policy == 'without_discount' &amp;&amp; line.price != line.price_lst">
+                        <div class="pos-receipt-left-padding">
+                            <t t-esc="widget.format_currency_no_symbol(line.price_lst)" />-><t t-esc="widget.format_currency_no_symbol(line.price)" />
+                        </div>
+                    </t>
+                    <t t-elif='line.discount !== 0'>
+                        <div class="pos-receipt-left-padding">
+                            <t t-if="pos.config.iface_tax_included === 'total'">
+                                <t t-esc="widget.format_currency_no_symbol(line.price_with_tax_before_discount)"/>
+                            </t>
+                            <t t-else="">
+                                <t t-esc="widget.format_currency_no_symbol(line.price)"/>
+                            </t>
+                            Discount: <t t-esc='line.discount' />%
+                        </div>
+                    </t>
+                    <t t-if='line.discount !== 0'>
+                </t>
+                <div class="pos-receipt-left-padding">
+                    <t t-esc="default_code"/>
+                    <t t-esc="Math.round(line.quantity * Math.pow(10, pos.dp['Product Unit of Measure'])) / Math.pow(10, pos.dp['Product Unit of Measure'])"/>
+                    <t t-if='line.unit_name !== "Units"' t-esc='line.unit_name'/>
+                    x
+                    <t t-esc='widget.format_currency_no_symbol(line.price_display_one)' />
+                    <span class="price_display pos-receipt-right-align">
+                        <t t-esc='widget.format_currency_no_symbol(line.price_display)'/>
+                    </span>
+                </div>
+            </t>
+        </t>
+
+         <t t-jquery="div.pos-receipt-right-align" t-operation="replace">
+             <br/>
+              <div class="pos-receipt-right-align">----------------</div>
+         </t>
+<!--        <t t-jquery="t[t-foreach='receipt.orderlines']" t-operation="replace">-->
+<!--        </t>-->
+
+        <t t-jquery="t[t-if='taxincluded']" t-operation="replace">
+            <div>
+                Tax
+                <span t-esc='widget.format_currency(receipt.total_tax)' class="pos-receipt-right-align"/>
+            </div>
+        </t>
+
+         <t t-jquery=".receipt-change" t-operation="replace">
+             <t t-if="receipt.change > 0">
+                CHANGE
+                <span t-esc='widget.format_currency(receipt.change)' class="pos-receipt-right-align"/>
+             </t>
+        </t>
+
+        <t t-jquery="t[t-foreach='paymentlines']:first" t-operation="replace">
+            <t t-foreach='paymentlines' t-as='line'>
+                <div>
+                    <t t-if="line.transaction_id == ''">
+                        <t t-esc='line.name' />
+                    </t>
+                    <t t-else="">
+                        <t t-if='line.card_type == "EMONEY"'>
+                            E-Money
+                        </t>
+                        <t t-elif='line.card_type == "OVO_PUSH_TO_PAY"'>
+                            OVO
+                        </t>
+                        <t t-elif='line.card_type == "SHOPEEPAY_QR"'>
+                            Shopee Pay QRIS
+                        </t>
+                        <t t-elif='line.card_type == "TCASH_QR"'>
+                            LinkAja
+                        </t>
+                        <t t-elif='line.card_type == "GOPAY_QR"'>
+                            Gopay
+                        </t>
+                        <t t-elif='line.card_type == "CIMB_QR"'>
+                            CIMB QRIS
+                        </t>
+                        <t t-elif='line.card_type == "NOBU_QR_DYNAMIC"'>
+                            Nobu QRIS
+                        </t>
+                        <t t-elif='line.card_type == "ARTAJASA_VA"'>
+                            Artajasa
+                        </t>
+                        <t t-elif='line.card_type == "PERMATA_VA"'>
+                            Permata
+                        </t>
+                        <t t-elif='line.card_type == "BCA_VA"'>
+                            BCA
+                        </t>
+                        <t t-elif='line.card_type == "CASH"'>
+                            Cash
+                        </t>
+                        <t t-elif='line.card_type == "DEBIT"'>
+                            Debit
+                        </t>
+                        <t t-elif='line.card_type == "CREDIT"'>
+                            Credit
+                        </t>
+                        <t t-elif='line.card_type == "ATOME"'>
+                            Atome
+                        </t>
+                        <t t-elif='line.card_type == "VOSPAY"'>
+                            Vospay
+                        </t>
+                        <t t-elif='line.card_type == "INDODANA"'>
+                            Indodana
+                        </t>
+                        <t t-else="">
+                            <t t-esc='line.card_type'/>
+                        </t>
+                    </t>
+                    <span t-esc='widget.format_currency_no_symbol(line.get_amount())' class="pos-receipt-right-align"/>
+                </div>
+            </t>
+        </t>
+
+    </t>
+
+    <t t-extend="OrderWidget">
+        <t t-jquery=".line" t-operation="replace">
+            <div class="line">
+                <div class='entry total'>
+                    <span class="badge">Total: </span>
+                    <span class="value">0.00 €</span>
+                    <div class='subentry'>Taxes: <span class="value">0.00€</span></div>
+                </div>
+            </div>
+        </t>
+    </t>
+</templates>

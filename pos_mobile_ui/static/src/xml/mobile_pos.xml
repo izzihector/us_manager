@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="MobileLeftPaneButton">
+        <div class="oe_status pos-show-leftpane">
+            <div class="js_connected oe_icon">
+                <span class="icon-and-badge">
+                  <i aria-label="Order info and actions" role="img" title="Order info and actions" class="fa fa-fw fa-th-list"></i>
+                  <t t-if="widget.pos.get_order() and widget.pos.get_order().orderlines.length">
+                    <span class="badge"><t t-esc="widget.pos.get_order().orderlines.length" /></span>
+                  </t>
+                </span>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="MobileMoreControlsButton">
+        <span class="control-button show-all-controls">
+            <span class="show-all"><i class="fa fa-ellipsis-h"></i>Show All</span>
+            <span class="show-less"><i class="fa fa-angle-down"></i>Show less</span>
+        </span>
+    </t>
+
+    <t t-name="MobileHideKbButton">
+        <button class="close-keyboard">
+            <span class="show-kb"><i class="fa fa-calculator"></i>Show<i class="fa fa-angle-up"></i></span>
+            <span class="hide-kb"><i class="fa fa-calculator"></i>Hide<i class="fa fa-angle-down"></i></span>
+        </button>
+    </t>
+
+    <t t-name="MobileHideCatsButton">
+        <button class="close-cats">
+            <span class="show-cats"><i class="fa fa-th"></i>Show categories<i class="fa fa-angle-down"></i></span>
+            <span class="hide-cats"><i class="fa fa-th"></i>Hide categories<i class="fa fa-angle-up"></i></span>
+        </button>
+    </t>
+</templates>

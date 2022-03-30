@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="wk_pos_discount_menu" name="Seasonal Discount" parent="point_of_sale.menu_point_config_product"
+                  action="pos_discount_form_view_action"/>
+
+    </data>
+</odoo>

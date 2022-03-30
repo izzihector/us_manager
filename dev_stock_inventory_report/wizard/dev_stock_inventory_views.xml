@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="view_dev_stock_inventory_form" model="ir.ui.view">
+		<field name="name">Stock Inventory</field>
+		<field name="model">dev.stock.inventory</field>
+		<field name="arch" type="xml">
+			<form string="Stock Inventory">
+				<group>
+					<group string="Dates">
+                        <label for="start_date" string="Date" />
+                        <div>
+                            <field class="oe_inline" name="start_date" />
+                            -
+                            <field class="oe_inline" name="end_date" />
+                        </div>
+                    </group>
+					<group string="Company" groups="base.group_multi_company">
+						<field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+					</group>
+				</group>
+				<group string="Warehouse / Location">
+					<group>
+						<field name="warehouse_ids" widget="many2many_tags" />
+					</group>
+					<group>
+						<field name="location_ids" widget="many2many_tags" />
+					</group>
+				</group>
+				<group string="Products / Category">
+					<group>
+						<field name="filter_by" />
+						<field
+							attrs="{'invisible':[('filter_by','!=','category')],'required':[('filter_by','=','category')]}"
+							name="category_id" />
+						<field
+							attrs="{'invisible':[('filter_by','!=','product')],'required':[('filter_by','=','product')]}"
+							name="product_ids" widget="many2many_tags" />
+					</group>
+					<group>
+						<field name="is_group_by_category" />
+						<field name="is_zero" />
+						<field name="is_value" />
+					</group>
+				</group>
+				<footer>
+					<button class="btn-primary" name="print_pdf"
+						string="Generate" type="object" />
+					<!-- <button class="btn-primary" name="export_stock_ledger" string="Excel" 
+						type="object" /> -->
+					<button class="btn-default" special="cancel" string="Cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+	<record id="action_dev_stock_inventory_info"
+		model="ir.actions.act_window">
+		<field name="name">Stock Inventory Report</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dev.stock.inventory</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+	<menuitem action="action_dev_stock_inventory_info"
+		id="menu_dev_stock_inventory_stock" name="Stock Inventory Report"
+		parent="stock.menu_warehouse_report" />
+	<!-- <record id="view_dev_stock_inventory_excel" model="ir.ui.view"> <field 
+		name="name">Stock Inventory Report Excel</field> <field name="model">dev.stock.inventory.excel</field> 
+		<field name="arch" type="xml"> <form string="Stock Ledger Excel"> <group> 
+		<field filename="file_name" name="excel_file" readonly="1" /> <field invisible="1" 
+		name="file_name" /> </group> <footer> <button class="btn-default" special="cancel" 
+		string="Cancel" /> </footer> </form> </field> </record> <record id="action_dev_stock_inventory_excel" 
+		model="ir.actions.act_window"> <field name="name">Stock Inventory Report 
+		Excel</field> <field name="res_model">dev.stock.inventory.excel</field> <field 
+		name="view_type">form</field> <field name="view_mode">form</field> <field 
+		name="view_id" ref="view_dev_stock_inventory_excel" /> <field name="target">new</field> 
+		</record> -->
+</odoo>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="OrderReturnBarcodePopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput product-info-popup order_return_popup">
+                <p class="title">
+                    <t t-if="widget.pos.is_return">
+                        Return Products
+                    </t>
+                    <t t-if="widget.pos.is_exchange">
+                        Exchange Products
+                    </t>
+                </p>
+
+                <div class="button complete_return">
+                    <t t-if="widget.pos.is_return">
+                        Complete Return (Void)
+                    </t>
+                    <t t-if="widget.pos.is_exchange">
+                        Complete Exchange
+                    </t>
+                </div>
+                <div class="main_div_pos_session">
+                    <table class="return_product_table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Qty.</th>
+                                <t t-if="widget.pos.is_return">
+                                    <th class="return_exchange_popup_header" style="display: none;">
+                                        Return Qty.
+                                    </th>
+                                </t>
+                                <t t-if="widget.pos.is_exchange">
+                                    <th class="return_exchange_popup_header">
+                                        Exchange Qty.
+                                    </th>
+                                </t>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="widget.lines">
+                                <t t-foreach="widget.lines" t-as="each_line">
+                                    <t t-if="widget.pos.is_return">
+                                        <t t-if="each_line.product_id[0]">
+                                            <t t-if="!widget.pos.db.get_product_by_id(each_line.product_id[0]).sh_product_non_returnable">
+                                                <t t-if="(each_line.qty - each_line.sh_return_qty) != 0 and (each_line.qty - each_line.sh_return_qty) > 0">
+                                                    <tr t-att-data-order_id="widget.order" class="return_data_line" t-att-data-line_id="each_line.id">
+                                                        <td>
+                                                            <t t-esc="each_line.product_id[1]" />
+                                                        </td>
+                                                        <td>
+                                                            <t t-esc="(each_line.qty - each_line.sh_return_qty)" />
+                                                        </td>
+                                                        <td style="display: none;">
+                                                            <input type="text" class="return_qty_input" />
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="!widget.pos.db.get_product_by_id(each_line.product_id).sh_product_non_returnable">
+                                                <t t-if="(each_line.qty - each_line.sh_return_qty) != 0 and (each_line.qty - each_line.sh_return_qty) > 0">
+                                                    <tr t-att-data-order_id="widget.order" class="return_data_line" t-att-data-line_id="each_line.sh_line_id">
+                                                        <td>
+                                                            <t t-esc="widget.pos.db.get_product_by_id(each_line.product_id).display_name" />
+                                                        </td>
+                                                        <td>
+                                                            <t t-esc="(each_line.qty - each_line.sh_return_qty)" />
+                                                        </td>
+                                                        <td style="display: none;">
+                                                            <input type="text" class="return_qty_input" />
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </t>
+                                    <t t-if="widget.pos.is_exchange">
+                                        <t t-if="each_line.product_id[0]">
+                                            <t t-if="!widget.pos.db.get_product_by_id(each_line.product_id[0]).sh_product_non_exchangeable">
+                                                <t t-if="(each_line.qty - each_line.sh_return_qty) != 0 and (each_line.qty - each_line.sh_return_qty) > 0">
+                                                    <tr t-att-data-order_id="widget.order" class="return_data_line" t-att-data-line_id="each_line.id">
+                                                        <td>
+                                                            <t t-esc="each_line.product_id[1]" />
+                                                        </td>
+                                                        <td>
+                                                            <t t-esc="(each_line.qty - each_line.sh_return_qty)" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="return_qty_input" />
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="!widget.pos.db.get_product_by_id(each_line.product_id).sh_product_non_exchangeable">
+                                                <t t-if="(each_line.qty - each_line.sh_return_qty) != 0 and (each_line.qty - each_line.sh_return_qty) > 0">
+                                                    <tr t-att-data-order_id="widget.order" class="return_data_line" t-att-data-line_id="each_line.sh_line_id">
+                                                        <td>
+                                                            <t t-esc="widget.pos.db.get_product_by_id(each_line.product_id).display_name" />
+                                                        </td>
+                                                        <td>
+                                                            <t t-esc="(each_line.qty - each_line.sh_return_qty)" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="return_qty_input" />
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="footer order_return_barcode_footer">
+                    <div class="sh_radio_btn_div">
+                        <div class="sh_return_exchange_radio">
+                            <t t-if="widget.pos.config.sh_allow_return and widget.pos.config.sh_allow_exchange">
+                                <input type="radio" id="return_radio" name="return_exchange_radio" checked="true" />
+                                <label for="return_radio"> Return</label>
+                                <input type="radio" id="exchange_radio" name="return_exchange_radio" />
+                                <label for="exchange_radio"> Exchange</label>
+                            </t>
+                            <t t-if="widget.pos.config.sh_allow_return and !widget.pos.config.sh_allow_exchange">
+                                <input type="radio" id="return_radio" name="return_exchange_radio" checked="true" />
+                                <label for="return_radio"> Return</label>
+                            </t>
+                            <t t-if="!widget.pos.config.sh_allow_return and widget.pos.config.sh_allow_exchange">
+                                <input type="radio" id="exchange_radio" name="return_exchange_radio" checked="true" />
+                                <label for="exchange_radio"> Exchange</label>
+                            </t>
+
+                            <br />
+                        </div>
+                        <!-- <t t-if="widget.pos.is_exchange"> -->
+                        <div class="sh_same_product_checkbox" style="display: none;">
+                            <input type="checkbox" id="exchange_checkbox" />
+                            <label for="exchange_same_checkbox"> Exchange With Same Products</label>
+                            <br />
+                        </div>
+                        <!-- </t> -->
+                    </div>
+                    <t t-if="widget.pos.is_return">
+                        <div class="button confirm" style="display: none;">
+                            Return
+                        </div>
+                    </t>
+                    <t t-if="widget.pos.is_exchange">
+                        <div class="button confirm">
+                            Exchange
+                        </div>
+                    </t>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

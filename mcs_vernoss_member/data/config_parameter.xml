@@ -1,0 +1,20 @@
+<odoo>
+    <data noupdate="1">
+
+        <record id="mcs_vernoss_base_url" model="ir.config_parameter">
+            <field name="key">vernoss_base_url</field>
+            <field name="value">http://128.199.201.196:8283</field>
+        </record>
+
+        <record id="mcs_vernoss_access_token" model="ir.config_parameter">
+            <field name="key">vernoss_access_token</field>
+            <field name="value">eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2ZXJub3NzIiwic3ViIjoiU0FSSUQiLCJpYXQiOjE2MzM1MzUxMjMsImV4cCI6MTY2NDk4OTIwMCwianRpIjoiMjU2M2JjZDgtZGZiOC00YjM2LWI0MzQtYWE1OTFkMDVlZjZhIn0.kQ96TeZ1JMvZYMbFWUGJM5bxCEo3M-jXSzZyMnnzTNU</field>
+        </record>
+
+        <record id="mcs_vernoss_api_key" model="ir.config_parameter">
+            <field name="key">vernoss_api_key</field>
+            <field name="value">bbbc61f4-206b-48c3-a606-2ff634936efb</field>
+        </record>
+
+    </data>
+</odoo>

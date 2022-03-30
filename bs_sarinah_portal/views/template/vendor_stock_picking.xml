@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="bs_sarinah_portal.vendor_stock_picking_list" name="Vendor Stock Picking List">
+    <t t-call="portal.portal_layout">
+      <t t-set="breadcrumbs_searchbar" t-value="True"/>
+      <t t-call="portal.portal_searchbar">
+        <t t-set="title">Vendor Delivery Orders</t>
+      </t>
+      <div class="pull-right">
+        <button role="button" class="btn btn-primary btn-sm mb8 create_picking_vp" t-att-value="operation_type" href="#">
+          <i class="fa fa-plus-square-o"/> Register new delivery order
+        </button>
+      </div>
+      <t t-if="not picking_ids">
+        <p>There are currently no delivery order found by your criteria.</p>
+      </t>
+      <t t-if="picking_ids" t-call="portal.portal_table">
+        <thead>
+          <tr class="active">
+            <th>Reference</th>
+            <th>Location</th>
+            <th>Internal Reference</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <t t-foreach="picking_ids" t-as="p">
+          <tr t-att-class="'inactive_row' if p.state == 'validate' else ''">
+            <td>
+              <a t-attf-href="/my/delivery_orders/#{p.id}?#{keep_query()}">
+                <t t-esc="p.name"/>
+              </a>
+            </td>
+            <td>
+              <t t-esc="p.vendor_location_id.name"/>
+            </td>
+            <td>
+              <t t-esc="p.vendor_reference"/>
+            </td>
+            <td>
+              <t t-if="p.state == 'draft'">
+                Draft
+              </t>
+              <t t-if="p.state == 'validate'">
+                Validated
+              </t>
+            </td>
+          </tr>
+        </t>
+      </t>
+    </t>
+  </template>
+
+    <template id="bs_sarinah_portal.vendor_stock_picking_detail" name="Vendor Stock Picking Detail"
+              inherit_id="portal.portal_sidebar" primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <div class="row mt16">
+                <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-12 col-lg flex-lg-grow-0'"/>
+                    <t t-set="entries">
+                        <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                            <li class="list-group-item flex-grow-1" style="white-space: nowrap;">
+                              <div t-if="picking.state == 'draft'" class="alert alert-info mb-0" role="alert">
+                                  State:
+                                <strong>
+                                  <i class="fa fa-sticky-note"/>
+                                  Draft
+                                </strong>
+                              </div>
+                              <div t-if="picking.state == 'validate'" class="alert alert-success mb-0" role="alert">
+                                  State:
+                                <strong>
+                                  <i class="fa fa-check-circle"/>
+                                  Validated
+                                </strong>
+                              </div>
+                            </li>
+                            <li t-if="picking.state != 'validate'" class="list-group-item flex-grow-1">
+                              <a role="button" class="btn btn-primary btn-block mb8 edit_picking_vp no_wrap_vendor"
+                                t-att-id="picking.id" href="#" >
+                                    <i class="fa fa-edit"/> Update delivery order
+                                </a>
+                                <!-- <a role="button" class="btn btn-primary btn-block mb8 create_picking_vp no_wrap_vendor" href="#" > -->
+                                <!--     <i class="fa fa-plus-square-o"/> Register new delivery order -->
+                                <!-- </a> -->
+                            </li>
+                            <li t-if="picking.state != 'validate'" class="list-group-item flex-grow-1">
+                              <a role="button" class="btn btn-info btn-block mb8 print_picking_vp no_wrap_vendor"
+                                t-attf-href="/report/pdf/bs_sarinah_portal.vendor_stock_picking_report/#{picking.id}" target="_blank">
+                                    <i class="fa fa-print"/> Print delivery order
+                                </a>
+                              <a role="button" class="btn btn-danger btn-block mb8 delete_picking_vp no_wrap_vendor"
+                                t-att-id="picking.id" t-att-data-name="picking.name" href="#" >
+                                    <i class="fa fa-times"/> Delete delivery order
+                                </a>
+                            </li>
+                        </ul>
+                    </t>
+                </t>
+                <div id="quote_content" class="col-12 col-lg justify-content-end">
+                    <div t-attf-class="card #{'pb-5' if report_type == 'html' else ''}">
+                        <div t-if="success" class="alert alert-success alert-dismissable d-print-none" role="status">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">&amp;times;</button>
+                            <strong>Thank You!</strong><br/>
+                            <span t-esc="success"/>
+                         </div>
+                        <div t-if="error" class="alert alert-danger alert-dismissable d-print-none" role="alert" >
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">&amp;times;</button>
+                            <span t-esc="error"/>
+                        </div>
+                        <div id="introduction" class="pb-2 pt-3 card-header bg-white}">
+                            <h2 class="my-0">
+                                <!-- [<span t-field="vendor_product.product_code"/>] -->
+                                <span t-field="picking.name"/>
+                                <!-- <t t-if="not vendor_product.active">
+                                    <span class="text-beta">Archived</span>
+                                </t> -->
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="informations">
+                                <ul class="list-group">
+                                  <li class="list-group-item" t-if="picking.vendor_reference">
+                                    Internal Reference:
+                                    <strong t-esc="picking.vendor_reference"/>
+                                  </li>
+                                  <li class="list-group-item" t-if="picking.vendor_location_id">
+                                    Location:
+                                    <strong t-esc="picking.vendor_location_id.name"/>
+                                  </li>
+                                </ul>
+                            </div>
+                            <section id="moves" style="page-break-inside: auto;" class="mt32">
+                                <h3 id="details">Moves</h3>
+                                <table class="table table-sm" id="moves_table">
+                                    <thead class="bg-100">
+                                        <tr>
+                                            <t t-set="colspan" t-value="5"/>
+                                            <th class="text-left">Product</th>
+                                            <th class="text-right">Quantity Delivered</th>
+                                            <th class="text-right">Quantity Received</th>
+                                            <th class="text-right">Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="moves_tbody">
+                                        <t t-foreach="picking.vendor_move_ids" t-as="move">
+                                            <tr>
+                                                <td id="product_col">
+                                                    <div t-field="move.vendor_product_variant_id" class="text-left"/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="move.quantity"/>
+                                                    <span t-field="move.product_uom_id"/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="move.quantity_received"/>
+                                                    <span t-field="move.product_uom_id"/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="move.balance"/>
+                                                    <span t-field="move.product_uom_id"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </section>
+                        </div>
+                    </div>
+                    <div id="sale_order_communication" class="mt-4">
+                        <h2>Communication</h2>
+                        <t t-call="portal.message_thread">
+                            <t t-set="object" t-value="picking"/>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,121 @@
+<odoo>
+   <data>
+      <template id="mcs_vendor_portal.test" name="My Document">
+         <t t-call="website.layout">
+            <div id="wrap">
+               <t t-if="website.user_id != user_id">
+                  <section class="s_text_block bg-gray-lighter" style="background-color: #ededed;">
+
+                     <div class="container">
+                        <div class="row">
+                           <div class="mt32 mb48 col-md-12" t-foreach="PartnerData" t-as="dt">
+                            <table width="100%">
+                              <tr>
+                                <td width="50%">
+                                    <div class="col-12 col-md col-lg-12">
+                                     <div class="o_portal_my_home">
+                                        <div class="oe_structure" id="oe_structure_portal_my_home_1"></div>
+                                        <h3 style="padding: 10px; background-color: #fff; border: 1px solid #dedede; border-radius: 3px;">Documents</h3>
+                                           <div class="o_portal_docs list-group">
+                                              <a t-attf-href="/product" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                                              <b> <i class="fa fa-caret-right"></i> Product </b>
+                                              </a>
+
+                                             <a class="list-group-item list-group-item-action d-flex align-items-center justify-content-between" href="/my/locations" title="My Locations">
+                                              <b> <i class="fa fa-caret-right"></i> My Locations </b>
+                                                 <!-- <span class="badge badge-secondary badge-pill">0</span> -->
+                                             </a>
+                           
+                                             <a class="list-group-item list-group-item-action d-flex align-items-center justify-content-between" href="/my/delivery_orders/incoming" title="Vendor Delivery Order">
+                                              <b>
+                                                <i class="fa fa-caret-right"></i> Vendor Delivery Order
+                                              </b>
+                                                 <!-- <span class="badge badge-secondary badge-pill">1</span> -->
+                                             </a>
+                           
+                                             <a class="list-group-item list-group-item-action d-flex align-items-center justify-content-between" href="/my/delivery_orders/outgoing" title="Vendor DO Return">
+                                              <b>
+                                                <i class="fa fa-caret-right"></i> Vendor DO Return
+                                              </b>
+                                             </a>
+                             
+                           
+                                             <a class="list-group-item list-group-item-action d-flex align-items-center justify-content-between" href="/my/low_stock_products" title="Low Stock Products">
+                                              <b>
+                                                <i class="fa fa-caret-right"></i> Low Stock Products
+                                              </b>
+                                             </a>
+                                         
+                                       
+                                             <a class="list-group-item list-group-item-action d-flex align-items-center justify-content-between" href="/my/sales_report" title="Sales Report">
+                                              <b>
+                                                <i class="fa fa-caret-right"></i> Sales Report
+                                              </b>
+                                             </a>
+                                         
+
+                                             
+                                         
+                                                 
+                                             <a class="list-group-item list-group-item-action d-flex align-items-center justify-content-between" href="/my/invoices" title="Invoices &amp; Bills">
+                                              <b>
+                                                <i class="fa fa-caret-right"></i> Invoices &amp; Bills
+                                              </b>
+                                             </a>
+                                         
+                                             
+                                                 
+                                             <a class="list-group-item list-group-item-action d-flex align-items-center justify-content-between" href="/my/rmas" title="RMA Orders">
+                                              <b>
+                                                <i class="fa fa-caret-right"></i> RMA Orders
+                                              </b>
+                                             </a>
+                                         
+                                             </div>
+                                     </div>
+                                  </div>
+                                </td>
+                                <td width="50%" style="vertical-align:top">
+                                  <div class="col-12 col-md col-lg-12">
+                                    <legend><b>PROFILE</b></legend>
+                                    <b><t t-esc="dt.name" /></b><br></br> 
+                                    <t t-esc="dt.street" /><br></br> 
+                                    <t t-esc="dt.city" /><br></br> 
+                                    <t t-esc="dt.zip" /><br></br> 
+                                    <i class="fa fa-envelope"></i> <t t-esc="dt.email" /><br></br> 
+                                    <i class="fa fa-phone"></i> <t t-esc="dt.phone" /><br></br> 
+                                    <t t-esc="dt.website" /><br></br> 
+                                    <hr></hr>
+                                    <a role="button" href="/my/account" class="btn btn-sm btn-link" style="background-color: #875a7b;
+    color: #fff;"><i class="fa fa-pencil"></i> Edit Profile</a>
+                                  </div>
+
+                                </td>
+
+                              </tr>
+                            </table>
+
+                              
+                              
+                           </div>
+                        </div>                                                                              
+                     </div>
+                  </section>
+               </t>
+              <t t-else="">
+                  <center>
+                      <img src="/mcs_vendor_portal/static/forbiden.png" width="80%"/>
+                  </center>
+              </t>
+            </div>
+            <link rel="stylesheet" href="/mcs_vendor_portal/static/src/js/bootstrap.css"/>
+            <link rel="stylesheet" href="/mcs_vendor_portal/static/src/js/dataTables.bootstrap4.min.css"/>
+            <script type="text/javascript" src="/mcs_vendor_portal/static/src/js/brt-jquery.js"></script>
+            <script type="text/javascript" src="/mcs_vendor_portal/static/src/js/dataTables.bootstrap4.min.js"></script>
+            <script type="text/javascript" src="/mcs_vendor_portal/static/src/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" src="/mcs_vendor_portal/static/src/js/datatables.min.js"></script>
+            <script type="text/javascript" src="/mcs_vendor_portal/static/src/js/mcs_survey.js"></script>
+         </t>
+      </template>
+   </data>
+</odoo>

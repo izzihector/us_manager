@@ -1,0 +1,2 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"bs_sarinah_department.access_valuation_layer_billing","Stock Valuation Layer Access for Group Billing: RU","stock_account.model_stock_valuation_layer","account.group_account_invoice",1,1,0,0

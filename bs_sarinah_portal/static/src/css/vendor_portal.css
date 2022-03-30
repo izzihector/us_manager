@@ -1,0 +1,21 @@
+body .modal.o_technical_modal .select2-container.form-control {
+  padding: 0;
+}
+body .modal.o_technical_modal .select2-container .select2-choice {
+  background-image: none;
+  height: auto;
+  line-height: 32px;
+}
+body .modal.o_technical_modal .select2-container .select2-arrow {
+  background: #fff;
+  background-image: none;
+}
+body .select2-drop-active {
+  border: 1px solid #d4d5d7;
+}
+body .modal.o_technical_modal a:not(.o_btn_preview) {
+  color: inherit;
+}
+body .select2-results .select2-highlighted {
+  background: #00A09D;
+}

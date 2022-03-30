@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data noupdate="0">
+    <!-- product.brand inherit form view -->
+    <record id="bs_sarinah_portal.product_brand_form_view" model="ir.ui.view">
+      <field name="name">product.brand.inherit.view.form</field>
+      <field name="model">product.brand</field>
+      <field name="inherit_id" ref="bi_product_brand.product_brand_form_view"/>
+      <field name="arch" type="xml">
+        <field name="tot_items" position="after">
+          <field name="consignment_margin"/>
+        </field>
+        <xpath expr="//page/field[@name='product_ids']/.." position="before">
+          <page string="Consignment margins" autofocus="autofocus">
+            <field name="margin_ids" context="{'default_brand_id': id}">
+              <tree editable="bottom">
+                <field name="category_id"/>
+                <field name="consignment_margin"/>
+              </tree>
+            </field>
+          </page>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

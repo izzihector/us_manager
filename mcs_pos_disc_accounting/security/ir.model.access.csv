@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mcs_pos_disc_accounting_mcs_pos_disc_accounting,mcs_pos_disc_accounting.mcs_pos_disc_accounting,model_mcs_pos_disc_accounting_mcs_pos_disc_accounting,base.group_user,1,1,1,1

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	
+		<!-- Add custom js for pos_bag_charges -->	    
+		<template id="assets_for_pos_bag_charges" inherit_id="point_of_sale.assets">
+			<xpath expr="." position="inside">
+				<script type="text/javascript" src="/pos_bag_charges/static/src/js/pos_bag_charges.js"/>
+			</xpath>
+		</template>
+		
+		
+			<!-- Add Many2one Bag Category Field in POS Config -->
+		<record id="inherit_view_pos_bag_charges_form" model="ir.ui.view">
+			<field name="name">inherit_pos_bag_charges_form</field>
+			<field name="model">pos.config</field>
+			<field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//div[3]" position="after">
+					<h2>POS Bag Charges </h2>
+					<div class="row mt16 o_settings_container" id="session_config">
+						<div id="bag" class="col-xs-12 col-md-6 o_setting_box">
+							<div class="o_setting_left_pane">
+								<field name="allow_bag_charges"/>
+							</div>
+							<div class="o_setting_right_pane">
+								<label for="allow_bag_charges" />
+							</div>
+						</div>
+						<div class="col-xs-12 col-md-6 o_setting_box"  attrs="{'invisible': [('allow_bag_charges' ,'=', False)]}">
+							<div class="o_setting_right_pane">
+								<label for="pos_bag_category_id"/>
+								<div class="text-muted">
+									Select Bag Category
+								</div>
+								<div class="content-group mt16">
+									<field name="pos_bag_category_id" attrs="{'required': [('allow_bag_charges', '!=', False)]}"/>
+								</div>
+							</div>
+						</div>
+					</div>			
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>
+
+					

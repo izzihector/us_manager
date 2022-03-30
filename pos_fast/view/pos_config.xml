@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="pos_config_remove_pos_cache_database">
+            <field name="name">pos.config.retail</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <group string="Big Datas">
+                        <group>
+                            <field name="big_datas_sync_backend"/>
+                        </group>
+                        <group>
+                            <button name="reinstall_database"
+                                        string="Install/Reinstall Database"
+                                        class="btn-danger"
+                                        type="object"
+                                        icon="fa-archive"
+                                        onclick="remove_pos_database()"
+                                >
+                                <script>
+                                    function remove_pos_database() {
+                                        localStorage.clear();
+                                        var database_template = this.odoo.session_info.db;
+                                        for (var i = 0; i &lt; 100; i++) {
+                                            indexedDB.deleteDatabase(database_template + '_' + i);
+                                            console.log('removed db: ' + database_template + '_' + i);
+                                        }
+                                    }
+                                </script>
+                            </button>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

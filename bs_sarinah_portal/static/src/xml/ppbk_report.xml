@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <t t-name="bs_sarinah_portal.ppbk_button">
+    <button type="button" class="btn btn-primary print-xlsx">PRINT (XLSX)</button>
+<!--    <button type="button" class="btn btn-primary" disabled="">PRINT UNFOLDED</button>-->
+  </t>
+</templates>

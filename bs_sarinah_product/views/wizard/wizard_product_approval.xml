@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_product.form_wizard_product_approval" model="ir.ui.view">
+      <field name="name">Wizard Product Approval Form View</field>
+      <field name="model">wizard.product.approval</field>
+      <field name="arch" type="xml">
+        <form string="Product Approval">
+          <group>
+            <group>
+              <field name="sale_ok"/>
+              <field name="available_in_pos"/>
+              <field name="is_published"/>
+            </group>
+          </group>
+          <footer>
+            <button name="action_confirm" type="object" string="Confirm" class="btn-primary"/>
+            <button string="Cancel" class="btn-secondary" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

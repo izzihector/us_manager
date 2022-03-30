@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="DiscountPopup">
+        <div class="modal-dialog" id="inbuilt_discount">
+            <div class="popup popup-textinput" style="height:400px !important">
+                <div class="title" style="height:3% !important;margin-bottom:0px;">
+                    <div>
+                        <p style="position: absolute;height: 27px;width: 420px;margin-top: -8px;">
+                            <t t-esc=" widget.options.title || 'Discount Rules' "/>
+                        </p>
+                        <t t-if="widget.pos.config.allow_custom_discount">
+                            <div class="button customize"
+                                 style="position: absolute;margin-left: 385px;height: 41px;margin-top: -16px;width: 130px;background: transparent;color: #333;text-decoration: underline;border: none;">
+                                <span class="fa-stack fa-stack-discount">
+                                    <u>M</u>anual
+                                </span>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <div style="height:70%;overflow-y: auto;">
+                    <div class="_popup_body">
+                        <t t-if="!widget.pos.all_discounts.length">
+                            <div style="margin:12%">
+                                No discount is available for current POS Session, please add discount from configuration or create a custom discount.
+                            </div>
+                        </t>
+                        <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                            <table class='selection scrollable-y touch-scrollable discount-list'>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody class='discount-list-contents'>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="discount_error" style="background:#ffa566;height:22px;display:none">
+                       <span style="color:brown"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i >Please select a
+                           discount</span>
+                </div>
+                <div class="footer">
+                    <div class="button remove_disc">
+                        <u>R</u>emove Disc
+                    </div>
+                    <div class="button apply">
+                        <u>S</u>elected Item
+                    </div>
+                    <div class="button apply_complete_order">
+                        <u>A</u>ll Items
+                    </div>
+                    <div class="button cancel">
+                        Ca<u>n</u>cel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="DiscountLine">
+        <tr class='product_discount' t-att-id='discount.id'>
+            <t t-if="discount and discount.name">
+                <td><t t-esc='discount.name' /></td>
+            </t>
+            <t t-if="discount and discount.name">
+                <td><t t-esc='discount.start_date' /></td>
+            </t>
+            <t t-if="discount and discount.name">
+                <td><t t-esc='discount.end_date' /></td>
+            </t>
+        </tr>
+    </t>
+
+    <t t-name="ErrorPopup">
+        <div class="modal-dialog" id="discount_error_popup">
+            <div class="popup popup-textinput" style="height: 203px !important;width: 580px !important;margin-top: 188px;">
+                <p class="title"><t t-esc=" widget.options.title || '' " /></p>
+                <p class="body"><t t-esc=" widget.options.body || '' " /></p>
+                <div class="footer">
+                    <div class="button" id="password_ok_button">
+                        OK
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="CustomDiscountPopup">
+        <div class="modal-dialog" id="custom_discount_popup">
+            <div class="popup popup-textinput tbl_custom_discont" style="height:350px !important" id="tbl_custom_discont">
+                <p class="title"><t t-esc=" widget.options.title || 'Manual Discount' " /></p>
+                <div class="body">
+                    <div>
+                        <select id="custom_discount_type" name="discount" class="tbl_custom_discont">
+                            <option value='percent' selected="selected">Percent</option>
+                            <option value='fixed'>Fixed</option>
+                        </select>
+                        <input id="discount" placeholder="Percent" name="discount" class="tbl_custom_discont"/>
+                        <input id="discount_fix" placeholder="Fixed" name="discount"
+                               class="tbl_custom_discont hidden-field"/>
+
+                        <textarea id="reason" class="tbl_custom_discont" rows="2" cols="26" name="custom_discount_reason"
+                                  form="usrform" placeholder="Reason"/>
+                    </div>
+                    <div id="error_div" style="display:none;">
+                       <span id="customize_error" style="color:brown"/>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button current_product">
+                        <u>S</u>elected Item
+                    </div>
+                    <div class="button whole_order">
+                        <u>A</u>ll Items
+                    </div>
+                    <div class="button custom_cancel">
+                        <u>B</u>ack
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-extend="Orderline">
+        <t t-jquery='ul.info-list' t-operation='replace'>
+            <ul class="info-list">
+                <t t-if="line.get_quantity_str() !== '1' || line.selected ">
+                    <li class="info">
+                        <em>
+                            <t t-esc="line.get_quantity_str()"/>
+                        </em>
+                        <t t-esc="line.get_unit().name"/>
+                        at
+                        <t t-esc="widget.format_currency(line.get_unit_display_price(),'Product Price')"/>
+                        /
+                        <t t-esc="line.get_unit().name"/>
+                    </li>
+                </t>
+                <t t-if="line.get_discount_str() !== '0'">
+                    <span style="color: #6ec89b;">With a <t t-esc="line.get_discount_str()"/>% discount</span>
+                </t>
+                <div id='custom_discount_reason' style='font-weight:bold;'>
+                    <t t-esc="line.get_custom_discount_reason()"/>
+                </div>
+                <t t-if="line.get_fix_discount()">
+                    <span style="color: #6ec89b;">With a <t t-esc="widget.format_currency(line.get_fix_discount())"/>
+                        fixed discount</span>
+                </t>
+            </ul>
+        </t>
+    </t>
+
+    <t t-extend="PosTicket">
+        <t t-jquery=".receipt-orderlines tr td:nth-child(1)" t-operation="append">
+            <t t-if="orderline.get_custom_discount_reason()!=''">
+                <div class="pos-disc-font">
+                    <t t-esc="orderline.get_custom_discount_reason()"/>
+                </div>
+            </t>
+            <t t-if="orderline.get_fix_discount()">
+                <div class="pos-disc-font">
+                    With a <t t-esc="widget.format_currency(orderline.get_fix_discount())"/>
+                    fixed discount
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="Chrome">
+        <t t-jquery="div.pos-branding" t-operation="replace">
+            <img class="pos-logo" src="/aspl_pos_discount/static/description/icon.png" alt="Logo"/>
+        </t>
+    </t>
+
+</templates>

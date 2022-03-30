@@ -1,0 +1,116 @@
+.o_form_view .o_group.o_inner_group > tbody > tr > td.o_td_label {
+    text-align: right;
+}
+
+.o_form_label {
+    min-height: 29px !important;
+}
+
+.o_invisible_modifier {
+    height: 0px !important;
+}
+
+.o_list_view tfoot {
+    color: #4c4c4c !important;
+    font-weight: 900 !important;
+}
+
+@media (max-width: 767.98px) {
+    .o_form_view .o_group.o_inner_group > tbody > tr > td.o_td_label {
+        text-align: left;
+    }
+}
+
+.plotlyjsicon {
+    visibility: hidden;
+    display: none;
+}
+
+.plotly-container {
+    display: block;
+    text-align: center;
+}
+
+.plotly-container-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+/* .plotly-container-btn {
+    display: block;
+    width: 100%;
+    background: none;
+    color: inherit;
+    border: none; 
+    padding: 0 !important;
+    font: inherit;
+    cursor: pointer;
+}
+
+.plotly-container-btn:active {
+    display: block;
+    width: 100%;
+    background: none;
+    color: inherit;
+    border: none; 
+    padding: 0 !important;
+    font: inherit;
+    cursor: pointer;
+} */
+
+.pvtUnused {
+    font-size: 10px;
+    /* max-width: 240px; */
+}
+
+.pvtHorizList li {
+    display: inline-block !important;
+}
+
+.pvtUnused li {
+    display: inline-block !important;
+}
+    
+.pvtUi {
+    width: 100%;
+}
+
+/* .pvtUiCell {
+    display: none;
+} */
+
+/* .plot-container {
+    margin-left: -75% !important;
+} */
+
+.plot-container > .svg-container {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pvtTable {
+    width: 100%;
+}
+
+@media print {
+    .plotly-container-btn {
+        display: none;
+    }
+
+    .pvtAxisContainer {
+        display: none;
+    }
+    
+    .pvtUnused {
+        display: none;
+    }
+    
+    .pvtUi {
+        width: 100%;
+    }
+
+    .pvtTable {
+        width: 100%;
+    }
+}

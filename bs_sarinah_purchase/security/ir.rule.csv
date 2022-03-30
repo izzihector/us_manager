@@ -1,0 +1,3 @@
+"id","name","model_id:id","domain_force","global","groups:id","perm_read","perm_write","perm_create","perm_unlink"
+"bs_sarinah_purchase.rule_replenish_tim_pengadaan","Replenish Request Rule for Tim Pengadaan: CRUD","base_rmdoo.model_replenish_request","['|',('create_uid', '=', user.id),('pengadaan_user_ids', 'child_of', user.id)]",,"bs_sarinah_purchase.group_purchase_request_tim_pengadaan",1,1,1,1
+"bs_sarinah_purchase.rule_replenish_tim_lelang","Replenish Request Rule for Tim Lelang: CRUD","base_rmdoo.model_replenish_request","['|',('create_uid', '=', user.id),('lelang_user_ids', 'child_of', user.id)]",,"bs_sarinah_purchase.group_purchase_request_tim_lelang",1,1,1,1

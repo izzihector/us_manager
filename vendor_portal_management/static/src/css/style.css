@@ -1,0 +1,19 @@
+.inactive_row {
+    background-color: #CCCCCC;
+}
+.chekbox_input {
+    width: 50% !important;
+}
+.hidden_input {
+    display: none;
+}
+.no_wrap_vendor {
+	white-space: nowrap;
+}
+
+.modal.o_technical_modal .modal-content {
+    border-radius: 0;
+    background-color: #F7F7F7;
+    width: 110% !important;
+    margin-left: -43px !important;
+}

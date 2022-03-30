@@ -1,0 +1,10 @@
+Under consideration
+===================
+* the option of automatic import matching vendor products with ours (a) by code; (b) by name [key doubt: performace]
+* the button to link vendor product for our product? --> the algo to find ones by code or name
+* notifications by stocks and prices updates [key doubt: performace; possible to organize queue]
+* [individual add-on] API to provide suppliers with direct access
+* the button on product 'Find the best vendor' --> wizard with max delay, checkbox 'needed registered stocks'
+* [individual add-on] 'Check vendor stocks in Sales orders'
+* page 'my orders', 'my rfqs' + and possible functionality of decline / accept. It might be not correct, since
+  products in RFQ are our products, not vendor products

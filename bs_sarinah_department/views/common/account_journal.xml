@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_department.form_account_journal" model="ir.ui.view">
+      <field name="name">Account Journal Form View</field>
+      <field name="model">account.journal</field>
+      <field name="inherit_id" ref="account.view_account_journal_form"/>
+      <field name="arch" type="xml">
+        <field name="company_id" position="before">
+          <field name="department_id" options="{'no_open':True, 'no_create': True}"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

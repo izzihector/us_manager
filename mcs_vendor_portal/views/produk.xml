@@ -1,0 +1,153 @@
+<odoo>
+   <data>
+      <template id="mcs_vendor_portal.product_list" name="Vendor Products">
+         <t t-call="website.layout">
+            <div id="wrap">
+               <t t-if="website.user_id != user_id">
+                  <style>
+                     div.dataTables_wrapper div.dataTables_filter {
+                        text-align: right;
+                        margin-left: 72%;
+                     }
+                     div.dataTables_wrapper div.dataTables_filter {
+                        text-align: right;
+                        <!-- width: 41%; -->
+                     }
+                     .paginate_button 
+                     {
+                        padding: 6px;
+                        border: 1px solid #dedede;
+                        margin: 3px;
+                        border-radius: 4px;
+                     }
+                     .active 
+                     {
+                        padding: 6px;
+                        border: 1px solid #dedede;
+                        margin: 3px;
+                        border-radius: 4px;
+                        background-color: #875A7B;
+                        color:#fff !important;
+                     }
+                  </style>
+                  <section class="s_text_block bg-gray-lighter" style="background-color: #ededed;">
+                     <div class="container">
+                        <div class="row">
+                           <div class="mt32 mb48 col-md-12" t-foreach="DTaObject" t-as="dt">
+                              <div class="panel panel-primary o_panel s_panel"  >
+                                 <div class="panel-heading" style="background-color: #fff; padding: 21px; border-radius: 15px;">
+                                    <h3 class="panel-title">PRODUCT VENDOR</h3>
+                                    List Data Product Vendor <b><t t-esc="dt.name"/></b>
+                                 </div>
+                                 <div class="panel-body" style="margin-top: 21px; background-color: #fff;border: 1px solid #dedede;  border-radius: 16px; ">
+                                    <div class="table-responsive" style="padding: 26px;  ">
+                                       <a role="button" class="btn btn-primary btn-sm mb8 create_product_vp" href="#" >
+                                          <i class="fa fa-plus-square-o"/> Tambah Produk
+                                       </a>
+
+                                       <script>
+                                              $(document).ready(function() {
+                                                  $('#example').DataTable();
+                                              } );
+                                       </script>
+                                       <div style="width:100% !important;">
+                                          <table cellspacing="0" class="table table-hover table-striped" id="survey_bidgasbin_tbl" style="width:100% !important;font-size: 14px;">
+                                             <thead>
+                                                <tr>
+                                                   <th width="5%">No</th>
+                                                   <!-- <th width="5%">Code</th> -->
+                                                   <th width="85%">Product</th>
+                                                   <th width="5%">Action</th>
+                                                </tr>
+                                             </thead>
+                                             <tbody>
+                                                <t t-set="no_urut" t-value="1" />
+                                                <t t-foreach="request.env['vendor.product'].search([('partner_id', '=', dt.id)])" t-as="prod">
+                                                   <tr>
+                                                      <td> <t t-esc="no_urut" />. </td>
+                                                      <!-- <td> <t t-esc="prod.product_code" /> </td> -->
+                                                      <td>
+                                                         <a t-attf-href="/my/products/#{prod.id}?#{keep_query()}">
+                                                            <b><t t-esc="prod.product_name" /></b>
+                                                         </a>
+                                                         <table width="100%">
+                                                            <t t-foreach="request.env['product.supplierinfo'].sudo().search([('vendor_product_id', '=', prod.id)])" t-as="var">
+                                                               <tr>
+                                                                  <td>
+                                                                     <t t-foreach='var.vendor_product_variant_id' t-as='a'>
+                                                                        <t t-foreach='a.attribute_value_ids' t-as='x'>
+                                                                           <t t-esc="a.product_code"/>
+                                                                        </t>
+                                                                     </t>
+                                                                  </td>
+                                                                  <td>
+                                                                     <t t-foreach='var.vendor_product_variant_id' t-as='a'>
+                                                                        <t t-foreach='a.attribute_value_ids' t-as='x'>
+                                                                           <t t-foreach="request.env['product.attribute'].search([('id', '=', x.attribute_id.id)])" t-as="d">
+                                                                              <i style="border: 1px solid #dedede; padding: 5px; border-radius: 8px;  background-color: #875a7b; color: #fff;"><t t-esc="d.name"/> : <t t-esc="x.name"/> </i>
+                                                                           </t>
+                                                                        </t>
+                                                                     </t>
+                                                                  </td>
+                                                                  <td>
+                                                                     Retail Price : 
+                                                                     Rp. <t t-esc="'{0:,.0f}'.format(var.portal_input_price)"/>
+                                                                  </td>
+                                                                   <td>
+                                                                     <t t-foreach='var.vendor_product_variant_id' t-as='a'>
+                                                                        <t t-foreach='a.variant_price_ids' t-as='f'>
+                                                                           <!-- <t t-foreach="request.env['product.supplierinfo'].search([('vendor_product_id', '=', prod.id)])" t-as="var"> -->
+                                                                           <t t-esc="f.id"/>
+                                                                           Vendor Price : Rp. 
+                                                                           <!-- <t t-esc="'{0:,.0f}'.format(f.price)"/> -->
+                                                                           <t t-esc="'{0:,.0f}'.format(f.price_after_margin)"/>
+                                                                        </t>
+                                                                     </t>
+                                                                     <!-- <t t-esc="var.price_after_margin" /> -->
+                                                                    <!--  <t t-set="result" t-value="(var.margin_percentage)\(var.portal_input_price)"/>
+                                                                     <t t-esc="result" /> -->
+                                                                  </td>
+                                                               </tr>
+                                                            </t>
+                                                         </table>
+                                                      </td>
+                                                      <td>
+                                                         <a t-attf-href="/my/products/#{prod.id}?#{keep_query()}">
+                                                            <b>
+                                                               <i class="fa fa-search"></i> Detail
+                                                            </b>
+                                                         </a>
+                                                      </td>
+                                                   </tr>
+
+                                                      <t t-set="no_urut" t-value="no_urut+1" />
+                                                </t>
+                                                    
+                                             </tbody>
+                                          </table>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>                  
+                           </div>
+                        </div>                                                                              
+                     </div>
+                  </section>
+               </t>
+              <t t-else="">
+                  <center>
+                      <img src="/mcs_vendor_portal/static/forbiden.png" width="80%"/>
+                  </center>
+              </t>
+            </div>
+            <link rel="stylesheet" href="/mcs_vendor_portal/static/src/js/bootstrap.css"/>
+            <link rel="stylesheet" href="/mcs_vendor_portal/static/src/js/dataTables.bootstrap4.min.css"/>
+            <script type="text/javascript" src="/mcs_vendor_portal/static/src/js/brt-jquery.js"></script>
+            <script type="text/javascript" src="/mcs_vendor_portal/static/src/js/dataTables.bootstrap4.min.js"></script>
+            <script type="text/javascript" src="/mcs_vendor_portal/static/src/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" src="/mcs_vendor_portal/static/src/js/datatables.min.js"></script>
+            <script type="text/javascript" src="/mcs_vendor_portal/static/src/js/mcs_survey.js"></script>
+         </t>
+      </template>
+   </data>
+</odoo>

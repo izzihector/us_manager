@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_department.form_hr_department" model="ir.ui.view">
+      <field name="name">HR Department Form View Inherit</field>
+      <field name="model">hr.department</field>
+      <field name="inherit_id" ref="hr.view_department_form"/>
+      <field name="arch" type="xml">
+        <group position="after">
+          <group name="account_property" string=" Account Properties" groups="account.group_account_user">
+            <group>
+              <field name="account_income_depart_id"
+                     domain="[('internal_type','=','other'),('deprecated', '=', False)]"/>
+              <field name="account_discount_depart_id"
+                     domain="[('internal_type','=','other'),('deprecated', '=', False)]"/>
+              <field name="account_expense_depart_id"
+                     domain="[('internal_type','=','other'),('deprecated', '=', False)]"/>
+            </group>
+            <group>
+              <field name="account_income_consign_id"
+                     domain="[('internal_type','=','other'),('deprecated', '=', False)]"/>
+              <field name="account_discount_consign_id"
+                     domain="[('internal_type','=','other'),('deprecated', '=', False)]"/>
+              <field name="account_expense_consign_id"
+                     domain="[('internal_type','=','other'),('deprecated', '=', False)]"/>
+              <field name="account_stock_output_consign_id"
+                     domain="[('deprecated', '=', False)]"/>
+            </group>
+          </group>
+        </group>
+      </field>
+    </record>
+  </data>
+</odoo>

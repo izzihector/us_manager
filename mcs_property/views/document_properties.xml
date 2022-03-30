@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mcs_property_document_properties_form" model="ir.ui.view">
+            <field name="name">mcs_property.document_properties.form</field>
+            <field name="model">mcs_property.document_properties</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false" delete="false" duplicate="false">
+                    <sheet>
+                        <group>
+                            <field name="res_partner_id" invisible="True"/>
+                            <field name="document_category_id"/>
+                            <field name="file" filename="file_name"/>
+                            <field name="file_name" invisible="True"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_document_properties_tree" model="ir.ui.view">
+            <field name="name">mcs_property.document_properties.tree</field>
+            <field name="model">mcs_property.document_properties</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="file" filename="file_name" widget="binary"/>
+                    <field name="file_name" invisible="True"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

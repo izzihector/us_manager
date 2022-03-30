@@ -1,0 +1,19 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"bs_sarinah_portal.access_vendor_stock_picking_crud_group_portal","Vendor Stock Picking Access for Group Portal: CRUD","bs_sarinah_portal.model_vendor_stock_picking",base.group_portal,1,1,1,1
+"bs_sarinah_portal.access_vendor_stock_picking_crud_group_purchase_user","Vendor Stock Picking Access for Group Purchase User: CRUD","bs_sarinah_portal.model_vendor_stock_picking",purchase.group_purchase_user,1,1,1,1
+"bs_sarinah_portal.access_vendor_stock_picking_crud_group_internal_user","Vendor Stock Picking Access for Group Internal User: CRUD","bs_sarinah_portal.model_vendor_stock_picking",base.group_user,1,0,0,0
+"bs_sarinah_portal.access_vendor_stock_move_crud_group_portal","Vendor Stock Move Access for Group Portal: CRUD","bs_sarinah_portal.model_vendor_stock_move",base.group_portal,1,1,1,1
+"bs_sarinah_portal.access_vendor_stock_move_crud_group_purchase_user","Vendor Stock Move Access for Group Purchase User: CRUD","bs_sarinah_portal.model_vendor_stock_move",purchase.group_purchase_user,1,1,1,1
+"bs_sarinah_portal.access_vendor_stock_move_crud_group_internal_user","Vendor Stock Move Access for Group Internal User: CRUD","bs_sarinah_portal.model_vendor_stock_move",base.group_user,1,0,0,0
+"bs_sarinah_portal.access_vendor_product_attr_line_crud_group_internal_user","Vendor Stock Product Attribute Line Access for Group Internal User: CRUD","bs_sarinah_portal.model_vendor_product_attr_line",base.group_user,1,1,1,1
+"bs_sarinah_portal.access_vendor_product_attr_crud_group_internal_user","Vendor Stock Product Attribute Access for Group Internal User: CRUD","bs_sarinah_portal.model_vendor_product_attr",base.group_user,1,1,1,1
+"bs_sarinah_portal.access_vendor_product_attr_value_crud_group_internal_user","Vendor Stock Product Attribute Value Access for Group Internal User: CRUD","bs_sarinah_portal.model_vendor_product_attr_value",base.group_user,1,1,1,1
+"bs_sarinah_portal.access_vendor_product_variant_value_crud_group_internal_user","Vendor Stock Product Variant Access for Group Internal User: CRUD","bs_sarinah_portal.model_vendor_product_variant",base.group_user,1,1,1,1
+"bs_sarinah_portal.access_vendor_product_image_crud_group_internal_user","Vendor Stock Product Image Access for Group Internal User: CRUD","bs_sarinah_portal.model_vendor_product_image",base.group_user,1,1,1,1
+"bs_sarinah_portal.access_vendor_product_attr_line_crud_group_portal","Vendor Stock Product Attribute Line Access for Group Portal: CRUD","bs_sarinah_portal.model_vendor_product_attr_line",base.group_portal,1,1,1,1
+"bs_sarinah_portal.access_product_attribute_crud_group_portal","Product Attribute Access for Group Portal: CRUD","product.model_product_attribute",base.group_portal,1,0,0,0
+"bs_sarinah_portal.access_product_attribute_value_crud_group_portal","Product Attribute Value Access for Group Portal: CRUD","product.model_product_attribute_value",base.group_portal,1,0,0,0
+"bs_sarinah_portal.access_vendor_product_variant_value_crud_group_portal","Vendor Stock Product Variant Access for Group Portal: CRUD","bs_sarinah_portal.model_vendor_product_variant",base.group_portal,1,1,1,1
+"bs_sarinah_portal.access_vendor_product_image_crud_group_portal","Vendor Stock Product Image Access for Group Portal: CRUD","bs_sarinah_portal.model_vendor_product_image",base.group_portal,1,1,1,1
+"bs_sarinah_portal.access_product_brand_margin_crud_group_internal_user","Stock Product Brand Margin Access for Group Internal User: CRUD","bs_sarinah_portal.model_product_brand_margin",base.group_user,1,1,1,1
+"bs_sarinah_portal.access_account_tax_user_portal","Account Tax Access for Group Portal User: Read","account.model_account_tax",base.group_portal,1,0,0,0

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+     <t t-extend="OrderScreenWidget">
+         <t t-jquery="div.order_set_width" t-operation="append">
+            <span class="button cashlez">
+                Cashlez  <i class="fa fa-angle-double-right"/>
+            </span>
+        </t>
+    </t>
+
+</templates>

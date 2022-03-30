@@ -1,0 +1,23 @@
+.pos .pos-bc-sanner-button{
+  display: inline-block;
+  border-left: 1px solid #292929;
+  font-size: .6em;
+}
+
+.pos .camera-scanner-screen #camera-video-scanner,
+.pos .camera-scanner-screen #camera-video-scanner video,
+.pos .camera-scanner-screen #camera-video-scanner canvas{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.pos .camera-scanner-screen #sourceSelectPanel{
+  display: inline-block;
+  padding: 20px 0;
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <report
+      id="bs_sarinah_portal.action_xlsx_ppbk_report"
+      model="ppbk.report"
+      string="PPBK Report (XLSX)"
+      report_type="xlsx"
+      name="bs_sarinah_portal.xlsx_ppbk_report"
+      file="ppbk_report"
+      attachment_use="False"
+    />
+   <report
+      id="bs_sarinah_portal.action_xlsx_sale_report"
+      model="sale.report"
+      string="Sale Report (XLSX)"
+      report_type="xlsx"
+      name="bs_sarinah_portal.xlsx_sale_report"
+      file="sale_report"
+      attachment_use="False"
+    />
+  </data>
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Sequences for GRN -->
+        <record id="seq_grn" model="ir.sequence">
+            <field name="name">GRN</field>
+            <field name="code">account.grn</field>
+            <field name="prefix">GRN%(y)s%(month)s%(day)s-</field>
+            <field name="padding">4</field>
+            <field name="reset">monthly</field>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+        </record>
+        <!-- Sequences for GDN -->
+        <!-- <record id="seq_gdn" model="ir.sequence">
+            <field name="name">GDN</field>
+            <field name="code">account.gdn</field>
+            <field name="prefix">GDN%(y)s%(month)s%(day)s-</field>
+            <field name="padding">4</field>
+            <field name="reset">monthly</field>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+        </record> -->
+        <!-- Sequences for Replenish Request -->
+        <record id="seq_replenish_request" model="ir.sequence">
+            <field name="name">PR</field>
+            <field name="code">replenish.request</field>
+            <field name="prefix">PR%(y)s%(month)s%(day)s-</field>
+            <field name="padding">4</field>
+            <field name="reset">monthly</field>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+        </record>
+        <!-- Sequences for Product Variant Internal Reference -->
+        <record id="seq_product_variant" model="ir.sequence">
+            <field name="name">PD</field>
+            <field name="code">product.variant</field>
+            <field name="prefix">PD%(y)s%(month)s%(day)s-</field>
+            <field name="padding">4</field>
+            <field name="reset">monthly</field>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+        </record>
+        <record id="seq_internal_ean13" model="ir.sequence">
+            <field name="name">Internal EAN13 Without Vericode</field>
+            <field name="code">internal.ean13</field>
+            <field name="padding">12</field>
+            <field eval="False" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+        </record>
+    </data>
+</odoo>

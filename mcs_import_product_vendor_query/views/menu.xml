@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<odoo>
+    <menuitem name="MCS | Import Product + Price Vendor"
+              id="menu_vendor_product_import_mcs"
+              parent="vendor_product_management.menu_vendor_products_root"
+              sequence="80"
+              action="action_import_produk_vendor"
+    />
+
+
+
+    <record id="vendor_product_import_do_wizard_view" model="ir.ui.view">
+        <field name="name">MCS | Import Vendor Products + Price + DO</field>
+        <field name="model">mcs.import.produk.vendor.do</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="partner_id" />
+                        <field name="nama_file" filename="file_name"/>
+                        <field name="file_name" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button name="act_import_data_do"
+                                string="Import Data"
+                                type="object"
+                                class="oe_highlight"
+                        />
+                        <button name="act_clear_data"
+                                string="Clear Catche"
+                                type="object"
+                                class="oe_highlight"
+                        />
+                        <button string="Cancel"
+                                class="oe_link"
+                                special="cancel"
+                        />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_import_produk_do_vendor" model="ir.actions.act_window">
+         <field name="name">MCS | Import Vendor Products + Price + DO</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="res_model">mcs.import.produk.vendor.do</field>
+         <field name="target">new</field>
+         <field name="view_mode">form</field>
+    </record>
+    
+     <menuitem name="MCS | Import Product + Price + DO Vendor"
+              id="menu_vendor_product_do_import_mcs_do"
+              parent="vendor_product_management.menu_vendor_products_root"
+              sequence="81"
+              action="action_import_produk_do_vendor"
+    />
+
+</odoo>

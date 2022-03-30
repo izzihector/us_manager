@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_portal.wizard_vendor_stock_picking" model="ir.ui.view">
+      <field name="name">Wizard Vendor Stock Picking Form View</field>
+      <field name="model">wizard.vendor.stock.picking</field>
+      <field name="arch" type="xml">
+        <form string="Fill and Validate">
+            <field name="picking_id" invisible="1"/>
+            <field name="is_received_empty" invisible="1"/>
+            <field name="is_fully_received" invisible="1"/>
+            <div attrs="{'invisible': [('is_received_empty', '=', False)]}">
+              All received quantity is empty.
+              <strong>Receive All and Validate</strong> action will receive all quantity delivered and validate this transfer.
+            </div>
+            <div attrs="{'invisible': ['|',('is_received_empty', '=', True),('is_fully_received', '=', True)]}">
+              Some lines has different received quantity and delivered quantity.
+              <ul>
+                <li>
+                  <strong>Validate</strong> action will leave received quantity as is
+                  and validate this transfer.
+                </li>
+                <li>
+                  <strong>Receive All and Validate</strong> action will receive all delivered quantity
+                  and validate this transfer.
+                </li>
+              </ul>
+            </div>
+            <div attrs="{'invisible': [('is_fully_received', '=', False)]}">
+                Are you sure to validate this transfer?
+            </div>
+          <footer>
+            <button name="validate" type="object" string="Validate" class="oe_highlight"
+                    attrs="{'invisible': [('is_received_empty', '==', True)]}"/>
+            <button name="fill_and_validate" type="object" string="Receive All and Validate" class="oe_highlight"
+                    attrs="{'invisible': [('is_fully_received', '==', True)]}"/>
+            <button string="Cancel" class="btn-secondary" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

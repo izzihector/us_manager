@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- POS config form -->
+    <record id="pos_config_view_form_inherit_mobile_bcscanner" model="ir.ui.view">
+        <field name="name">pos_mobile_barcode_scanner_config</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <sheet position="inside">
+                <div class="col-12 col-lg-6 o_setting_box"
+                     id="iface_pos_bcscanner_enable" >
+                    <div class="o_setting_left_pane">
+                        <field name="iface_pos_bcscanner_enable"/>
+                    </div>
+                </div>
+            </sheet>
+        </field>
+    </record>
+</odoo>

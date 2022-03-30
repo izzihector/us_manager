@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_mobile_ui/static/src/js/screens.js"></script>
+            <link rel="stylesheet" href="/pos_mobile_ui/static/src/css/pos.css" />
+        </xpath>
+    </template>
+
+    <template id="posindex" inherit_id="point_of_sale.index">
+        <xpath expr="//meta[@name='viewport']" position="attributes">
+            <attribute name="content">width=device-width, initial-scale=1, user-scalable=no</attribute>
+        </xpath>
+    </template>	
+</odoo>

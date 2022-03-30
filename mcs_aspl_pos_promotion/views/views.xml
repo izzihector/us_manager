@@ -1,0 +1,79 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="inherit_promotion_view_id">
+            <field name="name">Inherit pos.promotion form</field>
+            <field name="model">pos.promotion</field>
+            <field name="inherit_id" ref="aspl_pos_promotion.promotion_view_id"/>
+            <field name="arch" type="xml">
+                <field name="promotion_code" position="after">
+                    <field name="available_in_pos" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                    <field name="vendor_id" domain="[('is_merchant', '=', True)]"
+                           options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                    <field name="vendor_shared"/>
+                    <field name="sarinah_shared" force_save="1"/>
+                </field>
+
+                <field name="product_id_qty" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                    <attribute name="widget">many2many_tags</attribute>
+                    <attribute name="domain">[('owner_id', '=?', vendor_id)]</attribute>
+                </field>
+                <field name="product_id_amt" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                    <attribute name="domain">[('owner_id', '=?', vendor_id)]</attribute>
+                </field>
+
+                <field name="product_x_id" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                    <attribute name="domain">[('owner_id', '=?', parent.vendor_id)]</attribute>
+                </field>
+
+                <field name="product_y_id" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                    <attribute name="domain">[('owner_id', '=?', parent.vendor_id)]</attribute>
+                </field>
+
+                <field name="product_id_dis" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                    <attribute name="domain">[('owner_id', '=?', parent.vendor_id)]</attribute>
+                </field>
+
+                <field name="product_ids" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                    <attribute name="domain">[('owner_id', '=?', parent.vendor_id)]</attribute>
+                </field>
+
+                <field name="parent_product_ids" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                    <attribute name="domain">[('owner_id', '=?', vendor_id)]</attribute>
+                </field>
+
+
+            </field>
+        </record>
+
+
+        <record id="pos_config_inherit_view" model="ir.ui.view">
+            <field name="name">pos.config.inherit.view</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <div id="category_reference" position="before">
+                   <div class="col-12 col-lg-6 o_setting_box" id="config_promotion_ids">
+                       <div class="o_setting_right_pane">
+                           <label string="Select Promotions" for="promotion_ids"/>
+                           <div class="text-muted">
+	                            Select Promotions
+                           </div>
+                           <div class="content-group mt16">
+                               <field name="promotion_ids" colspan="4" nolabel="1" widget="many2many_tags"/>
+                           </div>
+                        </div>
+                   </div>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

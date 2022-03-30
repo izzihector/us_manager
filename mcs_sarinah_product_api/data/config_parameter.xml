@@ -1,0 +1,8 @@
+<odoo>
+    <data noupdate="1">
+        <record id="mcs_sarinah_key_product" model="ir.config_parameter">
+            <field name="key">mcs_sarinah_key</field>
+            <field name="value">U0PXgh7cu7xeQUJOY8sjYfOLx7P1me</field>
+        </record>
+    </data>
+</odoo>

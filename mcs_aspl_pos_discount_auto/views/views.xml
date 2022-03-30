@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="mcs_aspl_pos_discount_auto.list">
+      <field name="name">mcs_aspl_pos_discount_auto list</field>
+      <field name="model">mcs_aspl_pos_discount_auto.mcs_aspl_pos_discount_auto</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="mcs_aspl_pos_discount_auto.action_window">
+      <field name="name">mcs_aspl_pos_discount_auto window</field>
+      <field name="res_model">mcs_aspl_pos_discount_auto.mcs_aspl_pos_discount_auto</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="mcs_aspl_pos_discount_auto.action_server">
+      <field name="name">mcs_aspl_pos_discount_auto server</field>
+      <field name="model_id" ref="model_mcs_aspl_pos_discount_auto_mcs_aspl_pos_discount_auto"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="mcs_aspl_pos_discount_auto" id="mcs_aspl_pos_discount_auto.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="mcs_aspl_pos_discount_auto.menu_1" parent="mcs_aspl_pos_discount_auto.menu_root"/>
+    <menuitem name="Menu 2" id="mcs_aspl_pos_discount_auto.menu_2" parent="mcs_aspl_pos_discount_auto.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="mcs_aspl_pos_discount_auto.menu_1_list" parent="mcs_aspl_pos_discount_auto.menu_1"
+              action="mcs_aspl_pos_discount_auto.action_window"/>
+    <menuitem name="Server to list" id="mcs_aspl_pos_discount_auto" parent="mcs_aspl_pos_discount_auto.menu_2"
+              action="mcs_aspl_pos_discount_auto.action_server"/>
+-->
+  </data>
+</odoo>

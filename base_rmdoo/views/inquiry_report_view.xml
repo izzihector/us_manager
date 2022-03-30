@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_inquiry_report_form" model="ir.ui.view">
+            <field name="name">Inquiry Report</field>
+            <field name="model">inquiry.report</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form create="0" delete="0" string="Inquiry Report">
+                    <header>
+                        <field invisible="1" name="pivot_on"/>
+                        <button class="btn-primary"
+                            help="Add to Dashboard" icon="fa-tachometer"
+                            name="add_to_dash" string="" type="object"/>
+                        <button class="btn-primary" help="Direct Print"
+                            icon="fa-print" name="do_print" string="" type="object"/>
+                        <!-- <button name="report_print" string="Print" type="object"/> -->
+                        <!-- <button name="do_done" string="Done" type="object"/> -->
+                        <button class="oe_read_only" name="do_reload"
+                            string="Edit" type="object"/>
+                        <button name="list_view"
+                            string="List Detail View" type="object"/>
+                        <field name="defocus"/>
+                    </header>
+                    <h1 style="text-align:center;">
+                        <field class="oe_inline" name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <label for="date_from" string="Date"/>
+                            <div>
+                                <field class="oe_inline"
+                                    name="date_from"/>
+                                -
+                                <field
+                                    class="oe_inline" name="date_to"/>
+                            </div>
+                            <field groups="base.group_no_one"
+                                name="create_uids"
+                                options="{'no_create_edit':1}" widget="many2many_tags"/>
+                            <field groups="base.group_no_one"
+                                name="write_uids"
+                                options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page
+                            attrs="{'invisible':[('pivot_on','=',False)]}" string="Pivot">
+                            <field name="pivot"/>
+                        </page>
+                        <page string="Detail">
+                            <field name="lines"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record id="action_inquiry_report" model="ir.actions.act_window">
+            <field name="name">Inquiry Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inquiry.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('base_rmdoo.view_inquiry_report_form')})]" name="view_ids"/>
+        </record>
+        <!-- START:Pivot Product -->
+        <record id="view_product_inquiry_form" model="ir.ui.view">
+            <field name="name">Pivot Product</field>
+            <field name="model">product.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Pivot Product</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_name"/>
+                        <field name="categ_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="type"/>
+                    </group>
+                    <group>
+                        <field name="negative_location"/>
+                        <field name="negative_on_hand"/>
+                        <field name="negative_forecast"/>
+                        <field name="is_value"/>
+                    </group>
+                </xpath>
+                <xpath expr="//page[field[@name='lines']]" position="replace"/>
+                <xpath expr="//page[field[@name='pivot']]" position="before">
+                    <page string="Detail">
+                        <field name="lines">
+                            <tree
+                                decoration-danger="type=='product' and virtual_available&lt;0" decoration-info="type!='product' or virtual_available>=0">
+                                <field name="default_code"/>
+                                <field name="name"/>
+<!--                                <field-->
+<!--                                    groups="product.group_product_variant"-->
+<!--                                    name="attribute_value_ids" widget="many2many_tags"/>-->
+                                <field name="orderpoint_ids" widget="many2many_tags"/>
+                                <field name="location_ids" widget="many2many_tags"/>
+                                <field name="negative_location_ids" widget="many2many_tags"/>
+                                <field name="lst_price"/>
+                                <field name="standard_price"/>
+                                <field invisible="1" name="type"/>
+                                <field
+                                    invisible="not context.get('pricelist',False)" name="price"/>
+                                <field
+                                    attrs="{'invisible':[('type', '!=', 'product')]}" name="qty_available"/>
+                                <field
+                                    attrs="{'invisible':[('type', '!=', 'product')]}" name="virtual_available"/>
+                                <field
+                                    attrs="{'invisible':[('type', '!=', 'product')]}" name="qty_reserved"/>
+                                <field groups="uom.group_uom"
+                                    name="uom_id" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="barcode"/>
+                                <field invisible="1" name="product_tmpl_id"/>
+                                <field invisible="1" name="active"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_product_inquiry" model="ir.actions.act_window">
+            <field name="name">Pivot Product</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_product_inquiry_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_product_inquiry"
+            id="menu_stock_report_pivot_item" name="Products"
+            parent="menu_stock_report_pivot" sequence="10"/>
+        <!-- END:Pivot Product -->
+        <!-- START: Stock Moves Inquiries -->
+        <record id="view_stock_move_inquiry_form" model="ir.ui.view">
+            <field name="name">Stock Moves Inquiries</field>
+            <field name="model">stock.move.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Stock Moves Inquiries</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_stock_move_inquiry" model="ir.actions.act_window">
+            <field name="name">Stock Moves Inquiries</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.move.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_stock_move_inquiry_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_stock_move_inquiry"
+            id="menu_report_stock_moves_inquiries"
+            name="Stock Moves Inquiries" parent="stock_debug" sequence="139"/>
+        <!-- END: Stock Moves Inquiries -->
+        <!-- START: Product Moves Inquiries -->
+        <record id="view_product_move_inquiry_form" model="ir.ui.view">
+            <field name="name">Product Moves Inquiries</field>
+            <field name="model">product.move.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Product Moves Inquiries</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_product_move_inquiry" model="ir.actions.act_window">
+            <field name="name">Product Moves Inquiries</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.move.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_product_move_inquiry_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_product_move_inquiry"
+            id="menu_report_stock_product_inquiries"
+            name="Product Moves Inquiries" parent="stock_debug" sequence="141"/>
+        <!-- END: Product Moves Inquiries -->
+        <!-- START: Pivot Inventory Stock -->
+        <!-- <record id="view_inventory_inquiry_form" model="ir.ui.view">
+            <field name="name">Pivot Inventory Stocks</field>
+            <field name="model">inventory.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Pivot Product</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_inventory_inquiry" model="ir.actions.act_window">
+            <field name="name">Pivot Inventory Stocks</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inventory.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_inventory_inquiry_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_inventory_inquiry"
+            id="menu_stock_report_pivot_inventory"
+            name="Inventory Stock" parent="menu_stock_report_pivot" sequence="11"/> -->
+        <!-- END: Pivot Inventory Stock -->
+        <!-- START: Pivot Transfers -->
+        <!-- <record id="view_transfers_inquiry_form" model="ir.ui.view">
+            <field name="name">Pivot Transfers</field>
+            <field name="model">transfer.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Pivot Transfers</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_transfers_inquiry" model="ir.actions.act_window">
+            <field name="name">Pivot Transfers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">transfer.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_transfers_inquiry_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_transfers_inquiry"
+            id="menu_stock_report_pivot_transfer" name="Transfer"
+            parent="menu_stock_report_pivot" sequence="12"/> -->
+        <!-- END: Pivot Transfers -->
+        <!-- START: GP by Invetory Transfer -->
+        <!-- <record id="view_gpinvtrf_inquiry_form" model="ir.ui.view"> <field 
+            name="name">GP by Invetory Transfer</field> <field name="model">gpinvtrf.inquiry</field> 
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/> <field 
+            name="mode">primary</field> <field name="arch" type="xml"> <xpath expr="//form" 
+            position="attributes"> <attribute name="string">GP by Invetory Transfer</attribute> 
+            </xpath> </field> </record> <record id="action_gpinvtrf_inquiry" model="ir.actions.act_window"> 
+            <field name="name">GP by Invetory Transfer</field> <field name="type">ir.actions.act_window</field> 
+            <field name="res_model">gpinvtrf.inquiry</field> <field name="view_mode">form</field> 
+            <field name="target">inline</field> <field eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_gpinvtrf_inquiry_form')})]" 
+            name="view_ids"/> </record> <menuitem action="action_gpinvtrf_inquiry" id="menu_stock_report_gp_inventory_transfer" 
+            name="GP by Inventory Transfer" parent="stock_debug" sequence="149"/> -->
+        <!-- END: GP by Invetory Transfer -->
+        <!-- START: Inventory Cost & Pricelist -->
+        <!-- <record id="view_inventory_cost_pricelist_inquiry" model="ir.ui.view">
+            <field name="name">Inventory Cost and Pricelist</field>
+            <field name="model">costpricelist.inquiry</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                    <h1 style="text-align:center;">
+                        <field class="oe_inline" name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <label for="date_from" string="Date"/>
+                            <div>
+                                <field
+                                    name="date_from"/>
+                                -
+                                <field name="date_to"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="product_ids"
+                                options="{'no_create_edit':1}" widget="many2many_tags"/>
+                            <field name="location_ids"
+                                options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    </sheet>
+                    <footer>
+                        <button class="oe_highlight"
+                            name="print_pricelist" string="Print" type="object"/>
+                        <button special="cancel" string="Cancel" type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_inventory_cost_pricelist_inquiry" model="ir.actions.act_window">
+            <field name="name">Inventory Cost and Pricelist</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">costpricelist.inquiry</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_inventory_cost_pricelist_inquiry"/>
+            <field name="target">new</field>
+        </record>
+        <menuitem action="action_inventory_cost_pricelist_inquiry"
+            id="menu_stock_report_cost_price_list"
+            name="Inventory Cost and Price List"
+            parent="stock.menu_warehouse_report" sequence="143"/> -->
+        <!-- END: Inventory Cost & Pricelist -->
+        <!-- START: Pivot Sales -->
+        <!-- <record id="view_inventory_sales_inquiry_form"
+            model="ir.ui.view">
+            <field name="name">Pivot Sales Stocks</field>
+            <field name="model">inventory.sale.inquiry</field>
+            <field name="inherit_id"
+                ref="base_rmdoo.view_inquiry_report_form" />
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Pivot Product</attribute>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="location_id"/>
+                        <field name="product_id"/>
+                        <field name="partner_id"/>
+                        <field name="product_qty"/>
+                        <field name="price_unit"/>
+                        <field name="price_subtotal" sum="Total Tax Included" widget="monetary"/>
+                        <field name="pricelist_id"/>
+                        <field name="state_id"/>
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_inventory_sales_inquiry"
+            model="ir.actions.act_window">
+            <field name="name">Pivot Sales Stocks</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inventory.sale.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_inventory_sales_inquiry_form')})]"
+                name="view_ids" />
+        </record>
+        <menuitem action="action_inventory_sales_inquiry"
+            id="menu_stock_report_pivot_sales" name="Sales"
+            parent="menu_stock_report_pivot" sequence="13" /> -->
+        <!-- END: Pivot Sales -->
+        <!-- START: Inventory Stock -->
+        <record id="view_dev_stock_inventory_form" model="ir.ui.view">
+            <field name="name">Stock Inventory</field>
+            <field name="model">dev.stock.inventory</field>
+            <field name="inherit_id" ref="dev_stock_inventory_report.view_dev_stock_inventory_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace"/>
+                <xpath expr="//form/group[1]" position="before">
+                    <header>
+                        <button class="oe_read_only" name="do_reload"
+                            string="Edit" type="object"/>
+                        <button class="btn-primary" icon="fa-magic"
+                            name="generate" string="" type="object"/>
+                        <button
+                            attrs="{'invisible':[('is_result','=',False)]}"
+                            class="btn-primary" icon="fa-print"
+                            name="print_pdf" string="" type="object"/>
+                        <field name="defocus"/>
+                    </header>
+                    <h1 style="text-align:center;">Stock Inventory</h1>
+                </xpath>
+                <xpath expr="//form/group[last()]" position="after">
+                    <notebook>
+                        <page string="Result">
+                            <field name="result"/>
+                            <field invisible="1" name="is_result"/>
+                        </page>
+                    </notebook>
+                </xpath>
+                <field name="is_group_by_category" position="replace"/>
+                <field name="is_zero" position="replace"/>
+            </field>
+        </record>
+        <record
+            id="dev_stock_inventory_report.action_dev_stock_inventory_info" model="ir.actions.act_window">
+            <field name="name">Inventory Stock</field>
+            <field name="target">inline</field>
+        </record>
+        <menuitem
+            action="dev_stock_inventory_report.action_dev_stock_inventory_info"
+            id="dev_stock_inventory_report.menu_dev_stock_inventory_stock"
+            name="Inventory Stock" parent="stock.menu_warehouse_report" sequence="101"/>
+        <!-- END: Inventory Stock -->
+        <!-- START: Inventory Stock - Internal Transfers -->
+        <record id="view_stock_report_pivot_internal_transfer_form" model="ir.ui.view">
+            <field name="name">Internal Transfer</field>
+            <field name="model">inventoryinternaltransfer.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Internal Transfer</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="location_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="location_dest_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="state"/>
+                    </group>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="date" widget="date"/>
+                        <field name="product_id"/>
+                        <field name="location_id"/>
+                        <field name="location_dest_id"/>
+                        <field name="product_uom_qty"/>
+                        <field name="reserved_availability"/>
+                        <field name="quantity_done"/>
+                        <field name="product_uom" string="UoM"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_stock_report_pivot_internal_transfer" model="ir.actions.act_window">
+            <field name="name">Internal Transfer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inventoryinternaltransfer.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_stock_report_pivot_internal_transfer_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_stock_report_pivot_internal_transfer"
+            id="menu_stock_report_pivot_transfers"
+            name="Internal Transfers" parent="menu_stock_report_pivot" sequence="15"/>
+        <!-- END: Inventory Stock - Internal Transfers -->
+        <!-- START: Inventory Stock - Warehouse Transfers -->
+        <record id="view_stock_report_pivot_wh_transfer_form" model="ir.ui.view">
+            <field name="name">Warehouse Transfer</field>
+            <field name="model">inventorywhtransfer.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Warehouse Transfer</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="partner_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="location_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="location_dest_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="state"/>
+                    </group>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="date" widget="date"/>
+                        <field name="product_id"/>
+                        <field name="partner_id"/>
+                        <field name="location_id"/>
+                        <field name="location_dest_id"/>
+                        <field name="product_uom_qty"/>
+                        <field name="reserved_availability"/>
+                        <field name="quantity_done"/>
+                        <field name="product_uom" string="UoM"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_stock_report_pivot_wh_transfer" model="ir.actions.act_window">
+            <field name="name">Warehouse Transfer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inventorywhtransfer.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_stock_report_pivot_wh_transfer_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_stock_report_pivot_wh_transfer"
+            id="menu_stock_report_pivot_wh_transfers"
+            name="Warehouse Transfers" parent="menu_stock_report_pivot" sequence="16"/>
+        <!-- END: Inventory Stock - Warehouse Transfers -->
+        <!-- START: Inventory Stock - Adjustment Stock -->
+        <record id="view_stock_report_pivot_adjustment_form" model="ir.ui.view">
+            <field name="name">Adjustment</field>
+            <field name="model">inventoryadjustment.inquiry</field>
+            <field name="inherit_id" ref="base_rmdoo.view_inquiry_report_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="string">Adjustment</attribute>
+                </xpath>
+                <xpath expr="//group[label[@for='date_from']]" position="after">
+                    <group>
+                        <field name="product_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="location_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="location_dest_ids"
+                            options="{'no_create_edit':1}" widget="many2many_tags"/>
+                        <field name="state"/>
+                        <field name="is_value"/>
+                    </group>
+                </xpath>
+                <field name="lines" position="inside">
+                    <tree>
+                        <field name="date" widget="date"/>
+                        <field name="product_id"/>
+                        <field name="location_id"/>
+                        <field name="location_dest_id"/>
+                        <field name="product_uom_qty"/>
+                        <field name="reserved_availability"/>
+                        <field name="quantity_done"/>
+                        <field name="product_uom" string="UoM"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
+            </field>
+        </record>
+        <record id="action_stock_report_pivot_adjustment" model="ir.actions.act_window">
+            <field name="name">Adjustment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inventoryadjustment.inquiry</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field
+                eval="[(5,0,0),(0,0,{'view_mode':'form','view_id':ref('view_stock_report_pivot_adjustment_form')})]" name="view_ids"/>
+        </record>
+        <menuitem action="action_stock_report_pivot_adjustment"
+            id="menu_stock_report_pivot_adjustment" name="Adjustment"
+            parent="menu_stock_report_pivot" sequence="18"/>
+        <!-- END: Inventory Stock - Adjustment Stock -->
+        <!-- START: Inventory Stock - Adjustment Stock -->
+        <!-- <menuitem action="action_no_content"
+            id="menu_stock_report_pivot_scrap"
+            name="Scraped" parent="menu_stock_report_pivot" sequence="19"/> -->
+        <!-- END: Inventory Stock - Adjustment Stock -->
+    </data>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <menuitem id="bs_sarinah_portal.menu_item_product_supplierinfo"
+              name="Price"
+              parent="vendor_product_management.menu_vendor_products_root"
+              action="bs_sarinah_portal.action_window_product_supplierinfo"
+              sequence="11"/>
+    <menuitem id="bs_sarinah_portal.menu_item_vendor_stock_picking"
+              name="Vendor DO"
+              parent="vendor_product_management.menu_vendor_products_root"
+              action="bs_sarinah_portal.action_window_vendor_stock_picking"
+              sequence="35"/>
+    <menuitem id="bs_sarinah_portal.menu_item_vendor_stock_picking_out"
+              name="Vendor DO Return"
+              parent="vendor_product_management.menu_vendor_products_root"
+              action="bs_sarinah_portal.action_window_vendor_stock_picking_out"
+              sequence="36"/>
+    <menuitem id="bs_sarinah_portal.menu_item_ppbk_report"
+              name="PPBK Report"
+              parent="point_of_sale.menu_point_rep"
+              action="bs_sarinah_portal.action_menu_ppbk_report"
+              sequence="10"/>
+    <!-- <menuitem id="bs_sarinah_portal.menu_item_vendor_product_attribute" -->
+    <!--           name="Vendor Product Attributes" -->
+    <!--           parent="purchase.menu_product_in_config_purchase" -->
+    <!--           action="bs_sarinah_portal.action_window_vendor_product_attribute" -->
+    <!--           sequence="3"/> -->
+    <record id="vendor_product_management.menu_vendor_inventory" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+  </data>
+</odoo>

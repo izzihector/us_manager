@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_portal.form_res_partner" model="ir.ui.view">
+      <field name="name">Res Partner Form View</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//group[@name='purchase']" position="inside">
+<!--          <field name="portal_product_categ_id"/>-->
+          <field name="consignment_margin"/>
+          <field name="is_price_include_consignment_margin"/>
+        </xpath>
+        <xpath expr="//page[@name='sales_purchases']" position="after">
+          <page name="brands" string="Brands">
+            <field name="brand_ids" context="{'m2m_tags': True}">
+              <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="tot_items"/>
+                <field name="consignment_margin" string="Consignment Margin"/>
+                <field name="margin_ids" string="Consignment Margin (by Categories)"
+                  widget="many2many_tags"/>
+              </tree>
+            </field>
+          </page>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

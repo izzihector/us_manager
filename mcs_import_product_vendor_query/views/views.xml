@@ -1,0 +1,21 @@
+<odoo>
+  <data>
+    <record id="view_vendor_product_validate_wizard" model="ir.ui.view">
+      <field name="name">view_vendor_product_validate</field>
+      <field name="model">vendor.product.validate.wizard</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form string="Validate Product">
+          <sheet>
+            <h4>Validate product?</h4>
+            <footer>
+              <button name="action_validate" string="Validate Product" type="object" class="oe_highlight" />
+            </footer>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <act_window id="action_vendor_product_validate_new" name="Validate Product" binding_model="vendor.product" binding_views="form" res_model="vendor.product.validate.wizard" view_mode="form" target="new" />
+  </data>
+</odoo>

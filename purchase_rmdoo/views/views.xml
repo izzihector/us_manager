@@ -1,0 +1,386 @@
+<odoo>
+    <!-- <data noupdate="0">
+        <record id="product.decimal_discount" model="decimal.precision">
+            <field name="name">Discount</field>
+            <field name="digits">10</field>
+        </record>
+    </data> -->
+    <data>
+        <!--START:Testing Report Py3o -->
+        <!-- <record id="report_purchase_outstanding" model="ir.actions.report.xml">
+            <field name="report_type">py3o</field>
+            <field name="py3o_filetype">odt</field>
+            <field name="module">purchase_rmdoo</field>
+            <field name="py3o_template_fallback">reports/report_outstanding.odt</field>
+        </record>  -->
+        <!-- END -->
+        <record id="purchase_rmdoo_filter_outstanding" model="ir.ui.view">
+            <field name="name">puchase_rmdoo.filter.outstanding</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="arch" type="xml">
+                <search>
+                    <filter
+                        domain="['|',('outstanding_stock','!=',False),('outstanding_account','!=',False)]"
+                        name="filter_outstanding" string="Outstanding"/>
+                    <filter domain="[('outstanding_stock','!=',False)]"
+                        name="filter_outstanding_receive" string="Outstanding Receive"/>
+                    <filter
+                        domain="[('outstanding_account','!=',False)]"
+                        name="filter_outstanding_invoice" string="Outstanding Invoice"/>
+                    <!-- <filter name="filter_per_vendor" string="By Vendor" context="{'group_by':'partner_id'}"/> -->
+                </search>
+            </field>
+        </record>
+        <record id="res_config_settings_view_form_purchase" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.purchase</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="purchase.res_config_settings_view_form_purchase"/>
+            <field name="arch" type="xml">
+                <xpath
+                    expr="//div[@name='purchase_setting_container']/div[2]" position="after">
+                    <div
+                        attrs="{'invisible': [('po_order_approval', '=', False)]}" class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="po_order_approval_triple"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="po_order_approval_triple"/>
+                            <span
+                                aria-label="Values set here are company-specific."
+                                class="fa fa-lg fa-building-o"
+                                groups="base.group_multi_company"
+                                role="img" title="Values set here are company-specific."/>
+                            <div class="text-muted">
+                                    Tim Pengadaan must approve orders
+                                </div>
+                            <div
+                                attrs="{'invisible': [('po_order_approval_triple', '=', False)]}" class="content-group">
+                                <div class="row mt16">
+                                    <label
+                                    class="col-lg-4 o_light_label" for="po_triple_validation_amount"/>
+                                    <field name="po_triple_validation_amount"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath
+                    expr="//div[@name='purchase_setting_container']/div[4]" position="after">
+                    <div
+                        attrs="{'invisible': ['|',('po_order_approval', '=', False),('po_order_approval_triple', '=', False)]}" class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="po_order_approval_quadruple"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="po_order_approval_quadruple"/>
+                            <span
+                                aria-label="Values set here are company-specific."
+                                class="fa fa-lg fa-building-o"
+                                groups="base.group_multi_company"
+                                role="img" title="Values set here are company-specific."/>
+                            <div class="text-muted">
+                                    Tim Lelang must approve orders
+                                </div>
+                            <div
+                                attrs="{'invisible': [('po_order_approval_quadruple', '=', False)]}" class="content-group">
+                                <div class="row mt16">
+                                    <label
+                                    class="col-lg-4 o_light_label" for="po_quadruple_validation_amount"/>
+                                    <field name="po_quadruple_validation_amount"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+<!--        <record id="purchase_order_line_form2" model="ir.ui.view">-->
+<!--            <field name="name">purchase_discount.order.line.form2</field>-->
+<!--            <field name="model">purchase.order.line</field>-->
+<!--            <field name="inherit_id" ref="purchase_discount.purchase_order_line_form2"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="discount" position="attributes">-->
+<!--                    <attribute name="groups">base.group_no_one</attribute>-->
+<!--                </field>-->
+<!--                <field name="taxes_id" position="attributes">-->
+<!--                    <attribute name="groups">base.group_no_one</attribute>-->
+<!--                </field>-->
+<!--                <field name="name" position="after">-->
+<!--                    <separator string="Discounts"/>-->
+<!--                    <field name="discounts">-->
+<!--                        <tree editable="bottom">-->
+<!--                            <field name="sequence" widget="handle"/>-->
+<!--                            <field name="discounts"/>-->
+<!--                        </tree>-->
+<!--                    </field>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+<!--        <record id="purchase_order_line_tree" model="ir.ui.view">-->
+<!--            <field name="name">purchase_discount.order.line.tree</field>-->
+<!--            <field name="model">purchase.order.line</field>-->
+<!--            <field name="inherit_id" ref="purchase_discount.purchase_order_line_tree"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="discount" position="attributes">-->
+<!--                    <attribute name="groups">base.group_no_one</attribute>-->
+<!--                </field>-->
+<!--                <field name="discount" position="before">-->
+<!--                    <field name="discounts">-->
+<!--                        <tree editable="bottom">-->
+<!--                            <field name="sequence" widget="handle"/>-->
+<!--                            <field name="discounts"/>-->
+<!--                        </tree>-->
+<!--                    </field>-->
+<!--                </field>-->
+<!--                &lt;!&ndash; <field name="price_subtotal" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </field>-->
+<!--                <field name="price_subtotal" position="before">-->
+<!--                    <field name="price_subtotal_before" widget="monetary"/>-->
+<!--                </field> &ndash;&gt;-->
+<!--            </field>-->
+<!--        </record>-->
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase_discount.purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase_discount.purchase_order_form"/>
+            <field name="arch" type="xml">
+<!--                <field name="amount_untaxed" position="before">-->
+<!--                    <field name="discounts"/>-->
+<!--                </field>-->
+<!--                <field name="amount_tax" position="before">-->
+<!--                    <field domain="[('type_tax_use', '=', 'purchase')]"-->
+<!--                        name="taxes_id" options="{'no_create': True}" widget="many2many_tags"/>-->
+<!--                </field>-->
+<!--                <label for="amount_total" position="before">-->
+<!--                    <button class="oe_link" name="update_price"-->
+<!--                        string="(Update)" type="object"/>-->
+<!--                </label>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='order_line']/tree/field[@name='taxes_id']" position="attributes">-->
+<!--                    <attribute name="groups">base.group_no_one</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='order_line']/form//field[@name='taxes_id']" position="attributes">-->
+<!--                    <attribute name="groups">base.group_no_one</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='order_line']/tree" position="attributes">-->
+<!--                    <attribute name="editable"/>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='order_line']/tree/field[@name='discount']" position="replace">-->
+<!--                    <field name="discount_display"/>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='order_line']/form//field[@name='discount']" position="replace">-->
+<!--                    <field name="discounts">-->
+<!--                        <tree editable="bottom">-->
+<!--                            <field name="sequence" widget="handle"/>-->
+<!--                            <field name="discounts"/>-->
+<!--                        </tree>-->
+<!--                    </field>-->
+<!--                </xpath>-->
+                <xpath expr="//page[1]" position="after">
+                    <page attrs="{'invisible':[('origin','=',False)]}"
+                        name="purchase_replenish_page" string="Request &amp; Reordering">
+                        <!-- <separator string="Purchase Request"/>
+                        <field name="replenish_request_ids"/> -->
+                        <separator string="Request"/>
+                        <field name="product_replenish_request_ids"/>
+                        <separator string="Reordering"/>
+                        <field name="orderpoint_ids"/>
+                    </page>
+                </xpath>
+                <button name="button_confirm" position="before">
+                    <button
+                        attrs="{'invisible':[('state','!=','draft')]}"
+                        name="button_split" string="Split Order" type="object"/>
+                </button>
+                <xpath
+                    expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                    <attribute name="string">UoM</attribute>
+                </xpath>
+                <page name="purchase_delivery_invoice" position="after">
+                    <page
+                        attrs="{'invisible':[('confirm_uid','=',False),('confirm2_uid','=',False),('confirm3_uid','=',False),('confirm4_uid','=',False)]}"
+                        name="purchase_approval_page" string="Approval">
+                        <group>
+                            <group>
+                                <field
+                                    attrs="{'invisible':[('confirm_uid','=',False)]}" name="confirm_uid"/>
+                                <field
+                                    attrs="{'invisible':[('confirm2_uid','=',False)]}" name="confirm2_uid"/>
+                                <field
+                                    attrs="{'invisible':[('confirm3_uid','=',False)]}" name="confirm3_uid"/>
+                                <field
+                                    attrs="{'invisible':[('confirm4_uid','=',False)]}" name="confirm4_uid"/>
+                            </group>
+                        </group>
+                    </page>
+                </page>
+                <!-- <xpath
+                    expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath
+                    expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="before">
+                    <field name="price_subtotal_before" widget="monetary"/>
+                </xpath> -->
+            </field>
+        </record>
+        <!-- Purchase Outstanding View, Action and Menu -->
+        <record id="purchase_outstanding_tree" model="ir.ui.view">
+            <field name="name">purchase_outstanding.tree</field>
+            <field name="model">purchase.order</field>
+            <!-- <field name="inherit_id" ref="purchase.purchase_order_tree"/> -->
+            <field name="arch" type="xml">
+                <tree create="false"
+                    decoration-bf="message_unread==True"
+                    decoration-info="state in ('wait','confirmed')"
+                    decoration-muted="state=='cancel'" string="Purchase Order">
+                    <field invisible="1" name="message_unread"/>
+                    <field name="name" string="Reference"/>
+                    <field name="date_order"/>
+                    <field name="partner_id"/>
+                    <field groups="base.group_multi_company"
+                        name="company_id" options="{'no_create': True}"/>
+                    <field
+                        invisible="context.get('quotation_only', False)" name="date_planned"/>
+                    <field name="user_id"/>
+                    <field name="origin"/>
+                    <field invisible="1" name="outstanding_account"/>
+                    <field invisible="1" name="outstanding_stock"/>
+                    <field invisible="1" name="currency_id"/>
+                    <field name="state"/>
+                    <field
+                        attrs="{'column_invisible': [('parent.state', 'not in', ('purchase', 'done'))]}" name="invoice_status"/>
+                </tree>
+            </field>
+        </record>
+        <record id="purchase.purchase_rfq" model="ir.actions.act_window">
+            <field name="domain">[('state','not in',('to approve','purchase','done'))]</field>
+        </record>
+        <record id="action_purchase_outstanding_tree" model="ir.actions.act_window">
+            <field name="name">Purchase Outstanding</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+            <!-- <field name="context">{"search_default_filter_vendor":1}</field> -->
+            <field name="context">{"group_by":"partner_id"}</field>
+            <field name="domain">['|',('outstanding_stock','!=',False),('outstanding_account','!=',False)]</field>
+            <field name="view_id" ref="purchase_outstanding_tree"/>
+<!--            <field name="search_id" ref="purchase.view_purchase_order_filter"/>-->
+        </record>
+        <record id="purchase_rfq_to_approve1" model="ir.actions.act_window">
+            <field name="name">RFQ to Approve (Manager)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+            <field name="domain">[('state','=','to approve'),('confirm2_uid','=',False)]</field>
+            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                Create a request for quotation
+              </p>
+                <p>
+                The quotation contains the history of the discussion
+                you had with your vendor.
+              </p>
+            </field>
+        </record>
+        <record id="purchase_rfq_to_approve2" model="ir.actions.act_window">
+            <field name="name">RFQ to Approve (Tim Pengadaan)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+            <field name="domain">[('state','=','to approve'),('confirm2_uid','!=',False),('confirm3_uid','=',False)]</field>
+            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                Create a request for quotation
+              </p>
+                <p>
+                The quotation contains the history of the discussion
+                you had with your vendor.
+              </p>
+            </field>
+        </record>
+        <record id="purchase_rfq_to_approve3" model="ir.actions.act_window">
+            <field name="name">RFQ to Approve (Tim Lelang)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+            <field name="domain">[('state','=','to approve'),('confirm2_uid','!=',False),('confirm3_uid','!=',False),('confirm4_uid','=',False)]</field>
+            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                Create a request for quotation
+              </p>
+                <p>
+                The quotation contains the history of the discussion
+                you had with your vendor.
+              </p>
+            </field>
+        </record>
+        <menuitem id="menu_purchase_approval" name="Approval"
+            parent="purchase.menu_purchase_root" sequence="2"/>
+        <menuitem groups="purchase.group_purchase_manager"
+            id="menu_purchase_rfq_to_approve" name="RFQ to Approve"
+            parent="menu_purchase_approval" sequence="100"/>
+        <menuitem action="purchase_rfq_to_approve1"
+            groups="purchase.group_purchase_manager"
+            id="menu_purchase_rfq_to_approve1" name="By Manager"
+            parent="menu_purchase_rfq_to_approve" sequence="100"/>
+        <menuitem action="purchase_rfq_to_approve2"
+            groups="purchase_rmdoo.group_purchase_vp"
+            id="menu_purchase_rfq_to_approve2" name="By Tim Pengadaan"
+            parent="menu_purchase_rfq_to_approve" sequence="200"/>
+        <menuitem action="purchase_rfq_to_approve3"
+            groups="purchase_rmdoo.group_purchase_president"
+            id="menu_purchase_rfq_to_approve3" name="By Tim Lelang"
+            parent="menu_purchase_rfq_to_approve" sequence="300"/>
+        <!-- <memuitem action="" groups="purchase.group_purchase_manager"
+            id="purchase.purchase_report" name="Reporting"
+            parent="purchase.menu_purchase_root" sequence="99"/> -->
+        <!-- <menuitem action="base_rmdoo.action_inquiry_report"
+            id="menu_mp_request_inquiries" name="M/P Request Inquiries"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="101"/> -->
+        <!-- <menuitem action="base_rmdoo.action_no_content"
+            id="menu_cft_bo_inquiries"
+            name="Purchase Agreement Inquiries"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="102"/> -->
+        <!-- <menuitem action="action_purchase_outstanding_tree"
+            id="menu_outstanding" name="Purchase Orders Outstanding"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="103"/> -->
+        <!-- <menuitem action="base_rmdoo.action_no_content"
+            id="menu_total_po_vendor" name="Total P/O by Vendor"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="104"/> -->
+        <!-- <menuitem action="base_rmdoo.action_no_content"
+            id="menu_purchase_receivebilled"
+            name="Received Not yet Billed"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="105"/> -->
+        <menuitem action="base_rmdoo.action_no_content"
+            id="menu_purchase_acc" name="Purchase Accumulated"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="106"/>
+        <!-- <menuitem action="base_rmdoo.action_no_content"
+            id="menu_purchase_acc_items" name="By Items"
+            parent="menu_purchase_acc" sequence="501"/> -->
+        <!-- <menuitem action="base_rmdoo.action_no_content"
+            id="menu_purchase_acc_vendor" name="By Vendor"
+            parent="menu_purchase_acc" sequence="502"/> -->
+        <!-- <menuitem action="base_rmdoo.action_no_content"
+            id="menu_purchase_histories"
+            name="Purchase Histories by P/O"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="111"/> -->
+        <!-- <menuitem action="base_rmdoo.action_no_content"
+            id="menu_purchase_poreceipt" name="P/O vs Receipt"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="112"/> -->
+        <menuitem action="purchase.action_purchase_order_report_all"
+            id="menu_reporting" name="Purchase Analysis"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="120"/>
+        <menuitem action="base_rmdoo.action_no_content"
+            id="menu_vendor_evaluation" name="Vendor Evaluations"
+            parent="purchase.purchase_report" groups="purchase_rmdoo.group_show_advance_purchase_report" sequence="121"/>
+    </data>
+</odoo>

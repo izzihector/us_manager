@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="vendor_portal" inherit_id="web.assets_frontend" active="True">
+      <xpath expr="." position="inside">
+        <link rel="stylesheet" href="/bs_sarinah_portal/static/src/css/vendor_portal.css"/>
+        <script type="text/javascript" src="/bs_sarinah_portal/static/src/js/vendor_portal.js"/>
+      </xpath>
+    </template>
+    <template id="assets_backend" name="cjtp_fms assets backend" inherit_id="web.assets_backend">
+      <xpath expr="//script[last()]" position="after">
+        <script type="text/javascript" src="/bs_sarinah_portal/static/src/js/ppbk_report.js"/>
+      </xpath>
+    </template>
+
+    <template id="assets_common" name="cjtp_fms assets common" inherit_id="web.assets_common">
+      <xpath expr="." position="inside">
+        <link rel="stylesheet" type="text/scss" href="/bs_sarinah_portal/static/src/scss/ppbk_report.scss"/>
+      </xpath>
+    </template>
+  </data>
+</odoo>

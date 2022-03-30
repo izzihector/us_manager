@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_product.tree_product_template" model="ir.ui.view">
+      <field name="name">Product Template Tree View</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_tree_view"/>
+      <field name="mode">primary</field>
+      <field name="priority">1000</field>
+      <field name="arch" type="xml">
+        <xpath expr="//tree" position="attributes">
+          <attribute name="decoration-danger">archive_reason == 'manual'</attribute>
+        </xpath>
+        <field name="name" position="after">
+          <field name="create_uid"/>
+          <field name="create_date"/>
+          <field name="create_department_id"/>
+        </field>
+        <xpath expr="//tree" position="inside">
+          <field name="archive_reason"/>
+        </xpath>
+      </field>
+    </record>
+    <record id="bs_sarinah_product.form_product_template" model="ir.ui.view">
+      <field name="name">Product Template Form View</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <button name="%(product.product_attribute_value_action)d" position="before">
+          <field name="archive_reason" invisible="1"/>
+          <button name="action_approve_product" string="Approve Product" class="oe_highlight" type="object"
+                  groups="bs_sarinah_product.group_product_approval"
+                  attrs="{'invisible': ['|',('active', '=', True),('archive_reason', '!=', 'approval')]}"/>
+        </button>
+        <div name="options" position="inside">
+          <div>
+            <field name="is_coupon"/>
+            <label for="is_coupon"/>
+          </div>
+        </div>
+        <field name="categ_id" position="attributes">
+          <attribute name="domain">[('is_for_coupon', '=', is_coupon)]</attribute>
+        </field>
+      </field>
+    </record>
+    <record id="bs_sarinah_product.view_template_property_form_inherit" model="ir.ui.view">
+      <field name="name">Product Template Form View Inherit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="stock_no_negative.view_template_property_form"/>
+      <field name="arch" type="xml">
+        <field name="allow_negative_stock" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

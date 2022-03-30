@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_product.action_window_product_approval" model="ir.actions.act_window">
+      <field name="name">Products (To Approve)</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">product.template</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="bs_sarinah_product.tree_product_template"/>
+      <field name="domain">[('active', '=', False),('archive_reason', '=', 'approval')]</field>
+    </record>
+  </data>
+</odoo>

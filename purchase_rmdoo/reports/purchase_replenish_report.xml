@@ -1,0 +1,223 @@
+<odoo>
+    <template id="report_purchase_replenish_template">
+        <t t-call="base_rmdoo.rmdoo_internal_layout">
+            <style>
+                table{
+                    width:100%;
+                    border-collapse: collapse;
+                }
+                td{
+                    padding: 3px 3px 4px 2px;    
+                }
+                .table_custom {
+                    border: 1px solid black;
+                    font-size: 0.9em;
+                }
+                div{
+                    margin-top: 5px;
+                    margin-bottom: 10px;
+                }
+                .page{
+                    font-size: 12pt;
+                }
+                .head_caption {
+                    text-align: center;
+                    padding: 5px;
+                }
+                .cust_caption &gt; div &gt; strong &gt; h3{
+                    text-decoration: underline;
+                }
+                .cust_vendor{                
+                    font-size: 0.9em;
+                }
+                
+                
+                
+                <!-- #ttd1, #ttd2 {
+                    display:inline-block;
+                    text-align:center;
+                    width:49%;
+                }
+                #ttd1 img, #ttd2 img, #ttd1 div, #ttd2 div {
+                    margin:auto;
+                    width:25px;
+                    height:25px;
+                    display:block;
+                    text-align:center;
+                    border:none !important;
+                }
+                #ttd1 div, #ttd2 div {
+                    border-bottom:1px solid black !important;
+                } -->
+            </style>
+            <div class="page">
+                <div class="head_caption">
+                    <!-- <div style="height:20px;"/> -->
+                    <div>
+                        <strong>
+                            <h3>Purchase Request</h3>
+                        </strong>
+                        <h5>No. <span t-field="o.name"/>
+                        </h5>
+                    </div>
+                </div>
+                <div class="cust_vendor">
+                    <div style="float:left; width:35%;">
+                        <table>
+                            <tr>
+                                <td width="35%">Department</td>
+                                <td width="5%">:</td>
+                                <td width="60%">
+                                    <span t-field="o.request_department_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="35%">Date Order</td>
+                                <td width="5%">:</td>
+                                <td width="60%">
+                                    <!-- <span t-field="o.date_ordered"/> -->
+                                    <span t-field="o.date_ordered" t-options="{'widget':'date'}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="35%">Date Schedule</td>
+                                <td width="5%">:</td>
+                                <td width="60%">
+                                    <!-- <span t-field="o.date_planned"/> -->
+                                    <span t-field="o.date_planned" t-options="{'widget':'date'}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="float:right; width:30%;">
+                        <table>
+                            <tr>
+                                <td width="30%">Request</td>
+                                <td width="5%">:</td>
+                                <td width="65%">
+                                    <span t-field="o.create_uid"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Warehouse</td>
+                                <td width="5%">:</td>
+                                <td width="65%">
+                                    <span t-field="o.warehouse_id"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <!-- <table class="border:1px solid black;"> -->
+                        <table class="table_custom">
+                            <thead>
+                                <tr class="text-center table_custom" style="vertical-align:middle;">
+                                    <td class="table_custom" rowspan="2" width="">
+                                    <strong>Code</strong>
+                                    </td>
+                                    <td class="table_custom" rowspan="2" width="">
+                                    <strong>Product</strong>
+                                    </td>
+                                    <td class="table_custom" colspan="2">
+                                    <strong>Date</strong>
+                                    </td>
+                                    <td class="table_custom" rowspan="2" width="">
+                                    <strong>Qty</strong>
+                                    </td>
+                                    <td class="table_custom" rowspan="2" width="">
+                                    <strong>Est. Price</strong>
+                                    </td>
+                                    <td class="table_custom" rowspan="2" width="">
+                                    <strong>
+                                        Amount
+                                    </strong>
+                                    </td>
+                                    <td class="table_custom" rowspan="2" width="%">
+                                    <strong>Status</strong>
+                                    </td>
+                                </tr>
+                                <tr class="text-center table_custom" style="vertical-align:middle;">
+                                    <td class="table_custom" width="">
+                                    <strong>Ordered</strong>
+                                    </td>
+                                    <td class="table_custom" width="">
+                                    <strong>Scheduled</strong>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table_custom" t-as="line" t-foreach="o.product_replenish_ids">
+                                    <td class="table_custom text-center">
+                                    <span t-field="line.product_id.default_code"/>
+                                    </td>
+                                    <td class="table_custom text-center">
+                                    <span t-field="line.product_id.name"/>
+                                    </td>
+                                    <td class="table_custom text-center">
+                                    <span t-field="line.date_ordered" t-options="{'widget':'date'}"/>
+                                    </td>
+                                    <td class="table_custom text-center">
+                                    <span t-field="line.date_planned" t-options="{'widget':'date'}"/>
+                                    </td>
+                                    <td class="table_custom text-center">
+                                    <span t-esc="int(round(line.quantity))"/>
+                                    </td>
+                                    <td class="table_custom text-right">
+                                    <span t-field="line.product_id.standard_price"/>
+                                    </td>
+                                    <td class="table_custom text-right">
+                                    <span t-esc="round(line.product_id.standard_price)*(int(round(line.quantity)))"/>
+                                    </td>
+                                    <td class="table_custom text-center">
+                                    <span t-field="line.state"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <div style="float:left; width:50%;">
+                        <strong>NOTE :</strong>
+                        <p style="border:1px solid black;  height:100px;">
+                            <span t-field="o.note"/>
+                        </p>
+                    </div>
+                    <div class="text-center" style="float:right; width:45%;">
+                        <div style="float:left;">
+                            Confirmed By<br/>
+                            <div>
+                                <img height="100"
+                                    t-att-src="image_data_uri(o.confirm_uid.digital_signature)"
+                                    t-if="o.confirm_uid.digital_signature" width="150"/>
+                                <img height="100"
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                                    t-if="not o.confirm_uid.digital_signature" width="150"/>
+                            </div>
+                            <span t-field="o.confirm_uid"/>
+                        </div>
+                        <div style="float:right;">
+                            Created By<br/>
+                            <div>
+                                <img height="100"
+                                    t-att-src="image_data_uri(o.create_uid.digital_signature)"
+                                    t-if="o.create_uid.digital_signature" width="150"/>
+                                <img height="100"
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                                    t-if="not o.create_uid.digital_signature" width="150"/>
+                            </div>
+                            <span t-field="o.create_uid"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="report_purchase_replenish">
+        <t t-call="web.html_container">
+            <t t-as="o" t-foreach="docs">
+                <t t-call="purchase_rmdoo.report_purchase_replenish_template"/>
+            </t>
+        </t>
+    </template>
+</odoo>

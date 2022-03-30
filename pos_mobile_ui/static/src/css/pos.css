@@ -1,0 +1,576 @@
+.pos .control-buttons .show-all-controls,
+.pos .pos-show-leftpane,
+.pos button.close-cats,
+.pos button.close-keyboard
+{
+	display: none;
+}
+
+.pos button.close-cats,
+.pos button.close-keyboard{
+    width: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background-color: rgb(110, 200, 155);
+    color: #fff;
+    font-size: 18px;
+}
+
+.pos button.close-cats .fa,
+.pos button.close-keyboard .fa{
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.pos .categories.collapsed{
+    height: auto !important;
+}
+
+.pos #rightheader-separator{
+	display: none;
+}
+
+@media only screen and (max-width: 1024px){
+	html{
+		overflow: hidden;
+	}
+
+	.pos .product-screen{
+   		overflow-x: hidden;
+	}
+
+	.pos .leftpane{
+		width: 100%;
+        	max-width: 440px;
+		transform: translateX(-100%);
+		z-index: 1;
+		transition: transform 0.5s ease;
+        	box-sizing: content-box;
+	}
+
+	.pos .pos-branding{
+		position: relative;
+        width: 0;
+        overflow: visible;
+        z-index: 100;
+    }
+
+    .pos .pos-logo{
+        display: none;
+    }
+
+    .pos .pos-branding .username{
+        position: absolute;
+        top: 51px;
+        font-size: 0px;
+        padding: 0 14px;
+        border-right: 1px solid #292929;
+    }
+
+    .pos .pos-branding .username:after{
+        content: '\f2bd';
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 20px;
+        vertical-align: middle;
+    }
+
+	.pos .leftpane.show{
+		transform: translateX(0%);
+	}
+
+    .pos .leftpane>.window{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pos .leftpane>.window>.subwindow:first-child{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        height: auto;
+        flex-grow: 1;
+        flex-shrink: 1000000000;
+    }
+
+    .pos .leftpane>.window>.subwindow:first-child>.subwindow-container{
+        display: block;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        box-sizing: border-box;
+    }
+
+    .pos .leftpane>.window>.subwindow:nth-child(2){
+        display: block;
+        height: auto;
+        overflow-y: auto;
+    }
+
+    .pos .leftpane>.window>.subwindow:nth-child(2).collapsed{
+        height: 32px;
+        overflow-y: hidden;
+    }
+
+    .pos button.close-cats,
+    .pos button.close-keyboard{
+        display: block;
+    }
+
+    .pos .categories.collapsed .close-cats .show-cats,
+    .pos .categories .close-cats .hide-cats,
+    .pos .leftpane>.window>.subwindow:nth-child(2).collapsed .close-keyboard .show-kb,
+    .pos .leftpane>.window>.subwindow:nth-child(2) .close-keyboard .hide-kb{
+        display: block;
+    }
+
+    .pos .categories .close-cats .show-cats,
+    .pos .categories.collapsed  .close-cats .hide-cats,
+    .pos .leftpane>.window>.subwindow:nth-child(2) .close-keyboard .show-kb,
+    .pos .leftpane>.window>.subwindow:nth-child(2).collapsed .close-keyboard .hide-kb{
+        display: none;
+    }
+
+    .pos .categories{
+        display: flex;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .pos .categories.collapsed{
+        height: 29px !important;
+    }
+
+    .pos .category-list-scroller{
+        flex-grow: 1;
+        flex-shrink: 100000;
+    }
+
+	.pos .leftpane .pads{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	.pos .actionpad{
+		width: auto;
+		max-width: calc(100% - 248px);
+		flex-grow: 1;
+        box-sizing: border-box;
+	}
+
+	.pos .actionpad .button.set-customer{
+		padding-right: 0px;
+        padding-left: 42px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+	}
+
+    .pos .actionpad .button .fa-user{
+        left: 8px;
+    }
+
+	.pos .rightpane{
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+
+	.pos .pos-topheader{
+		height: 100px;
+	}
+
+	.pos .pos-rightheader{
+		width: 100%;
+		flex-wrap: wrap;
+		max-width: 100%;
+		overflow-x: hidden;
+		left: 0px;
+	}
+
+	.pos .order-selector{
+		width: 50%;
+		flex-grow: 1;
+    border-bottom: 1px solid #ccc;
+	}
+
+	.pos #rightheader-separator + *{
+			margin-left: 50px;
+	}
+	
+	.pos #rightheader-separator{
+		min-width: 100%;
+		display: block;
+		width: 100%;
+	}
+
+	.pos .orders{
+		overflow-y: hidden;
+		overflow-x: scroll;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+
+	.pos .orders::-webkit-scrollbar{
+		display: none;
+	}
+
+	.pos .order-button.square.neworder-button{
+		margin-left: auto;
+	}
+
+    .pos .js_proxy .js_msg{
+        display: none;
+    }
+
+	.pos .pos-content{
+		top: 100px;
+	}
+
+	.pos .pos-show-leftpane{
+		display: inline-block;
+		margin-left: auto;
+        border-left: 1px solid #292929;
+	}
+
+	.pos .pos-show-leftpane .icon-and-badge{
+		position: relative;
+	}
+
+	.pos .product{
+		transition: filter 0.5s ease opacity 0.5s ease;
+	}
+
+	.pos .product:active{
+		filter: brightness(0.5);
+	}
+
+	.pos .product:focus{
+		opacity: 0.8;
+	}
+
+	.pos .pos-show-leftpane .icon-and-badge .badge{
+		position: absolute;
+		top: -5px;
+		right: -5px;
+		vertical-align: top;
+		color: white;
+		line-height: 13px;
+		background: #7f82ac;
+		padding: 2px 5px;
+		border-radius: 50%;
+		font-size: 0.5em;
+	}
+
+    .pos-content>.window {
+        overflow: visible;
+    }
+
+    .pos .control-buttons{
+        height: 46px;
+        overflow: hidden;
+    }
+
+    .pos .control-buttons .show-all-controls{
+        display: inline-block;
+    }
+
+    .pos .control-buttons.show{
+        height: auto;
+    }
+
+    .pos .control-buttons.show .show-all-controls .show-less,
+    .pos .control-buttons .show-all-controls .show-all {
+        display: inline-block;
+    }
+
+    .pos .control-buttons .show-all-controls .show-less,
+    .pos .control-buttons.show .show-all-controls .show-all{
+        display: none;
+    }
+
+    .ui-dialog, .modal-dialog{
+        overflow: auto;
+    }
+
+    .pos .modal-dialog{
+        box-sizing: border-box;
+    }
+
+    .pos .modal-dialog .popup{
+        box-sizing: border-box;
+        width: auto;
+        max-width: 500px;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .pos .popup.popup-number{
+        max-width: 300px;
+    }
+
+    .screen .screen-content{
+        overflow-y: auto;
+    }
+
+    .pos .payment-screen .right-content,
+    .pos .payment-screen .left-content,
+    .pos .payment-screen .centered-content,
+    .pos .payment-screen .top-content{
+        position: relative;
+        right: 0 !important;
+        left: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+    }
+
+    .pos .payment-screen .top-content{
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .pos .payment-screen .top-content h1{
+        flex-grow: 1;
+        flex-shrink: 1000;
+        margin-right: 16px;
+        margin-left: 16px;
+        position: static;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .pos .payment-screen .top-content .button{
+        position: static;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+
+    .pos .payment-screen .button.back{
+        font-size: 0px;
+        white-space: nowrap;
+        margin-right: 0;
+    }
+
+    .pos .payment-screen .button.next{
+        margin-left: 0;
+        flex-shrink: 900;
+        font-size: 16px;
+    }
+
+    .pos .payment-screen .button.back .fa{
+        font-size: 16px;
+        vertical-align: middle;
+    }
+
+    .pos .paymentlines{
+        display: block;
+        position: relative;
+    }
+
+    .pos .paymentline{
+        display: flex;
+        width: 100%;
+        overflow: visible;
+        flex-wrap: wrap;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .pos .paymentline .col-due,
+    .pos .paymentline .col-tendered,
+    .pos .paymentline .col-change{
+        width: 100%;
+        display: block;
+    }
+
+    .pos .paymentline .col-change{
+        min-height: 24px;
+    }
+
+    .pos .paymentline .col-name,
+    .pos .paymentline .delete-button{
+        display: inline-block;
+    }
+
+    .pos .paymentline .delete-button{
+        margin-right: 70px;
+        margin-left: auto;
+        position: relative;
+        z-index: 1000;
+    }
+
+    .pos .paymentlines .label{
+        position: absolute;
+        top: 0;
+        right: 0;
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        z-index: 100;
+    }
+    .pos .paymentlines .label th{
+        padding: 11px 12px;
+    }
+
+    .pos .paymentlines-container{
+        overflow-x: auto;
+    }
+
+    .pos .payment-numpad,
+    .pos .payment-buttons
+    {
+        width: auto;
+        float: none;
+        margin: auto;
+        display: block;
+    }
+
+    .pos .payment-buttons{
+        padding-left: 16px;
+    }
+
+    .pos .clientlist-screen .button.new-customer{
+        white-space: nowrap;
+        margin-left: 0;
+        font-size: 12px;
+    }
+
+    .pos .clientlist-screen .button.back{
+        font-size: 0px;
+        white-space: nowrap;
+        margin-right: 0;
+    }
+
+    .pos .clientlist-screen .button.next{
+        white-space: nowrap;
+        margin-left: 0;
+        flex-shrink: 900;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 16px;
+    }
+
+    .pos .clientlist-screen .button.back .fa{
+        font-size: 16px;
+        vertical-align: middle;
+    }
+
+    .pos .clientlist-screen .top-content{
+        position: relative;
+        right: 0 !important;
+        left: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        display: flex;
+        justify-content: space-between;
+        overflow: hidden;
+        align-items: center;
+    }
+
+    .pos .clientlist-screen .top-content .searchbox,
+    .pos .clientlist-screen .top-content h1 {
+        flex-grow: 1;
+        flex-shrink: 1000;
+        position: relative;
+        margin: 6px;
+        top: 0;
+        left: 0;
+    }
+
+    .pos .clientlist-screen .top-content .searchbox input{
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0px;
+    }
+
+    .pos .clientlist-screen .top-content .searchbox:empty{
+        margin: 0px;
+    }
+
+    .pos .clientlist-screen .top-content .button{
+        position: static;
+    }
+
+    .pos .clientlist-screen .full-content .subwindow{
+        height: auto;
+    }
+
+    .pos .clientlist-screen .full-content .window{
+        overflow-y: auto;
+    }
+
+    .pos .clientlist-screen .client-details-left,
+    .pos .clientlist-screen .client-details-right{
+        width: auto;
+        float: none;
+    }
+
+    .pos .clientlist-screen .client-detail > .label{
+        text-align: left;
+    }
+
+    .pos .clientlist-screen .full-content .subwindow-container .subwindow-container-fix{
+        height: auto !important;
+        overflow: hidden !important;
+    }
+
+    .pos .receipt-screen .right-content,
+    .pos .receipt-screen .left-content,
+    .pos .receipt-screen .centered-content,
+    .pos .receipt-screen .top-content{
+        position: relative;
+        right: 0 !important;
+        left: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+    }
+
+    .pos .receipt-screen.button.next{
+        white-space: nowrap;
+        margin-left: 0;
+        flex-shrink: 900;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 16px;
+    }
+
+    .pos .receipt-screen .top-content{
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .pos .receipt-screen .top-content h1{
+        flex-grow: 1;
+        flex-shrink: 1000;
+        margin-right: 16px;
+        margin-left: 16px;
+        position: static;
+    }
+
+    .pos .receipt-screen .top-content h1 .change-value{
+        white-space: nowrap;
+    }
+
+    .pos .receipt-screen .top-content .button{
+        position: static;
+    }
+
+}

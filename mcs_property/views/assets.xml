@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="mcs_property assets backend" inherit_id="web.assets_backend">
+        <xpath expr="link[last()]" position="after">
+            <style>
+                .btn-secondary {
+                    border: 1px solid #dee2e6;
+                }
+                .o_required_modifier.o_input, .o_required_modifier .o_input {
+                    background-color: #ffffff !important;
+                }
+                .text-muted {
+                    color: #7a7a7a !important;
+                }
+                .ribbon-box {
+                    width: 150px;
+                    height: 150px;
+                    overflow: hidden;
+                    margin-top: -25px !important;
+                    margin-right: -32px !important;
+                    float: right;
+                }
+                .ribbon-cancel {
+                    display: block;
+                    width: 127px;
+                    box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
+                    color: white !important;
+                    font: 700 16px/1 'Lato', sans-serif;
+                    text-shadow: 0 1px 1px rgb(0 0 0 / 20%);
+                    text-transform: uppercase;
+                    text-align: center;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-left: 48px;
+                    margin-top: 30px;
+                    background-color: #f44336;
+                    left: -15px;
+                    top: 30px;
+                    transform: rotate(45deg);
+                }
+                .bg-grey {
+                    background-color: #6b6b6b !important;
+                    color: #FFFFFF;
+                }
+            </style>
+        </xpath>
+    </template>
+</odoo>

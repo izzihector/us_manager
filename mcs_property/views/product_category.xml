@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mcs_property_product_categories_action" model="ir.actions.act_window">
+            <field name="name">Product Categories</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mcs_property.product.category</field>
+            <field name="view_mode">tree,kanban,form</field>
+        </record>
+    </data>
+</odoo>

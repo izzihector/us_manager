@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html>
+
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Calculate Vendor Bills from Consigment Sales</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<!-- ======= Header Section ======= -->
+<section class="d-flex align-items-center" style="width: 100%;">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+        <h1 style="margin: 0 0 10px 0; font-size: 48px; font-weight: 700; line-height: 56px; color: black;">
+          Calculate Vendor Bills from Consigment Sales</h1>
+        <h2 style="color: #484848; font-size: 24px;">Calculate vendor bills quantity and price based on consignment sales</h2>
+        <div>
+          <a href="https://apps.odoo.com/apps/modules/browse?author=Bumiswa"
+             style="font-weight: 500; font-size: 16px; letter-spacing: 1px; display: inline-block; padding: 10px 30px; border-radius: 50px; transition: 0.5s; color: #3498db; border: 2px solid #3498db;">Bumiswa</a>
+        </div>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2">
+        <img src="images/thumbnail.png" class="img-fluid" alt="">
+      </div>
+    </div>
+  </div>
+</section><!-- End Header Section -->
+
+<!-- ======= Features Section ======= -->
+<section style="padding: 60px 0; overflow: hidden;">
+  <div class="container">
+    <div style="text-align: center; padding-bottom: 30px;">
+      <h2 style="font-size: 32px; font-weight: bold; text-transform: uppercase; position: relative; color: #222222; text-decoration: underline; text-decoration-color: #3498db;">
+        Features</h2>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+        <div
+            style="padding: 30px; position: relative; overflow: hidden; background-color: #fff; box-shadow: 0 0 29px 0 rgba(68, 88, 144, 0.12); transition: all 0.3s ease-in-out; border-radius: 8px; z-index: 1;">
+          <div
+              style="margin: 0 auto 20px auto; padding-top: 10px; text-align: center; border-radius: 50%; width: 60px; height: 60px; background-color: #3498db; transition: all 0.3s ease-in-out;">
+            <i class="fa fa-star" style="font-size: 36px; line-height: 1; color: #fff;"></i>
+          </div>
+          <h4 style="font-weight: 700; margin-bottom: 15px; font-size: 18px; text-align: center;">
+            <span style="color: #111;">Lorem Ipsum</span>
+          </h4>
+          <p style="font-size: 15px; line-height: 28px; margin-bottom: 0;">Voluptatum deleniti atque corrupti quos
+            dolores et quas molestias excepturi</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+        <div
+            style="padding: 30px; position: relative; overflow: hidden; background-color: #fff; box-shadow: 0 0 29px 0 rgba(68, 88, 144, 0.12); transition: all 0.3s ease-in-out; border-radius: 8px; z-index: 1;">
+          <div
+              style="margin: 0 auto 20px auto; padding-top: 10px; text-align: center; border-radius: 50%; width: 60px; height: 60px; background-color: #3498db; transition: all 0.3s ease-in-out;">
+            <i class="fa fa-star" style="font-size: 36px; line-height: 1; color: #fff;"></i>
+          </div>
+          <h4 style="font-weight: 700; margin-bottom: 15px; font-size: 18px; text-align: center;">
+            <span style="color: #111;">Lorem Ipsum</span>
+          </h4>
+          <p style="font-size: 15px; line-height: 28px; margin-bottom: 0;">Voluptatum deleniti atque corrupti quos
+            dolores et quas molestias excepturi</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+        <div
+            style="padding: 30px; position: relative; overflow: hidden; background-color: #fff; box-shadow: 0 0 29px 0 rgba(68, 88, 144, 0.12); transition: all 0.3s ease-in-out; border-radius: 8px; z-index: 1;">
+          <div
+              style="margin: 0 auto 20px auto; padding-top: 10px; text-align: center; border-radius: 50%; width: 60px; height: 60px; background-color: #3498db; transition: all 0.3s ease-in-out;">
+            <i class="fa fa-star" style="font-size: 36px; line-height: 1; color: #fff;"></i>
+          </div>
+          <h4 style="font-weight: 700; margin-bottom: 15px; font-size: 18px; text-align: center;">
+            <span style="color: #111;">Lorem Ipsum</span>
+          </h4>
+          <p style="font-size: 15px; line-height: 28px; margin-bottom: 0;">Voluptatum deleniti atque corrupti quos
+            dolores et quas molestias excepturi</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+        <div
+            style="padding: 30px; position: relative; overflow: hidden; background-color: #fff; box-shadow: 0 0 29px 0 rgba(68, 88, 144, 0.12); transition: all 0.3s ease-in-out; border-radius: 8px; z-index: 1;">
+          <div
+              style="margin: 0 auto 20px auto; padding-top: 10px; text-align: center; border-radius: 50%; width: 60px; height: 60px; background-color: #3498db; transition: all 0.3s ease-in-out;">
+            <i class="fa fa-star" style="font-size: 36px; line-height: 1; color: #fff;"></i>
+          </div>
+          <h4 style="font-weight: 700; margin-bottom: 15px; font-size: 18px; text-align: center;">
+            <span style="color: #111;">Lorem Ipsum</span>
+          </h4>
+          <p style="font-size: 15px; line-height: 28px; margin-bottom: 0;">Voluptatum deleniti atque corrupti quos
+            dolores et quas molestias excepturi</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section><!-- End Features Section -->
+
+<!-- ======= Screenshot Section ======= -->
+<section style="padding: 60px 0; overflow: hidden;">
+  <div class="container">
+    <div style="text-align: center; padding-bottom: 30px;">
+      <h2 style="font-size: 32px; font-weight: bold; text-transform: uppercase; position: relative; color: #222222; text-decoration: underline; text-decoration-color: #3498db;">
+        Screenshots</h2>
+    </div>
+
+    <div style="margin-bottom:4%">
+      <h3 class="text-center mt4 oe_slogan"
+          style="letter-spacing:-1px !important; font-weight:400">Screenshot Caption</h3>
+      <div class="mt16 mb16 oe_pic_ctr">
+        <img src="images/screenshot-full-1.jpg" class="oe_picture">
+      </div>
+    </div>
+
+  </div>
+</section><!-- End Screenshot Section -->
+
+<!-- ======= Releases Section ======= -->
+<section style="padding: 60px 0; overflow: hidden;">
+  <div class="container">
+    <div style="text-align: center;">
+      <h2 style="font-size: 32px; font-weight: bold; text-transform: uppercase; position: relative; color: #222222; text-decoration: underline; text-decoration-color: #3498db;">
+        Releases</h2>
+    </div>
+
+    <div class="row d-flex align-items-stretch"
+         style="margin: 20px 0; padding: 20px 0; border-bottom: 1px solid #eeeeee;">
+      <div class="col-lg-12">
+        <i class="fa fa-code-fork"
+           style="color: #8bc4ea; font-size: 24px; float: left; line-height: 0; padding: 13px 0 0 0; margin: 0;"></i>
+        <h4 style="font-size: 16px; line-height: 26px; font-weight: 500; margin: 0 0 10px 32px;">Month Day, Year</h4>
+        <h3 class="text-left alert"
+            style="font-weight:500; color:#091E42; background-color:#F0F4F7; border-radius:10px">
+          Release Version 1.0.0
+        </h3>
+        <ul>
+          <li class="mb8" style="color:#091E42">New - Initial Commit</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section><!-- End Releases Section -->
+
+<!-- ======= Contact Section ======= -->
+<section style="padding: 60px 0; overflow: hidden;">
+  <div class="container">
+    <div style="text-align: center; padding-bottom: 30px;">
+      <h2 style="font-size: 32px; font-weight: bold; text-transform: uppercase; position: relative; color: #222222; text-decoration: underline; text-decoration-color: #3498db;">
+        Contact Us</h2>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3 col-md-6 mt-2">
+        <div class="oe_pic_ctr">
+          <a href="https://rmdoo.com">
+            <img src="images/bumiswa-logo.png" alt="Bumiswa" class="oe_title"
+                 style="right: 0; position: inherit; max-width: 100%;">
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 mt-4 mt-md-0">
+        <div class="col-lg-3 col-md-4">
+          <div style="display: inline-flex; align-items: center; padding: 20px; background-color: #f6f6f6; width: 215px;">
+            <i class="fa fa-envelope" style="color: #ffbb2c; font-size: 32px; padding-right: 10px; line-height: 1;"></i>
+            <h3 style="font-weight: 700; margin: 0; padding: 0; line-height: 1; font-size: 16px;">
+              <a href="mailto:support@rmdoo.com" style="color: #222222;">Technical Support</a>
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mt-4 mt-md-0">
+        <div class="col-lg-3 col-md-4">
+          <div style="display: inline-flex; align-items: center; padding: 20px; background-color: #f6f6f6; width: 215px;">
+            <i class="fa fa-th" style="color: #5578ff; font-size: 32px; padding-right: 10px; line-height: 1;"></i>
+            <h3 style="font-weight: 700; margin: 0; padding: 0; line-height: 1; font-size: 16px;">
+              <a href="https://apps.odoo.com/apps/modules/browse?author=Bumiswa"
+                 style="color: #222222;">Our Modules</a>
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mt-4 mt-md-0">
+        <div class="col-lg-3 col-md-4">
+          <div style="display: inline-flex; align-items: center; padding: 20px; background-color: #f6f6f6; width: 215px;">
+            <i class="fa fa-cogs" style="color: #e80368; font-size: 32px; padding-right: 10px; line-height: 1;"></i>
+            <h3 style="font-weight: 700; margin: 0; padding: 0; line-height: 1; font-size: 16px;">
+              <a href="mailto:sales@rmdoo.com" style="color: #222222;">Request Customization</a>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section><!-- End Contact Section -->
+</body>
+</html>

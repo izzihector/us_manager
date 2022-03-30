@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="pos_config_view_form_restrict_discount_inherit" model="ir.ui.view">
+        <field name="name">pos.config.form.restrict.discount.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='pricing']" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box discount_control">
+                    <div class="o_setting_left_pane">
+                        <field name="restrict_discount_control"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="restrict_discount_control" string="Discount Control"/>
+                        <div class="text-muted">Restrict discount modification to managers
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+<!--             <xpath expr="//field[@name='restrict_price_control']/../.." position="after">
+                <div class="col-12 col-lg-6 o_setting_box" title="Only users with Manager access rights for PoS app can modify the product discount on orders.">
+                    <div class="o_setting_left_pane">
+                        <field name="restrict_discount_control"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="restrict_discount_control" string="Discount Control"/>
+                        <div class="text-muted">Restrict discount modification to managers</div>
+                    </div>
+                </div>
+            </xpath> -->
+        </field>
+    </record>
+</odoo>

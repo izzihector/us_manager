@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="bs_sarinah_department.search_template_department">
+      <a type="button" class="dropdown-toggle account_department_filter"
+         data-toggle="dropdown">
+        <span class="fa fa-folder-open"/> Department
+      </a>
+      <ul class="dropdown-menu o_filters_menu" role="menu">
+        <li class="o_account_report_search js_account_department_m2m"/>
+      </ul>
+    </template>
+
+    <template id="department_search_template" inherit_id="account_reports.search_template">
+      <xpath expr="//div[@class='btn-group o_dropdown o_account_reports_filter_analytic']" position="after">
+        <div class="btn-group o_dropdown o_account_reports_filter_department">
+          <t t-call="bs_sarinah_department.search_template_department"/>
+        </div>
+      </xpath>
+    </template>
+  </data>
+</odoo>

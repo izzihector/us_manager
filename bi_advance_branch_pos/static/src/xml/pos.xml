@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="OrderReceipt">
+
+        <t t-jquery=".pos-receipt .pos-receipt-order-data" t-operation='append'>
+
+            <div class="pos-receipt-order-data">
+                
+            </div>
+            
+        </t>
+
+        <t t-jquery=".pos-receipt .pos-receipt-logo" t-operation='replace'>
+            <img class="pos-receipt-logo" t-att-src="'data:image/png;base64,'+ widget.pos.pos_session.logo" style="max-height: 1cm; max-width: 4cm;"/>
+            
+            <br/>
+        </t>
+
+        <t t-jquery=".pos-receipt .pos-receipt-contact" t-operation='replace'>
+            <div class="pos-receipt-contact">
+                <t t-if='widget.pos.pos_session.com_name'>
+                    <div><t t-esc='widget.pos.pos_session.com_name' /></div>
+                </t>
+                <t t-if='widget.pos.pos_session.contact_address'>
+                    <div><t t-esc='widget.pos.pos_session.contact_address' /></div>
+                </t>
+                <t t-if='widget.pos.pos_session.phone'>
+                    <div>Tel:<t t-esc='widget.pos.pos_session.phone' /></div>
+                </t>
+                <t t-if='widget.pos.pos_session.vat'>
+                    <div>VAT:<t t-esc='widget.pos.pos_session.vat' /></div>
+                </t>
+                <t t-if='widget.pos.pos_session.email'>
+                    <div><t t-esc='widget.pos.pos_session.email' /></div>
+                </t>
+                <t t-if='widget.pos.pos_session.website'>
+                    <div><t t-esc='widget.pos.pos_session.website' /></div>
+                </t>
+                <t t-if='receipt.header_html'>
+                    <t t-raw='receipt.header_html' />
+                </t>
+                <t t-if='!receipt.header_html and receipt.header'>
+                    <div><t t-esc='receipt.header' /></div>
+                </t>
+                <t t-if='receipt.cashier'>
+                    <div class='cashier'>
+                        <div>--------------------------------</div>
+                        <div>Served by <t t-esc='receipt.cashier' /></div>
+                    </div>
+                </t>
+
+                <br/>Branch: <t t-esc="widget.pos.pos_session.branch_id[1]"/>
+                <br/>
+                <div>Branch Address: <t t-esc="widget.pos.pos_session.address"/></div>
+            </div>
+        </t>
+    </t>
+</templates>

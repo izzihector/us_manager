@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_product_replenish_request" model="ir.ui.view">
+            <field name="name">Replenish Request</field>
+            <field name="model">product.replenish.request</field>
+            <field name="arch" type="xml">
+                <form string="Replenish Request Wizard">
+                    <header>
+                        <button
+                            attrs="{'invisible':[('state','not in',('approve'))]}"
+                            class="btn-primary"
+                            name="launch_replenishment" string="Confirm" type="object"/>
+                        <button
+                            attrs="{'invisible':[('state','not in',('draft'))]}"
+                            class="btn-primary" name="approve"
+                            string="Approve" type="object"/>
+                        <button
+                            attrs="{'invisible':[('state','not in',('draft'))]}"
+                            name="cancel" string="Cancel" type="object"/>
+                        <button
+                            attrs="{'invisible':[('state','not in',('cancel'))]}"
+                            name="reopen" string="Re-open" type="object"/>
+                        <button
+                            attrs="{'invisible':[('state','not in',('confirm'))]}"
+                            name="open_quant" string="Inventory Report" type="object"/>
+                        <button
+                            attrs="{'invisible':[('state','not in',('confirm'))]}"
+                            name="open_move" string="Stock Move" type="object"/>
+                        <field name="state" readonly="1"
+                            statusbar_visible="draft,approve,confirm" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field
+                                attrs="{'invisible':[('group_id','=',False)],'readonly':[('group_id','!=',False)]}"
+                                class="oe_inline" name="group_id" string="Code"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field
+                                    attrs="{'readonly': [('state','not in',('draft'))]}" name="request_department_id"/>
+                                <field invisible="1" name="product_tmpl_id"/>
+                                <field invisible="1" name="product_has_variants"/>
+                                <field
+                                    attrs="{'readonly': ['|',('product_has_variants','=',False),('state','not in',('draft'))]}"
+                                    domain="[('product_tmpl_id','=',product_tmpl_id)]" name="product_id"/>
+                                <field invisible="1" name="product_uom_category_id"/>
+                                <field name="price_estimation" widget="monetary"/>
+                                <field name="currency_id" invisible="1"/>
+                                <label for="quantity"/>
+                                <div>
+                                    <field
+                                    attrs="{'readonly': [('state','not in',('draft'))]}"
+                                    class="oe_inline" name="quantity"/>
+                                    <field
+                                    attrs="{'readonly': [('state','not in',('draft'))]}"
+                                    class="oe_inline"
+                                    domain="[('category_id','=',product_uom_category_id)]"
+                                    groups="uom.group_uom" name="product_uom_id"/>
+                                </div>
+                                <field
+                                    attrs="{'readonly': [('state','not in',('draft'))]}" name="date_ordered"/>
+                                <field
+                                    attrs="{'readonly': [('state','not in',('draft'))]}" name="date_planned"/>
+                            </group>
+                            <group>
+                                <field
+                                    attrs="{'invisible':[('create_uid','=',False)],'readonly':['|',('create_uid','!=',False),('state','not in',('draft'))]}" name="create_uid"/>
+                                <field
+                                    attrs="{'invisible':[('confirm_uid','=',False)],'readonly':['|',('confirm_uid','!=',False),('state','not in',('draft'))]}" name="confirm_uid"/>
+                                <field
+                                    attrs="{'readonly': [('state','not in',('draft'))]}"
+                                    groups="stock.group_stock_multi_warehouses" name="warehouse_id"/>
+                                <field
+                                    attrs="{'readonly': [('state','not in',('draft'))]}"
+                                    groups="stock.group_adv_location"
+                                    name="route_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Internal Note">
+                                <field name="note"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_product_replenish_request_tree" model="ir.ui.view">
+            <field name="name">Replenish Request Tree</field>
+            <field name="model">product.replenish.request</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="state=='cancel'"
+                    decoration-success="state=='confirm'"
+                    decoration-warning="state=='draft'" string="Replenish request wizard">
+                    <field
+                        attrs="{'invisible':[('group_id','=',False)],'readonly':[('group_id','!=',False)]}"
+                        name="group_id" string="Code"/>
+                    <field name="create_uid" readonly="1"/>
+                    <field name="request_department_id"/>
+                    <field
+                        attrs="{'invisible':[('confirm_uid','=',False)],'readonly':[('confirm_uid','!=',False)]}" name="confirm_uid"/>
+                    <field invisible="1" name="product_tmpl_id"/>
+                    <field invisible="1" name="product_has_variants"/>
+                    <field
+                        attrs="{'readonly': [('product_has_variants', '=', False)]}"
+                        domain="[('product_tmpl_id', '=', product_tmpl_id)]" name="product_id"/>
+                    <field invisible="1" name="product_uom_category_id"/>
+                    <field name="date_ordered"/>
+                    <field name="date_planned"/>
+                    <field groups="stock.group_stock_multi_warehouses" name="warehouse_id"/>
+                    <field name="quantity"/>
+                    <field
+                        domain="[('category_id', '=', product_uom_category_id)]"
+                        groups="uom.group_uom" name="product_uom_id"/>
+                    <field groups="base_rmdoo.group_product_cost_price"
+                        name="price_estimation" widget="monetary"/>
+                    <field groups="base_rmdoo.group_product_cost_price"
+                        name="amount_estimation" sum="Total" widget="monetary"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="product_product_view_form_easy_inherit_stock" model="ir.ui.view">
+            <field name="name">product.product.view.form.easy.inherit.stock
+			</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock.product_product_view_form_easy_inherit_stock"/>
+            <field name="arch" type="xml">
+                <button name="%(stock.action_product_replenish)d" position="replace">
+                    <button
+                        attrs="{'invisible': [('type', '!=', 'product')]}"
+                        context="{'default_product_id': id}"
+                        groups="stock.group_stock_user"
+                        name="action_replenish_request"
+                        string="Replenish" type="object"/>
+                </button>
+            </field>
+        </record>
+        <record id="product_form_view_procurement_button" model="ir.ui.view">
+            <field name="name">product.product.procurement</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock.product_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <button name="%(stock.action_product_replenish)d" position="replace">
+                    <button
+                        attrs="{'invisible': [('type', '!=', 'product')]}"
+                        context="{'default_product_id': id}"
+                        groups="stock.group_stock_user"
+                        name="action_replenish_request"
+                        string="Replenish" type="object"/>
+                </button>
+                <button name="action_open_quants" position="after">
+                    <button
+                        attrs="{'invisible':[('type','!=','product')]}"
+                        class="oe_stat_button" icon="fa-building-o"
+                        name="action_open_reserved" type="object">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field class="mr4" name="qty_reserved"
+                                    nolabel="1" widget="statinfo"/>
+                                <field name="uom_name"/>
+                            </span>
+                            <span class="o_stat_text">Reserved</span>
+                        </div>
+                    </button>
+                </button>
+            </field>
+        </record>
+        <record id="product_template_form_view_procurement_button" model="ir.ui.view">
+            <field name="name">product.template_procurement</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <button name="%(stock.action_product_replenish)d" position="replace">
+                    <button
+                        attrs="{'invisible': [('type', '!=', 'product')]}"
+                        context="{'default_product_tmpl_id': id}"
+                        groups="stock.group_stock_user"
+                        name="action_replenish_request"
+                        string="Replenish" type="object"/>
+                </button>
+                <button name="action_open_quants" position="after">
+                    <button
+                        attrs="{'invisible':[('type','!=','product')]}"
+                        class="oe_stat_button" icon="fa-building-o"
+                        name="action_open_reserved" type="object">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field class="mr4" name="qty_reserved"
+                                    nolabel="1" widget="statinfo"/>
+                                <field name="uom_name"/>
+                            </span>
+                            <span class="o_stat_text">Reserved</span>
+                        </div>
+                    </button>
+                </button>
+                <field name="default_code" position="attributes">
+                    <attribute name="attrs">{'invisible':[('product_variant_count','&gt;',1)],'required':[('product_variant_count','&lt;=',1)]}
+					</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="product_normal_form_view" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="default_code" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+                <!-- <field name="uom_id" position="before"> <field groups="base.group_multi_company" 
+					name="tmpl_company_id" options="{'no_create': True}"/> </field> -->
+            </field>
+        </record>
+        <!-- PRODUCT PRICE -->
+        <record id="product_template_tree_view" model="ir.ui.view">
+            <field name="name">product.template.product.tree</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="standard_price" position="attributes">
+                    <attribute name="groups">base_rmdoo.group_product_cost_price
+					</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.common.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="list_price" position="attributes">
+                    <attribute name="groups">base_rmdoo.group_product_sale_price
+					</attribute>
+                </field>
+                <field name="standard_price" position="attributes">
+                    <attribute name="groups">base_rmdoo.group_product_cost_price
+					</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="product_variant_easy_edit_view" model="ir.ui.view">
+            <field name="name">product.product.view.form.easy</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+                <field name="lst_price" position="attributes">
+                    <attribute name="groups">base_rmdoo.group_product_sale_price
+					</attribute>
+                </field>
+                <field name="standard_price" position="attributes">
+                    <attribute name="groups">base_rmdoo.group_product_cost_price
+					</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="product_product_tree_view" model="ir.ui.view">
+            <field name="name">product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="lst_price" position="attributes">
+                    <attribute name="groups">base_rmdoo.group_product_sale_price
+					</attribute>
+                </field>
+                <field name="standard_price" position="attributes">
+                    <attribute name="groups">base_rmdoo.group_product_cost_price
+					</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="view_template_property_form" model="ir.ui.view">
+            <field name="name">product.template.stock.property.form.inherit
+			</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock_account.view_template_property_form"/>
+            <field name="arch" type="xml">
+                <field name="standard_price" position="attributes">
+                    <attribute name="groups">base_rmdoo.group_product_cost_price
+					</attribute>
+                </field>
+<!--                <div name="update_cost_price" position="attributes">-->
+<!--                    <attribute name="groups">base_rmdoo.group_product_cost_price-->
+<!--					</attribute>-->
+<!--                </div>-->
+            </field>
+        </record>
+        <record id="product_variant_easy_edit_view_inherit" model="ir.ui.view">
+            <field name="name">product.product.product.view.form.easy.inherit
+			</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock_account.product_variant_easy_edit_view_inherit"/>
+            <field name="arch" type="xml">
+                <field name="standard_price" position="attributes">
+                    <attribute name="groups">base_rmdoo.group_product_cost_price
+					</attribute>
+                </field>
+<!--                <div name="update_cost_price" position="attributes">-->
+<!--                    <attribute name="groups">base_rmdoo.group_product_cost_price-->
+<!--					</attribute>-->
+<!--                </div>-->
+            </field>
+        </record>
+<!--        <record id="view_stock_landed_cost_type_form" model="ir.ui.view">-->
+<!--            <field name="name">stock.landed.cost.type.form</field>-->
+<!--            <field name="model">product.product</field>-->
+<!--            <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_type_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="standard_price" position="attributes">-->
+<!--                    <attribute name="groups">base_rmdoo.group_product_cost_price-->
+<!--					</attribute>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+<!--        <record id="stock_landed_cost_tree_view" model="ir.ui.view">-->
+<!--            <field name="name">product.product.tree</field>-->
+<!--            <field name="model">product.product</field>-->
+<!--            <field name="inherit_id" ref="stock_landed_costs.stock_landed_cost_tree_view"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="standard_price" position="attributes">-->
+<!--                    <attribute name="groups">base_rmdoo.group_product_cost_price-->
+<!--					</attribute>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

@@ -1,0 +1,80 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record id="inherit_asset_sell" model="ir.ui.view">
+        <field name="name">inherit_asset_sell</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="om_account_asset.view_account_asset_asset_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='analytic_tag_ids']" position="after">
+                <field name="request_sell" invisible="1"/>
+                <field name="manager_approve" invisible="1"/>
+            </xpath>
+            <xpath expr="//header/button[@name='set_to_close']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header/button[4]" position="before">
+              <button name="approve_manager" groups="mcs_gsf_inherit_asset.group_sell_asset_user" string="Approve Manager" type="object" class="oe_highlight" attrs="{'invisible': ['|','|',('request_sell', '=', False),('manager_approve', '=', True), ('state', '!=', 'open')]}"/>
+              <button name="set_to_close" string="Sell or Dispose" type="object" class="oe_highlight" attrs="{'invisible': ['|','|', ('request_sell', '=', False),('manager_approve', '=', False), ('state', '!=', 'open')]}"/>
+              <button name="action_set_to_close" string="Sell" type="object" class="oe_highlight" attrs="{'invisible': ['|','|', ('request_sell', '=', False),('manager_approve', '=', False), ('state', '!=', 'open')]}"/>
+              <button name="ask_to_sell" string="Request Sell or Dispose" type="object" class="oe_highlight" attrs="{'invisible': ['|',('request_sell', '=', True), ('state', '!=', 'open')]}"/>
+              <button name="cancel_request_sell" string="Cancel Sell or Dispose" type="object" class="oe_highlight" attrs="{'invisible': ['|',('request_sell', '=', False), ('state', '!=', 'open')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='method_progress_factor']" position="before">
+                <field name="degresiv_faktor"/>
+
+            </xpath>
+            <xpath expr="//field[@name='method_progress_factor']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//button[11]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[10]" position="after">
+                    <button name="%(action_asset_modify_2)d" states="open" string="Modify Depreciations" type="action"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="activity_test" model="mail.activity.type">
+        <field name="name">Approve Sell Asset</field>
+        <field name="summary">note</field>
+        <field name="category">default</field>
+        <field name="res_model_id" ref="model_account_asset_asset"/>
+        <field name="icon">fa-tasks</field>
+        <field name="delay_count">0</field>
+    </record>
+
+
+    <record model="ir.ui.view" id="asset_asset_sell_form">
+        <field name="name">wizard.asset.sell.form</field>
+        <field name="model">account.asset.asset.sell</field>
+        <field name="arch" type="xml">
+            <form string="Sell Asset">
+                <field name="select_invoice_line_id" invisible="1"/>
+                <field name="gain_or_loss" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+                <group>
+                    <group>
+                        <field name="action"/>
+                        <field name="invoice_id" options="{'no_create': True}" attrs="{'invisible': [('action', '!=', 'sell')], 'required': [('action', '=', 'sell')]}"/>
+                        <field name="invoice_line_id" options="{'no_create': True}" attrs="{'invisible': [('select_invoice_line_id', '=', False)], 'required': [('select_invoice_line_id', '=', True)]}"/>
+                    </group>
+                    <group>
+                        <field name="gain_account_id" attrs="{'invisible': [('gain_or_loss', '!=', 'gain')], 'required': [('gain_or_loss', '=', 'gain')]}"/>
+                        <field name="loss_account_id" attrs="{'invisible': [('gain_or_loss', '!=', 'loss')], 'required': [('gain_or_loss', '=', 'loss')]}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="do_action" string="Sell" type="object" class="btn-primary" attrs="{'invisible': [('action', '!=', 'sell')]}"/>
+                    <button name="do_action" string="Dispose" type="object" class="btn-primary" attrs="{'invisible': [('action', '!=', 'dispose')]}"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <!-- JS Library -->
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/lib/js/jquery.msgBox.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/lib/js/bwip.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/lib/js/canvas.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/lib/js/bwipp/code128.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/lib/js/bwipp/renlinear.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/lib/js/bwipp/renmatrix.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/lib/js/bwipp/renmaximatrix.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/lib/js/needyoffset.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/lib/js/jquery.dataTables.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/lib/js/jquery.dataTables.min.js"/>
+
+            <!-- JS -->
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/js/models.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/js/barcode.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/js/screens.js"/>
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/js/voucher_models.js"/>
+            <!-- <script type="text/javascript" src="/pos_gift_voucher/static/src/js/widgets.js"/>
+
+            <script type="text/javascript" src="/pos_gift_voucher/static/src/js/devices.js"/> -->
+        </xpath>
+        <!-- CSS -->
+        <xpath expr="//link[@id='pos-stylesheet']" position="after">
+            <link rel="stylesheet" href="/pos_gift_voucher/static/src/css/pos_gift_voucher.css"/>
+        </xpath>
+    </template>
+
+</odoo>

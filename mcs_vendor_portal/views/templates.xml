@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+    <template id="my_account_link" name="Link to frontend portal" inherit_id="portal.frontend_layout">
+        <xpath expr="//a[@id='o_logout']" position="before">
+            <a href="/mydok" role="menuitem" class="dropdown-item">Account</a>
+        </xpath>
+    </template>
+    </data>
+</odoo>

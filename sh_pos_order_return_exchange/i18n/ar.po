@@ -1,0 +1,350 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sh_pos_order_return_exchange
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-22 09:41+0000\n"
+"PO-Revision-Date: 2021-02-22 09:41+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "(Non-Exchangeable)"
+msgstr "(غير قابل للاستبدال)"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "(Non-Returnable)"
+msgstr "(غير قابل للإرجاع)"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "(Non-Returnable) (Non-Exchangeable)"
+msgstr "(غير قابل للإرجاع) (غير قابل للاستبدال)"
+
+#. module: sh_pos_order_return_exchange
+#: model_terms:ir.ui.view,arch_db:sh_pos_order_return_exchange.view_pos_new_form_extended
+msgid "<span class=\"o_stat_text\">Exchange</span>"
+msgstr "<span class=\"o_stat_text\">تبادل</span>"
+
+#. module: sh_pos_order_return_exchange
+#: model_terms:ir.ui.view,arch_db:sh_pos_order_return_exchange.view_pos_new_form_extended
+msgid "<span class=\"o_stat_text\">Return</span>"
+msgstr "<span class=\"o_stat_text\">إرجاع</span>"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__sh_allow_exchange
+msgid "Allow Exchange Order"
+msgstr "السماح بطلب التبادل"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__sh_return_more_qty
+msgid "Allow Return More Than Purchase Item"
+msgstr "السماح بإرجاع أكثر من شراء البند"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__sh_allow_return
+msgid "Allow Return Order"
+msgstr "السماح لأمر العودة"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Cancel"
+msgstr "يلغي"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#, python-format
+msgid "Complete Exchange"
+msgstr "التبادل الكامل"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#, python-format
+msgid "Complete Return"
+msgstr "عودة كاملة"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Discount (%)"
+msgstr "تخفيض (٪)"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__display_name
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__display_name
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order_line__display_name
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_product_product__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: model_terms:ir.ui.view,arch_db:sh_pos_order_return_exchange.pos_return_order_select
+#, python-format
+msgid "Exchange"
+msgstr "تبادل"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/receipt.xml:0
+#, python-format
+msgid "Exchange Order"
+msgstr "ترتيب التبادل"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#, python-format
+msgid "Exchange Products"
+msgstr "صرف المنتجات"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order_line__sh_exchange_qty
+#, python-format
+msgid "Exchange Qty."
+msgstr "تبادل الكمية."
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#, python-format
+msgid "Exchange With Same Products"
+msgstr "تبادل مع نفس المنتجات"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields.selection,name:sh_pos_order_return_exchange.selection__pos_order__return_status__fully_return
+msgid "Fully Returned"
+msgstr "عاد بالكامل"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Fully-Returned"
+msgstr "عاد بالكامل"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__id
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__id
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order_line__id
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_product_product__id
+msgid "ID"
+msgstr "بطاقة تعريف"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__is_exchange_order
+msgid "Is Exchange Order?"
+msgstr "هل ترتيب التبادل؟"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__is_return_order
+msgid "Is Return Order?"
+msgstr "هو ترتيب العودة؟"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config____last_update
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order____last_update
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order_line____last_update
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_product_product____last_update
+msgid "Last Modified on"
+msgstr "آخر تعديل في"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_product_product__sh_product_non_exchangeable
+msgid "Non Exchangeable"
+msgstr "غير صالحة"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_product_product__sh_product_non_returnable
+msgid "Non Returnable"
+msgstr "غير قابل للإرجاع"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields.selection,name:sh_pos_order_return_exchange.selection__pos_order__return_status__nothing_return
+msgid "Nothing Returned"
+msgstr "لا شيء عاد"
+
+#. module: sh_pos_order_return_exchange
+#: model_terms:ir.ui.view,arch_db:sh_pos_order_return_exchange.sh_pos_config_settings_pos_return_exchange
+msgid "POS Order Return Exchange"
+msgstr "ترتيب نقاط البيع"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Partially-Returned"
+msgstr "عاد جزئيا"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields.selection,name:sh_pos_order_return_exchange.selection__pos_order__return_status__partialy_return
+msgid "Partialy Returned"
+msgstr "عاد جزئي"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model,name:sh_pos_order_return_exchange.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "نقطة بيع التكوين"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model,name:sh_pos_order_return_exchange.model_pos_order_line
+msgid "Point of Sale Order Lines"
+msgstr "نقطة بيع خطوط الطلب"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model,name:sh_pos_order_return_exchange.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "أوامر نقطة البيع"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__sh_exchange_print_receipt
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__sh_return_print_receipt
+msgid "Print Information In Receipt"
+msgstr "طباعة المعلومات في الاستلام"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#: model:ir.model,name:sh_pos_order_return_exchange.model_product_product
+#, python-format
+msgid "Product"
+msgstr "منتج"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Qty."
+msgstr "الكمية."
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/js/screen.js:0
+#, python-format
+msgid "Remaining unsynced orders"
+msgstr "أوامر غير ضرورية"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: model_terms:ir.ui.view,arch_db:sh_pos_order_return_exchange.pos_return_order_select
+#, python-format
+msgid "Return"
+msgstr "إرجاع"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/receipt.xml:0
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__old_pos_reference
+#, python-format
+msgid "Return Order"
+msgstr "ترتيب العودة"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Return Order Reference :"
+msgstr "مرجع ترتيب العودة:"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Return Orders"
+msgstr "أوامر العودة"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#, python-format
+msgid "Return Products"
+msgstr "عودة المنتجات"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order_line__sh_return_qty
+#, python-format
+msgid "Return Qty."
+msgstr "عودة الكمية."
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Return Quantity"
+msgstr "إرجاع الكمية"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__return_status
+#, python-format
+msgid "Return Status"
+msgstr "عودة الحالة"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,help:sh_pos_order_return_exchange.field_pos_order__return_status
+msgid "Return status of Order"
+msgstr "عودة حالة النظام"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Sub Total"
+msgstr "المجموع الفرعي"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/js/screen.js:0
+#, python-format
+msgid "There are unsynced orders. Do you want to sync these orders?"
+msgstr "هناك أوامر غير ضرورية. هل ترغب في مزامنة هذه الطلبات؟"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__total_exchange_order
+msgid "Total Exchange Order"
+msgstr "إجمالي أمر الصرف"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__total_return_order
+msgid "Total Return Order"
+msgstr "إجمالي ترتيب العودة"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Unit Price"
+msgstr "سعر الوحدة"

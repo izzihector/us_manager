@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- Employee -->
+    <record id="view_employee_user_button_form" model="ir.ui.view">
+      <field name="name">hr.employee.user_button.form</field>
+      <field name="model">hr.employee</field>
+      <field name="inherit_id" ref="hr.view_employee_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//form/sheet" position="before">
+          <header>
+            <button name="link_to_user" string="Link to a user" type="object" class="btn-primary"
+                    attrs="{'invisible': ['|', ('is_user', '=', True), ('user_archived', '=', True)]}"/>
+            <button name="archive_user_link" string="Archive user" type="object" class="oe_highlight"
+                    attrs="{'invisible': [('is_user', '=', False)]}"/>
+            <button name="active_user_link" string="Active user" type="object"
+                    attrs="{'invisible': [('user_archived', '=', False)]}"/>
+
+          </header>
+        </xpath>
+        <xpath expr="//field[@name='category_ids']" position="after">
+          <group>
+            <field name="is_user" invisible="1"/>
+            <field name="user_archived" invisible="1"/>
+          </group>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

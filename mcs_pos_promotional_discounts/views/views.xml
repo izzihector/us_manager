@@ -1,0 +1,86 @@
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="inherit_pos_promo_message_view" model="ir.ui.view">
+            <field name="name">inherit.pos.promotions</field>
+            <field name="model">pos.promotions</field>
+            <field name="inherit_id" ref="pos_promotional_discounts.pos_promo_message_view"/>
+            <field name="arch" type="xml">
+
+<!--                <field name="offer_type" position="before">-->
+<!--                    <field name="offer_type2" required="1"/>-->
+<!--                </field>-->
+
+<!--                <field name="offer_type" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </field>-->
+
+                <label for="offer_type" position="before">
+                    <field name="vendor_id" domain="[('is_merchant', '=', True)]"
+                           required="1" options='{"no_open": True, "no_create": True}'/>
+                </label>
+
+<!--                <xpath expr="//form/sheet/group[1]/group[2]" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+
+                <xpath expr="//form/sheet/group[1]/group[1]" position="after">
+                    <group>
+                        <label for="start_date" string="Date"/>
+                        <div>
+                            <field class="oe_inline" name="start_date"/>
+                            -
+                            <field class="oe_inline" name="end_date"/>
+                        </div>
+                    </group>
+                </xpath>
+
+
+                <!-- buy1get1-->
+                <xpath expr="//field[@name='buy_x_get_y_ids']/tree/field[@name='product_x_id']"
+                       position="attributes">
+                    <attribute name="domain">[('owner_id', '=', parent.vendor_id)]</attribute>
+                    <attribute name="options">{"no_open": True, "no_create": True}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='buy_x_get_y_ids']/tree/field[@name='product_y_id']"
+                       position="attributes">
+                    <attribute name="domain">[('owner_id', '=', parent.vendor_id)]</attribute>
+                    <attribute name="options">{"no_open": True, "no_create": True}</attribute>
+                </xpath>
+                <!-- !buy1get1-->
+
+                <!-- buy_x_get_y_qty_ids-->
+                <xpath expr="//field[@name='buy_x_get_y_qty_ids']/tree/field[@name='product_x_id']"
+                       position="attributes">
+                    <attribute name="domain">[('owner_id', '=', parent.vendor_id)]</attribute>
+                    <attribute name="options">{"no_open": True, "no_create": True}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='buy_x_get_y_qty_ids']/tree/field[@name='product_y_id']"
+                       position="attributes">
+                    <attribute name="domain">[('owner_id', '=', parent.vendor_id)]</attribute>
+                    <attribute name="options">{"no_open": True, "no_create": True}</attribute>
+                </xpath>
+                <!-- !buy_x_get_y_qty_ids-->
+
+                <!-- buy_x_get_discount_on_y_ids-->
+                <xpath expr="//field[@name='buy_x_get_discount_on_y_ids']/tree/field[@name='product_x_id']"
+                       position="attributes">
+                    <attribute name="domain">[('owner_id', '=', parent.vendor_id)]</attribute>
+                    <attribute name="options">{"no_open": True, "no_create": True}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='buy_x_get_discount_on_y_ids']/tree/field[@name='product_y_id']"
+                       position="attributes">
+                    <attribute name="domain">[('owner_id', '=', parent.vendor_id)]</attribute>
+                    <attribute name="options">{"no_open": True, "no_create": True}</attribute>
+                </xpath>
+                <!-- !buy_x_get_discount_on_y_ids-->
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

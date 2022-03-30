@@ -1,0 +1,17 @@
+Version Info:
+
+13.0.0.1:
+=> super called on overriden methods.
+=> removed commented and unwanted code.
+=> added one line description to methods.
+
+13.0.0.2:
+=> Access rights csv removed.
+
+Commit Date -22-05-2019 
+13.0.0.3 : Made changes in security file and overriden report with super().
+
+Commit Date -28-05-2019
+13.0.0.4 : Made Changes in security file and py file for department and employee default method.
+
+13.0.0.5 : Fixed issue of id not found and removed code of inherited objcts of hr_payroll as it's not available in v13 

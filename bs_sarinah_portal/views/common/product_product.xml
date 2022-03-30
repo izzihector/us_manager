@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_portal.tree_product_product" model="ir.ui.view">
+      <field name="name">Product Product Tree View</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="product.product_product_tree_view"/>
+      <field name="arch" type="xml">
+        <field name="lst_price" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

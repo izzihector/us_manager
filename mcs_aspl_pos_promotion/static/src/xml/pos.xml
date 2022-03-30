@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<templates id="template" xml:space="preserve">
+<!--    <t t-extend="Orderline">-->
+<!--            <t t-jquery=".info-list" t-operation="append">-->
+<!--                <t t-if="line.get_has_aspl_promotion()">-->
+<!--                    <div>-->
+<!--                        <i class="fa fa-gift show_aspl_promotions" style="color: tomato;font-size: 18px;"-->
+<!--                           aria-hidden="true"></i>-->
+<!--                    </div>-->
+<!--                </t>-->
+<!--            </t>-->
+<!--    </t>-->
+
+     <t t-name="OfferPromotionDetails">
+        <div id='info_tooltip' class='product_info_div' style="position: absolute;display: none;z-index: 1;height: auto;
+            width: 250px;font-weight: bold;background-color: grey;border: 1px #ffffff solid;color: #efefef;opacity: 0.85;">
+            <img class='cross_img_top close_button' style="margin-left:-90%; width:8%;" src='/pos_promotional_discounts/static/src/js/icon-cross.png'/>
+            <h2 style="margin-top: 0%;margin-bottom: 1%;">Available Offers</h2>
+            <div class="inner_div" style="position:relative; margin: 3%; margin-top: 0% !important; border-top: 1px solid aliceblue;">
+                <div>
+                    <t t-foreach="offers" t-as="offer">
+                        <div style="margin: 5%;">
+                            <t t-if="offer.discount_product_id">
+                                <t t-if="offer.offer_name">
+                                    <t t-esc="offer.offer_name"/>
+                                </t>
+                                <t t-if="!offer.offer_name">
+                                    <t t-esc="offer.discount_product_id[1]"/>
+                                </t>
+                            </t>
+                            <t t-if="offer.buy_x_get_y_id">
+                                <t t-if="offer.offer_name">
+                                    <t t-esc="offer.offer_name"/>
+                                </t>
+                                <t t-if="!offer.offer_name">
+                                    <t t-esc="offer.buy_x_get_y_id[1]"/>
+                                </t>
+                            </t>
+                            <t t-if="offer.buy_x_get_y_qty_id">
+                                <t t-if="offer.offer_name">
+                                    <t t-esc="offer.offer_name"/>
+                                </t>
+                                <t t-if="!offer.offer_name">
+                                    <t t-esc="offer.buy_x_get_y_qty_id[1]"/>
+                                </t>
+                            </t>
+                            <t t-if="offer.buy_x_get_discount_on_y_id">
+                                <t t-if="offer.offer_name">
+                                    <t t-esc="offer.offer_name"/>
+                                </t>
+                                <t t-if="!offer.offer_name">
+                                    <t t-esc="offer.buy_x_get_discount_on_y_id[1]"/>
+                                </t>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+            </div>
+            <img class='cross_img_bottom close_button' src='/pos_promotional_discounts/static/src/js/icon-cross.png'/>
+        </div>
+    </t>
+</templates>

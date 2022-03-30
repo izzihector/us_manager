@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <report file="base_rmdoo.report_product_template"
+            id="action_replenish_report"
+            model="product.replenish.request"
+            name="base_rmdoo.report_product_template"
+            paperformat="base_rmdoo.paperformat_rmdoo_a5_landscape"
+            print_report_name="Replenish Request" report_type="qweb-pdf" string="Replenish Request"/>
+        <!-- Inventory Cost dan Pricelist -->
+        <report file="base_rmdoo.report_costpricelist"
+            id="action_print_costpricelist"
+            model="costpricelist.inquiry"
+            name="base_rmdoo.report_costpricelist"
+            paperformat="base_rmdoo.paperformat_rmdoo_a4_portrait"
+            print_report_name="Inventory Cost and Pricelist"
+            report_type="qweb-html" string="Inventory Cost and Pricelist"/>
+        <!-- de_print_journal_entries -->
+        <!-- <report attachment_use="False"
+            file="de_print_journal_entries.journal_entries_report"
+            id="de_print_journal_entries.action_journal_entries_report"
+            model="account.move"
+            name="de_print_journal_entries.journal_entries_report"
+            report_type="qweb-pdf" string="Journal Entries"/> -->
+        <record
+            id="de_print_journal_entries.action_journal_entries_report" model="ir.actions.report">
+            <field eval="False" name="attachment_use"/>
+            <field name="paperformat_id" ref="paperformat_rmdoo_a5_landscape"/>
+        </record>
+    </data>
+</odoo>

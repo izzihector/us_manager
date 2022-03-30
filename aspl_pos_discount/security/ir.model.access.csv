@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+user_access_pos_custom_discount,user.access.pos.custom.discount,model_pos_custom_discount,point_of_sale.group_pos_user,1,1,1,1
+access_day_week,access_day_week,model_day_week,base.group_user,1,1,1,1
+access_exception_dates,access_exception_dates,model_exception_dates,base.group_user,1,1,1,1

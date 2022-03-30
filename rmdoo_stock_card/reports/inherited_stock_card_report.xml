@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='utf-8'?>
+    <odoo>
+        <template id="stock_card_report.report_stock_card_report_pdf">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="stock_card_report.internal_layout">
+                        <t t-call="rmdoo_stock_card.report_stock_card_report_base" />
+                    </t>
+                </t>
+            </t>
+        </template>
+        <template id="rmdoo_stock_card.report_stock_card_report_base" inherit_id="stock_card_report.report_stock_card_report_base">
+            <xpath expr="//div[@class='page']" position="replace">
+                <!-- <t t-foreach="o.product_ids" t-as="product"> -->
+                    <div class="page">
+                        <div class="row">
+                            <t t-set="title">Stock Card- <t t-raw="product.name" /></t>
+                            <h4 class="mt0" t-esc="title" style="text-align: center;" />
+                        </div>
+                        <!-- Display filters -->
+                        <t t-call="stock_card_report.report_stock_card_report_filters" />
+                        <!-- Display stock card table -->
+                        <table class="act_as_table data_table mt4" style="width: 100%;">
+                            <!-- Display header line-->
+                            <t t-call="stock_card_report.report_stock_card_lines_header" />
+                            <!-- Display initial lines -->
+                            <t
+                                t-set="initial"
+                                t-value="o._get_initial(o.results.filtered(lambda l: l.product_id == product and l.is_initial))"
+                            />
+                            <tr class="act_as_row lines">
+                                <td class="act_as_cell" />
+                                <td class="act_as_cell" />
+                                <td class="act_as_cell">
+                                    Initial
+                                </td>
+                                <td class="act_as_cell" />
+                                <td class="act_as_cell" />
+                                <td class="act_as_cell right">
+                                    <!-- <t t-esc="product.currency_id.symbol" /> -->
+                                    <t t-esc="'{0:,.3f}'.format(initial)" />
+                                </td>
+                                <td class="act_as_cell" />
+                                <td class="act_as_cell" />
+                                <td class="act_as_cell" />
+                            </tr>
+                            <!-- Display each lines -->
+                            <t t-set="product_balance" t-value="initial" />
+                            <t t-set="product_purchase_price" t-value="product.standard_price"/>
+                            <t t-set="product_cost_balance" t-value="initial * product.standard_price" />
+                            <t
+                                t-foreach="o.results.filtered(lambda l: l.product_id == product and not l.is_initial)"
+                                t-as="product_line"
+                            >
+                                <t t-if="product_line.purchase_line_id">
+                                    <t
+                                        t-set="product_purchase_price"
+                                        t-value="product_line.purchase_line_id.price_unit"
+                                    />
+                                </t>
+                                <t t-else="">
+                                    <t t-set="product_purchase_price" t-value="product.standard_price"/>
+                                </t>
+
+                                <t
+                                    t-set="product_cost_balance"
+                                    t-value="product_cost_balance + ((product_line.product_in - product_line.product_out) * product_purchase_price)"
+                                />
+                                <t
+                                    t-set="product_balance"
+                                    t-value="product_balance + product_line.product_in - product_line.product_out"
+                                />
+                                
+                                <t t-call="rmdoo_stock_card.report_stock_card_lines" />
+                            </t>
+                        </table>
+                        <p style="page-break-before:always;" />
+                    </div>
+                <!-- </t> -->
+            </xpath>
+        </template>
+        <template id="rmdoo_stock_card.report_stock_card_lines_header" inherit_id="stock_card_report.report_stock_card_lines_header">
+            <xpath expr="//div[@class='act_as_thead']" position="replace">
+                <thead class="act_as_thead">
+                    <tr class="act_as_row labels">
+                        <td class="act_as_cell" rowspan="2">Dates</td>
+                        <td class="act_as_cell" rowspan="2">Customer</td>
+                        <td class="act_as_cell" rowspan="2">Reference</td>
+                        <td class="act_as_cell" colspan="3">Stock</td>
+                        <td class="act_as_cell" colspan="3">Cost</td>
+                    </tr>
+                    <tr class="act_as_row labels">
+                        <!-- <td class="act_as_cell"></td> -->
+                        <!-- <td class="act_as_cell"></td>
+                        <td class="act_as_cell"></td> -->
+                        <td class="act_as_cell">Input</td>
+                        <td class="act_as_cell">Output</td>
+                        <td class="act_as_cell">Balance</td>
+                        <td class="act_as_cell">Input</td>
+                        <td class="act_as_cell">Output</td>
+                        <td class="act_as_cell">Balance</td>
+                    </tr>
+                </thead>
+            </xpath>
+        </template>
+        <template id="rmdoo_stock_card.report_stock_card_lines">
+            <!-- <xpath expr="//div[@class='act_as_thead']" position="replace"> -->
+                <tr class="act_as_row lines">
+                    <td class="act_as_cell left">
+                        <t t-esc="product_line.date.strftime('%Y-%m-%d')" />
+                    </td>
+                    <td class="act_as_cell left">
+                        <t t-esc="product_line.partner_name" />
+                    </td>
+                    <td class="act_as_cell left">
+                        <t t-esc="product_line.reference" />
+                    </td>
+                    <td class="act_as_cell right">
+                        <t t-esc="'{0:,.3f}'.format(product_line.product_in)" />
+                    </td>
+                    <td class="act_as_cell right">
+                        <t t-esc="'{0:,.3f}'.format(product_line.product_out)" />
+                    </td>
+                    <td class="act_as_cell right">
+                        <t t-esc="'{0:,.3f}'.format(product_balance)" />
+                    </td>
+
+                    <t t-if="product_line.product_in > 0">
+                        <td class="act_as_cell right">
+                                <t t-esc="product.currency_id.symbol" />
+                                <t t-esc="'{0:,.3f}'.format(product_line.product_in * product_purchase_price)" />
+                        </td>
+                    </t>
+                    <t t-else="">
+                        <td class="act_as_cell" style="background:lightgray;" />
+                    </t>
+                    <t t-if="product_line.product_out > 0">
+                        <td class="act_as_cell right">
+                            <t t-esc="product.currency_id.symbol" />
+                            <t t-esc="'{0:,.3f}'.format(product_line.product_out * product_purchase_price)" />
+                        </td>
+                    </t>
+                    <t t-else="">
+                        <td class="act_as_cell" style="background:lightgray;" />
+                    </t>
+                    <td class="act_as_cell right">
+                            <t t-esc="product.currency_id.symbol" />
+                            <t t-esc="'{0:,.3f}'.format(product_cost_balance)" />
+                    </td>
+                </tr>
+            <!-- </xpath> -->
+        </template>
+</odoo>

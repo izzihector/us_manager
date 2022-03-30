@@ -1,0 +1,115 @@
+<odoo>
+	<template id="report_purchase_outstanding">
+		<t t-call="web.html_container">
+			<t t-as="o" t-foreach="docs">
+				<t t-call="purchase_rmdoo.report_purchase_outstanding_template" />
+			</t>
+		</t>
+	</template>
+	<template id="report_purchase_outstanding_template">
+		<t t-call="web.internal_layout">
+			<style>
+				table {
+				font-size:12px;
+				}
+			</style>
+			<div class="page">
+				<!-- <div class="oe_structure"/> -->
+				<h5>Purchase Order Outstanding Inquiries</h5>
+				<br />
+				<table style="width:100%;table-layout:fixed">
+					<tr>
+						<td style="width:140px;">Date</td>
+						<td style="width:10px;">:</td>
+						<td>
+							<span t-field="o.date_from" />
+							-
+							<span t-field="o.date_to" />
+						</td>
+						<td style="width:10px;">&amp;nbsp;</td>
+						<td style="width:140px;">Purchase</td>
+						<td style="width:10px;">:</td>
+						<td>
+							<span t-field="o.purchase_ids" />
+						</td>
+					</tr>
+					<tr>
+						<td>Created By</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.create_uids" />
+						</td>
+						<td>&amp;nbsp;</td>
+						<td>Product</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.product_ids" />
+						</td>
+					</tr>
+					<tr>
+						<td>Last Updated By</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.write_uids" />
+						</td>
+						<td>&amp;nbsp;</td>
+						<td>Vendor</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.partner_ids" />
+						</td>
+					</tr>
+	<!-- <tr> <td colspan="4">&amp;nbsp;</td> <td>Status</td> <td>:</td> <td> 
+		<span t-field="o.state" /> </td> </tr> -->
+				</table>
+				<br />
+				<table class="table table-sm o_main_table">
+					<thead>
+						<tr>
+							<th>P/O</th>
+							<th>Description</th>
+							<th style="text-align:center;">Date Planned</th>
+							<th>Vendor</th>
+							<th style="text-align:right;">Reserved Qty</th>
+							<th style="text-align:right;">Received Qty</th>
+							<th style="text-align:right;">Balance Qty</th>
+							<th style="text-align:center;">Status Due</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr t-as="line" t-foreach="o.lines">
+							<td>
+								<span t-field="line.order_id" />
+							</td>
+							<td>
+								<span t-field="line.name" />
+							</td>
+							<td style="text-align:center;">
+								<span t-field="line.date_planned"
+									t-options="{'widget':'date'}" />
+							</td>
+							<td>
+								<span t-field="line.partner_id" />
+							</td>
+							<td style="text-align:right;">
+								<span t-esc="line.product_qty * 1.0" />
+								<span t-field="line.product_uom" />
+							</td>
+							<td style="text-align:right;">
+								<span t-esc="line.qty_received * 1.0" />
+								<span t-field="line.product_uom" />
+							</td>
+							<td style="text-align:right;">
+								<span t-esc="line.balance_received * 1.0" />
+								<span t-field="line.product_uom" />
+							</td>
+							<td style="text-align:center;">
+								<span t-field="line.status_due" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</t>
+	</template>
+</odoo>

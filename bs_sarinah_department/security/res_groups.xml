@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_department.group_allow_manage_purchase_ga" model="res.groups">
+      <field name="name">Allow Manage Purchase GA</field>
+    </record>
+
+    <record id="bs_sarinah_department.group_show_advance_inventory_report" model="res.groups">
+        <field name="name">Show advance inventory report</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+    <record id="purchase_rmdoo.group_purchase_vp" model="res.groups">
+        <field name="name">Tim Pengadaan</field>
+    </record>
+    <record id="purchase_rmdoo.group_purchase_president" model="res.groups">
+        <field name="name">Tim Lelang</field>
+    </record>
+
+    <record id="bs_sarinah_department.module_category_accounting_department" model="ir.module.category">
+      <field name="name">Accounting Department</field>
+    </record>
+
+    <record id="bs_sarinah_department.group_manage_accounting_all" model="res.groups">
+      <field name="name">Manage Accounting for All Department</field>
+      <field name="category_id" ref="bs_sarinah_department.module_category_accounting_department"/>
+      <field name="implied_ids" eval="[(4, ref('account.group_account_invoice'))]"/>
+    </record>
+  </data>
+</odoo>

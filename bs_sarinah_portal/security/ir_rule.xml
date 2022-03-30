@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="vendor_portal_management.vendor_location_portal_user" model="ir.rule">
+            <field name="active">0</field>
+        </record>
+        <record id="vendor_portal_management.vendor_product_portal_user" model="ir.rule">
+            <field name="domain_force">
+                ['|',
+                ("partner_id", "child_of", user.partner_id.commercial_partner_id.id),
+                ("partner_id", "=", user.partner_id.commercial_partner_id.id)]
+            </field>
+        </record>
+    </data>
+</odoo>

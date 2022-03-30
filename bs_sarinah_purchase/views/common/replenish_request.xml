@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_purchase.form_replenish_request" model="ir.ui.view">
+      <field name="name">Replenish Request Form View</field>
+      <field name="model">replenish.request</field>
+      <field name="inherit_id" ref="purchase_rmdoo.view_replenish_request_form"/>
+      <field name="arch" type="xml">
+        <field name="date_planned" position="after">
+          <field name="approval_state" states="to_approve,approve"/>
+        </field>
+        <xpath expr="//header" position="replace">
+          <header>
+            <button name="action_submit" string="Submit" class="oe_highlight" states="draft" type="object"/>
+            <button name="action_cancel" string="Cancel" states="draft" type="object"/>
+
+            <button name="action_approve" string="Approve" class="oe_highlight" type="object"
+                    groups="bs_sarinah_purchase.group_purchase_request_manager"
+                    attrs="{'invisible': ['|', ('state', '!=', 'to_approve'), ('approval_state', '!=', 'approve_1')]}"/>
+            <button name="action_reject" string="Reject" type="object"
+                    groups="bs_sarinah_purchase.group_purchase_request_manager"
+                    attrs="{'invisible': ['|', ('state', '!=', 'to_approve'), ('approval_state', '!=', 'approve_1')]}"/>
+
+            <button name="action_approve" string="Approve" class="oe_highlight" type="object"
+                    groups="bs_sarinah_purchase.group_purchase_request_tim_pengadaan"
+                    attrs="{'invisible': ['|', ('state', '!=', 'to_approve'), ('approval_state', '!=', 'approve_2')]}"/>
+            <button name="action_reject" string="Reject" type="object"
+                    groups="bs_sarinah_purchase.group_purchase_request_tim_pengadaan"
+                    attrs="{'invisible': ['|', ('state', '!=', 'to_approve'), ('approval_state', '!=', 'approve_2')]}"/>
+
+            <button name="action_approve" string="Approve" class="oe_highlight" type="object"
+                    groups="bs_sarinah_purchase.group_purchase_request_tim_lelang"
+                    attrs="{'invisible': ['|', ('state', '!=', 'to_approve'), ('approval_state', '!=', 'approve_3')]}"/>
+            <button name="action_reject" string="Reject" type="object"
+                    groups="bs_sarinah_purchase.group_purchase_request_tim_lelang"
+                    attrs="{'invisible': ['|', ('state', '!=', 'to_approve'), ('approval_state', '!=', 'approve_3')]}"/>
+            <button attrs="{'invisible':[('state','not in',('part_confirm','confirm', 'approve'))]}" name="open_quant" string="Inventory Report" type="object"/>
+						<button attrs="{'invisible':[('state','not in',('part_confirm','confirm', 'approve'))]}" name="open_move" string="Stock Move" type="object"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,to_approve,approve"/>
+          </header>
+        </xpath>
+        <field name="warehouse_id" position="after">
+          <field name="pengadaan_user_ids" options="{'no_create': True, 'no_create_edit':True}" widget="many2many_tags"
+                 domain="[('is_tim_pengadaan', '=', True)]" attrs="{'invisible': [('is_ga', '=', False)], 'required': [('is_ga', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/>
+          <field name="lelang_user_ids" options="{'no_create': True, 'no_create_edit':True}" widget="many2many_tags"
+                 domain="[('is_tim_lelang', '=', True)]" attrs="{'invisible': [('is_ga', '=', False)], 'required': [('is_ga', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/>
+        </field>
+        <xpath expr="//field[@name='product_replenish_ids']/tree/field[@name='state']" position="attributes">
+          <attribute name="optional">hide</attribute>
+        </xpath>
+        <xpath expr="//field[@name='product_replenish_ids']/tree/button[@name='approve']" position="replace"/>
+        <xpath expr="//field[@name='product_replenish_ids']/tree/button[@name='cancel']" position="replace"/>
+      </field>
+    </record>
+  </data>
+</odoo>

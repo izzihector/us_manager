@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_product.stock_location_view_inherit" model="ir.ui.view">
+      <field name="name">Stock Location Form View Inherit</field>
+      <field name="model">stock.location</field>
+      <field name="inherit_id" ref="stock_no_negative.view_location_form"/>
+      <field name="arch" type="xml">
+        <field name="allow_negative_stock" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

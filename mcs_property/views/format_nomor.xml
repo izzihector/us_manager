@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mcs_property_format_nomor_form" model="ir.ui.view">
+            <field name="name">mcs_property.format_nomor.form</field>
+            <field name="model">mcs_property.format_nomor</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="format_nomor" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_format_nomor_tree" model="ir.ui.view">
+            <field name="name">mcs_property.format_nomor.tree</field>
+            <field name="model">mcs_property.format_nomor</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="format_nomor" />
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

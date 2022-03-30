@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_stock.tree_inventory_ledger" model="ir.ui.view">
+      <field name="name">Inventory Ledger Tree View</field>
+      <field name="model">setu.inventory.ledger.bi.report</field>
+      <field name="inherit_id" ref="setu_inventory_ledger_report.setu_inventory_ledger_bi_report_tree_cmpwise"/>
+      <field name="arch" type="xml">
+        <field name="opening_stock" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+      </field>
+    </record>
+    <record id="bs_sarinah_stock.form_inventory_ledger" model="ir.ui.view">
+      <field name="name">Inventory Ledger Form View</field>
+      <field name="model">setu.inventory.ledger.bi.report</field>
+      <field name="inherit_id" ref="setu_inventory_ledger_report.setu_inventory_ledger_bi_report_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//table/h2/tr[1]/th[1]" position="replace"/>
+        <xpath expr="//table/h2/tr[2]/td[1]" position="replace"/>
+      </field>
+    </record>
+  </data>
+</odoo>

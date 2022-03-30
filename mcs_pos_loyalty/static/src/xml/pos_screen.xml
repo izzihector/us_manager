@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="ClientDetails">
+         <t t-jquery=".edit-buttons" t-operation="append">
+             <div class='button check'><i class='fa fa-refresh' role="img" aria-label="Check" title="Check"/></div>
+         </t>
+        <t t-jquery=".client-details-right" t-operation="append">
+             <div class='client-detail'>
+                 <span class='label'>Loyalty ID</span>
+                 <t t-if='partner.loyalty_id'>
+                     <span class='detail client-id'><t t-esc='partner.loyalty_id'/></span>
+                 </t>
+                 <t t-if='!partner.loyalty_id'>
+                     <span class='detail client-id empty'>N/A</span>
+                 </t>
+             </div>
+            <div class='client-detail'>
+                 <span class='label'>Date of Birth</span>
+                <t t-if='partner.date_of_birth'>
+                     <span class='detail client-id'><t t-esc='partner.date_of_birth'/></span>
+                 </t>
+                <t t-if='!partner.date_of_birth'>
+                     <span class='detail client-id empty'>N/A</span>
+                 </t>
+            </div>
+         </t>
+    </t>
+
+    <t t-extend="ClientDetailsEdit">
+         <t t-jquery=".client-details-right" t-operation="append">
+             <div class='client-detail'>
+                 <span class='label'>Loyalty ID</span>
+                 <input class='detail loyalty' name='loyalty_id' t-att-value='partner.loyalty_id || ""'></input>
+             </div>
+             <div class='client-detail'>
+                 <span class='label'>Date of Birth</span>
+                 <input type="date" class='detail dob' name='date_of_birth'
+                        t-att-value='partner.date_of_birth || ""'></input>
+             </div>
+         </t>
+     </t>
+
+    <t t-extend="OrderReceipt">
+         <t t-jquery=".loyalty" t-operation="replace">
+            <span class="pos-receipt-center-align">
+                <div>--------------------------------</div>
+                <br/>
+                <div t-esc='receipt.loyalty.name' class="pos-receipt-title"/>
+                <br />
+                <div><t t-esc='receipt.loyalty.client' /></div>
+                <br/>
+            </span>
+             <t t-if='receipt.loyalty.points_won'>
+                <div>Earned Points <span t-esc='widget.format_pr(receipt.loyalty.points_won, receipt.loyalty.rounding)' class="pos-receipt-right-align"/></div>
+            </t>
+<!--            <t t-if='receipt.loyalty.points_total'>-->
+<!--                <div>Total Points <span t-esc='widget.format_pr(receipt.loyalty.points_total, receipt.loyalty.rounding)' class="pos-receipt-right-align"/></div>-->
+<!--            </t>-->
+            <br />
+         </t>
+    </t>
+
+    <t t-name="CustomLoyaltyPopup">
+        <div class="modal-dialog" id="custom_discount_popup">
+            <div class="popup popup-textinput tbl_custom_discont" style="height:400px !important" id="tbl_custom_loyalty">
+                <p class="title"><t t-esc=" 'Loyalty Points' " /></p>
+                <div class="body">
+                    <div>
+                        Available Points: <p class="client_points"/>
+                        Redeemable Points: <p class="client_redeemable_points"/>
+<!--                        <input id="client_points" placeholder="Percent" name="loyalty_points" readonly="1"/>-->
+                        <br/>
+                        <input id="client_points_redeem" type="number" placeholder="Points Redeem" name="loyalty_points_redeem"/>
+                    </div>
+
+                </div>
+                <div class="footer">
+                    <div class="button confirm_redeem">
+                        Confirm
+                    </div>
+                    <div class="button custom_cancel">
+                        Back
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-extend="LoyaltyPoints">
+        <t t-jquery=".loyalty-points" t-operation="replace">
+        </t>
+    </t>
+    <t t-extend="PaymentScreen-Numpad">
+        <t t-jquery=".numpad" t-operation="replace">
+            <div class="numpad">
+            <button class="input-button number-char" data-action='1'>1</button>
+            <button class="input-button number-char" data-action='2'>2</button>
+            <button class="input-button number-char" data-action='3'>3</button>
+            <button class="mode-button" data-action='*10'>*10</button>
+            <br />
+            <button class="input-button number-char" data-action='4'>4</button>
+            <button class="input-button number-char" data-action='5'>5</button>
+            <button class="input-button number-char" data-action='6'>6</button>
+            <button class="mode-button" data-action='*100'>*100</button>
+            <br />
+            <button class="input-button number-char" data-action='7'>7</button>
+            <button class="input-button number-char" data-action='8'>8</button>
+            <button class="input-button number-char" data-action='9'>9</button>
+            <button class="mode-button" data-action='*1000'>*1000</button>
+            <br />
+            <button class="input-button numpad-char" data-action='-' >+/-</button>
+            <button class="input-button number-char" data-action='0'>0</button>
+            <button class="input-button number-char" t-att-data-action='widget.decimal_point'><t t-esc='widget.decimal_point'/></button>
+            <button class="input-button numpad-backspace" data-action='BACKSPACE' >
+                <img src="/point_of_sale/static/src/img/backspace.png" width="24" height="21" alt="Backspace"/>
+            </button>
+        </div>
+        </t>
+    </t>
+</templates>

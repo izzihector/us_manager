@@ -1,0 +1,58 @@
+<odoo>
+  <data noupdate="0">
+    <!-- explicit list view definition -->
+    <record id="bs_sarinah_patch.form_product_template" model="ir.ui.view">
+      <field name="name">Product Template Form View</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='allow_negative_stock']" position="before">
+          <field name="default_code"/>
+          <field name="owner_id"/>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="testing.action_window">
+      <field name="name">testing window</field>
+      <field name="res_model">testing.testing</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="testing.action_server">
+      <field name="name">testing server</field>
+      <field name="model_id" ref="model_testing_testing"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="testing" id="testing.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="testing.menu_1" parent="testing.menu_root"/>
+    <menuitem name="Menu 2" id="testing.menu_2" parent="testing.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="testing.menu_1_list" parent="testing.menu_1"
+              action="testing.action_window"/>
+    <menuitem name="Server to list" id="testing" parent="testing.menu_2"
+              action="testing.action_server"/>
+-->
+  </data>
+</odoo>

@@ -1,0 +1,7 @@
+PRODUCT,QUANTITY,UOM,DESCRIPTION,PRICE,TAX,DISCOUNT
+Basic Computer,1,Unit(s),Basic Computer,10000,GST 1%,10
+Little Server,2,Unit(s),Little Server,50000,GST 28%,11
+Computer Case,1,Unit(s),Computer Case,2000,,12
+Server,3,Unit(s),Server,100000,GST 2%,13
+iMac,1,Unit(s),iMac,10000,,14
+iPad,2,Unit(s),iPad,50000,GST 1%,15

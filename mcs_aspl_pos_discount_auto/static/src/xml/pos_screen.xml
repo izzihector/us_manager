@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+     <t t-extend="DiscountPopup">
+         <t t-jquery=".apply" t-operation="replace"/>
+         <t t-jquery=".apply_complete_order" t-operation="replace">
+              <div class="button apply_complete_order">
+                <u>E</u>xecute
+              </div>
+         </t>
+     </t>
+</templates>

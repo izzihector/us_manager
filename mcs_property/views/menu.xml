@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem name="Property" id="mcs_property.menu_root" web_icon="mcs_property,static/description/icon.png" />
+
+        <menuitem name="Contract Agreement" id="mcs_property.contract" parent="mcs_property.menu_root" action="mcs_property_contract_action" sequence="5"/>
+
+        <menuitem name="Order" id="mcs_property.order" parent="mcs_property.menu_root" action="mcs_property_order_action" sequence="20" />
+        <menuitem name="Product Property" id="mcs_property.product_property" parent="mcs_property.menu_root" action="mcs_property_product_property_action" sequence="30" />
+        <menuitem name="Customer" id="mcs_property.customer" parent="mcs_property.menu_root" action="mcs_property_customer_action" sequence="40" />
+        <menuitem name="Configuration" id="mcs_property.konfigurasi" parent="mcs_property.menu_root" sequence="50" />
+
+        <menuitem name="Format Nomor" id="mcs_property.format_nomor" parent="mcs_property.konfigurasi" action="mcs_property_format_nomor_action" sequence="1" />
+        <menuitem name="Location" id="mcs_property.location" parent="mcs_property.konfigurasi" action="mcs_property_location_action" sequence="5" />
+        <menuitem name="Document Categories" id="mcs_property.document_categories" parent="mcs_property.konfigurasi" action="mcs_property_document_categories_action" sequence="10" />
+        <menuitem name="UoM" id="mcs_property.unit" parent="mcs_property.konfigurasi" action="mcs_property_uom_uom_action" sequence="20" />
+        <menuitem name="Lost Reason" id="mcs_property.lost_reason" parent="mcs_property.konfigurasi" action="mcs_property_lost_reason_action" sequence="30" />
+    </data>
+</odoo>

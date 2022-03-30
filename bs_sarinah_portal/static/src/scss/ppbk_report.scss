@@ -1,0 +1,30 @@
+.o_ppbk_report_page {
+  //noinspection SassScssResolvedByNameOnly
+  background-color: $o-view-background-color;
+  margin: 16px auto;
+  padding: 24px 16px;
+  max-width: 90%!important;
+  table.o_ppbk_expandable {
+    thead tr {
+      border-width: 2px;
+      border-top-style: groove;
+      border-bottom-style: groove;
+    }
+
+    tbody tr {
+      border-width: 1px;
+      border-top-style: solid;
+      border-bottom-style: groove;
+    }
+
+    thead tr th {
+      padding-left: 10px;
+    }
+
+    tbody, tfoot {
+      & > tr > td ~ td {
+        padding-left: 10px;
+      }
+    }
+  }
+}

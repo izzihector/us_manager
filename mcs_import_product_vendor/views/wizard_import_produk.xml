@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+     <record id="vendor_product_import_wizard_view" model="ir.ui.view">
+        <field name="name">mcs.import.produk.vendor.wizard</field>
+        <field name="model">mcs.import.produk.vendor</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="partner_id" />
+                        <field name="nama_file" filename="file_name"/>
+                        <field name="file_name" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button name="act_import_data"
+                                string="Import Data"
+                                type="object"
+                                class="oe_highlight"
+                        />
+                        <button string="Cancel"
+                                class="oe_link"
+                                special="cancel"
+                        />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_import_produk_vendor" model="ir.actions.act_window">
+         <field name="name">MCS | Import Vendor Products</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="res_model">mcs.import.produk.vendor</field>
+         <field name="target">new</field>
+         <field name="view_mode">form</field>
+    </record>
+
+
+
+</odoo>

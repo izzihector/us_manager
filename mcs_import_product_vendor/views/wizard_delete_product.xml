@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <record id="wizard_del_prod_vendor" model="ir.ui.view">
+            <field name="name">Validasi Hapus Data Produk Vendor</field>
+            <field name="model">brt.delete_product_vendor</field>
+            <field name="arch" type="xml">
+                <form string="Validasi Hapus Data Produk Vendor">
+                    <group>
+                        <p>Apakah anda yakin akan menghapus Product ini?? 
+                        <br></br>Pastikan data product belum ada transaksi, dan semua attribute serta Variant product otomatis akan ikut terhapus</p>
+                    </group>
+                    <footer>
+                        <button name="action_delete_product_vendor" string="Hapus Data" type="object" class="btn-primary" />
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Delete Product Vendor" id="action_delete_product_vendor" res_model="brt.delete_product_vendor" binding_model="vendor.product" binding_views="form,list" view_mode="form" target="new" />
+
+        <record id="wizard_del_prod_variant" model="ir.ui.view">
+            <field name="name">Validasi Hapus Data Produk Variant</field>
+            <field name="model">brt.delete_product_variant</field>
+            <field name="arch" type="xml">
+                <form string="Validasi Hapus Data Produk Variant">
+                    <group>
+                        <p>Apakah anda yakin akan menghapus Product Variant ini?? 
+                        <br></br>Pastikan data product Variant belum ada transaksi, dan semua attribute product otomatis akan ikut terhapus</p>
+                    </group>
+                    <footer>
+                        <button name="action_delete_product_variant" string="Hapus Data" type="object" class="btn-primary" />
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Delete Product Variant" id="action_delete_product_variant" res_model="brt.delete_product_variant" binding_model="product.product" binding_views="form,list" view_mode="form" target="new" />
+       
+
+    </data>
+</odoo>

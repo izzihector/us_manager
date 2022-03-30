@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="Chrome">
+        <t t-jquery="div.pos-branding" t-operation="replace">
+            <img class="pos-logo" src="/web/binary/company_logo" alt="Logo"/>
+        </t>
+    </t>
+    <t t-name="CustomerDisplay">
+        <div class="control-button">
+            Customer Display
+        </div>
+    </t>
+
+</templates>

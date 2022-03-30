@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="inherit_coa_form">
+            <field name="name">inherit.account.account.form</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="active"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

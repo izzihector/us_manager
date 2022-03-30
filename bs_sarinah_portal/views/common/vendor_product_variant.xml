@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <!-- vendor.product.variant tree view -->
+    <record id="bs_sarinah_portal.vendor_product_variant_view_tree" model="ir.ui.view">
+      <field name="name">vendor.product.variant.view.tree</field>
+      <field name="model">vendor.product.variant</field>
+      <field name="arch" type="xml">
+        <tree>
+          <!-- Add your fields here -->
+          <field name="vendor_product_id" invisible="1"/>
+          <field name="product_code"/>
+          <field name="product_name"/>
+          <field name="attribute_value_ids" widget="many2many_tags"/>
+        </tree>
+      </field>
+    </record>
+    <record id="bs_sarinah_portal.vendor_product_variant_view_form" model="ir.ui.view">
+      <field name="name">vendor.product.variant.form</field>
+      <field name="model">vendor.product.variant</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button name="%(vendor_product_management.vendor_quant_action)d"
+                      type="action" icon="fa-cubes"
+                      context="{
+                                    'default_vendor_product_id': active_id,
+                                    'search_default_vendor_product_id': active_id,
+                                    'search_default_vendor_location_id_group': 1,
+                                    'search_default_vendor_product_partner_id_group': 1,
+                                }">
+                <div class="o_field_widget o_stat_info">
+                  <span class="o_stat_value">
+                    <field name="vendor_quantity"
+                           widget="statinfo"
+                           nolabel="1"
+                           class="mr4"
+                    />
+                    <field name="uom_name"/>
+                  </span>
+                  <span class="o_stat_text">Vendor Stocks</span>
+                </div>
+              </button>
+            </div>
+            <group>
+              <group>
+                <field name="partner_id"/>
+                <field name="product_name"/>
+                <field name="product_code"/>
+                <field name="attribute_value_ids" widget="many2many_tags"/>
+              </group>
+              <group>
+                <div style="color: #c54d49;"
+                     attrs="{'invisible': [('uom_notes', '=', False)]}"
+                >
+                  <field name="uom_notes"
+                         nolabel="1"
+                  />
+                </div>
+                <field name="vendor_product_id"/>
+                <field name="product_id" domain="[('product_tmpl_id', '=', product_tmpl_id)]"/>
+                <field name="product_tmpl_id"/>
+                <field name="delay"/>
+                <field name="active" invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Prices">
+                <field name="variant_price_ids">
+                  <tree>
+                    <field name="price"/>
+                    <field name="currency_id"/>
+                    <field name="min_qty"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                  </tree>
+                  <form>
+                    <sheet>
+                      <group>
+                        <label for="min_qty"/>
+                        <div>
+                          <field name="min_qty" class="oe_inline"/>
+                          <field name="product_uom"
+                                 class="oe_inline"
+                                 groups="uom.group_uom"
+                          />
+                        </div>
+                        <label for="price"/>
+                        <div>
+                          <field name="price" class="oe_inline"/>
+                          <field name="currency_id"
+                                 class="oe_inline"
+                          />
+                        </div>
+                        <label for="date_start" string="Validity"/>
+                        <div>
+                          <field name="date_start" class="oe_inline"/>
+                          to
+                          <field name="date_end" class="oe_inline"/>
+                        </div>
+                        <field name="company_id"
+                               readonly="1"
+                               groups="base.group_multi_company"
+                        />
+                      </group>
+                      <group invisible="0">
+                        <field name="name"/>
+                        <field name="vendor_product_id"/>
+                        <field name="product_id"/>
+                        <field name="product_tmpl_id"/>
+                        <field name="product_name"/>
+                        <field name="product_code"/>
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+              <page string="Notes">
+                <field name="description"/>
+              </page>
+            </notebook>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="activity_ids" widget="mail_activity"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+############################################################################
+#  Module Name: pos
+#  Class Name: custom_discount, Model Name: pos.custom.discount
+#  File Name: pos_custom_discount_inherit.xml
+#  Created On: 19/11/2021, 09.59
+#  Description:  Sistem Informasi pos
+#  Author: Matrica Consulting - (TPW)
+############################################################################-->
+<odoo>
+    <data>
+
+        <!-- INHERIT VIEW Form pos.custom_discount_form_view_id ========= -->
+        <record model="ir.ui.view" id="view_custom_discount_form_inherited">
+            <field name="name">custom_discount form</field>
+            <field name="model">pos.custom.discount</field>
+            <field name="inherit_id" ref="aspl_pos_discount.pos_discount_form_view"/>
+            <field name="arch" type="xml">
+                <!-- Snipet: tpf_view_inherit_field, tpf_view_inherit_xpath, tpf_inherit_catatan -->
+                <xpath expr="//group[1]" position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <field name="active" invisible="1"/>
+                        <button name="toggle_active" attrs="{'invisible': [('active', '=', False)]}" icon="fa-archive" type="object" class="oe_stat_button">
+                            Archive
+	                    </button>
+                         <button name="toggle_active" attrs="{'invisible': [('active', '=', True)]}" icon="fa-archive" type="object" class="oe_stat_button">
+                            Un-Archive
+	                    </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archive" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="sequence_number"/>
+                        </h1>
+                    </div>
+                </xpath>
+                <field name="apply_on" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="product_ids" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                    <attribute name="domain">[('owner_id', '=?', vendor_id)]</attribute>
+                </field>
+                <field name="value" position="after">
+                    <!-- after,before,replace,inside(inside tidak perlu referensi),attribute -->
+                    <field name="vendor_id" domain="[('is_merchant', '=', True)]" required="1" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                    <field name="vendor_shared"/>
+                    <field name="sarinah_shared" force_save="1"/>
+                </field>
+
+            </field> <!-- end arch -->
+        </record> <!-- end view generic -->
+
+    </data>
+</odoo>

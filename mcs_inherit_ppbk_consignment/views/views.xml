@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="inherit_wizard_consignment_bills" model="ir.ui.view">
+            <field name="name">Inherit wizard_consignment_bills</field>
+            <field name="model">wizard.consignment.bills</field>
+            <field name="inherit_id" ref="bs_consignment_bills.wizard_consignment_bills"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='branch_ids']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="inherit_wizard_ppbk_report" model="ir.ui.view">
+            <field name="name">Inherit wizard_ppbk_report</field>
+            <field name="model">wizard.ppbk.report</field>
+            <field name="inherit_id" ref="bs_sarinah_portal.wizard_ppbk_report"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='branch_id']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True, 'no_open': True}</attribute>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <templates id="pos_bag_charges_template" inherit_id="point_of_sale.template" xml:space="preserve">
+
+
+  
+  <!-- PosBagWidget -->
+   
+      <t t-name="PosBagWidget" name="Pos Bag Widget">
+        <t t-if="widget.pos.config.allow_bag_charges">
+            <div class="control-button button confirm" id="pos_bag" style="background-color: #6ec89b; color: #fff;">
+                <i class="fa fa-shopping-bag"></i> Bag 
+            </div>
+        </t>
+   	 </t>
+
+
+
+        <!-- PosBagPopupWidget -->
+    <t t-name="PosBagPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-confirm" style="height: 350px;">
+                <p class="title" style="background-color: rgb(110,200,155); color: #fff;">List of Bag Charges</p>
+                <div class="body">
+		     				   <div class='div-container' style="height: 100px;">
+		                    <span class='product bag-category' t-foreach="widget.options.orderlines || []" t-as="item" t-att-data-product-id="item.id">
+      									   <div class="product-img">
+      										    <img t-att-src='item.image_url'  alt="Product image"/>
+      										      <span class="price-tag">
+      										        <t t-esc="widget.format_currency(item.lst_price,'Product Price')"/>
+      									         </span>
+									         </div>
+          									<div class="product-name">
+          										<t t-esc="item.display_name"/>
+          									</div>
+							         	</span>
+							
+		                </div>
+		            </div>
+
+                <div class="footer" style="background-color: rgb(110,200,155); color: #fff;">
+                	<div class="button cancel" style="background-color: #0075AC; color: #fff;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+  	</templates>
+  	
+  	

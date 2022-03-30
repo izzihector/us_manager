@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="vendor_low_stock_product_list" name="Low Stock Products">
+    <t t-call="portal.portal_layout">
+      <t t-set="breadcrumbs_searchbar" t-value="True"/>
+      <t t-call="portal.portal_searchbar">
+        <t t-set="title">Low Stock Products</t>
+      </t>
+      <t t-if="not low_stocks">
+        <p>There are currently no products with low stock found by your criteria.</p>
+      </t>
+      <t t-if="low_stocks" t-call="portal.portal_table">
+        <thead>
+          <tr class="active">
+            <th>Code</th>
+            <th>Product</th>
+            <th>Location</th>
+            <th>Stock Limit</th>
+            <th>Current Stock</th>
+          </tr>
+        </thead>
+        <t t-foreach="low_stocks" t-as="stock">
+          <t t-set="product_id" t-value="stock['product_id']"/>
+          <tr t-att-class="'inactive_row' if not product_id.active else ''">
+            <td>
+              <a t-attf-href="/my/low_stock_products/#{product_id.id}?#{keep_query()}">
+                <t t-esc="product_id.product_code"/>
+              </a>
+            </td>
+            <td>
+              <a t-attf-href="/my/low_stock_products/#{product_id.id}?#{keep_query()}">
+                <t t-esc="product_id.display_name"/>
+              </a>
+            </td>
+            <td/>
+            <td/>
+            <td/>
+          </tr>
+          <t t-foreach="stock['lines']" t-as="line">
+            <tr>
+              <td/>
+              <td/>
+              <td>
+                <t t-esc="line['location_id'].name"/>
+              </td>
+              <td>
+                <t t-esc="product_id.minimum_quantity"/>
+              </td>
+              <td>
+                <t t-esc="line['current_stock']"/>
+              </td>
+            </tr>
+          </t>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

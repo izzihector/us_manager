@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <template id="bs_sarinah_portal.quote_content" inherit_id="vendor_portal_management.vendor_product">
+      <xpath expr="//div[@id='introduction']" position="before">
+        <div t-if="vendor_product.state == 'draft'" class="alert alert-warning alert-dismissable mb-0 d-print-none" role="warning">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">&amp;times;</button>
+          <strong>Waiting for Validation</strong><br/>
+          Product you created not validated by admin yet.
+        </div>
+      </xpath>
+      <xpath expr="//section[@id='prices']" position="replace">
+        <section id="product_images" t-att-data-product="vendor_product.id" style="page-break-inside: auto;" class="mt32"/>
+        <section id="product_attributes" t-att-data-product="vendor_product.id" style="page-break-inside: auto;" class="mt32"/>
+        <section id="product_variants" t-att-data-product="vendor_product.id" style="page-break-inside: auto;" class="mt32"/>
+      </xpath>
+      <xpath expr="//section[@id='stocks']" position="replace">
+      </xpath>
+    </template>
+    <template id="bs_sarinah_portal.vendor_products" inherit_id="vendor_portal_management.vendor_products">
+      <xpath expr="//th[3]" position="replace">
+        <th>Retail Price</th>
+      </xpath>
+      <xpath expr="//th[4]" position="replace">
+        <th>Vendor Price</th>
+      </xpath>
+      <xpath expr="//td[3]" position="replace">
+        <td>
+          <t t-foreach="vproduct.price_ids" t-as="price">
+            <div t-if="not price.check_not_valid()">
+              <span class="badge badge-pill badge-info">
+                <span t-field="price.portal_input_price" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: price.currency_id}"/>
+                <t t-if="price.min_qty">
+                  (from <span t-field="price.min_qty"/>
+                  <span t-field="price.product_uom" groups="uom.group_uom"/>)
+                </t>
+              </span>
+            </div>
+          </t>
+        </td>
+      </xpath>
+      <xpath expr="//td[4]" position="replace">
+        <td>
+          <t t-foreach="vproduct.price_ids" t-as="price">
+            <div t-if="not price.check_not_valid()">
+              <span class="badge badge-pill badge-info">
+                <span t-field="price.sudo().price_after_margin" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: price.currency_id}"/>
+                <t t-if="price.min_qty">
+                  (from <span t-field="price.min_qty"/>
+                  <span t-field="price.product_uom" groups="uom.group_uom"/>)
+                </t>
+              </span>
+            </div>
+          </t>
+        </td>
+      </xpath>
+    </template>
+  </data>
+</odoo>

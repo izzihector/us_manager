@@ -1,0 +1,5 @@
+<odoo>
+    <record name="local_py3o_server" model="py3o.server">
+        <field name="url"></field>
+    </record>
+</odoo>

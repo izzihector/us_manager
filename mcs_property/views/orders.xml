@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mcs_property_sale_order_inherit_add_rent_charge" model="ir.ui.view">
+            <field name="name">mcs_property_sale_order_inherit_add_rent_charge</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                    <button name="action_confirm_property" string="Confirm" type="object" attrs="{'invisible': ['|', ('is_property', '=', False), ('state', 'not in', ['draft'])]}" />
+                </xpath>
+                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="is_property" invisible="1" />
+                    <field name="contract_id" attrs="{'invisible': [('is_property', '=', False)]}" />
+                    <field name="recurring_month_display" attrs="{'invisible': [('is_property', '=', False)]}" />
+                    <field name="recurring_year" attrs="{'invisible': [('is_property', '=', False)]}" />
+                    <field name="recurring_active" attrs="{'invisible': [('is_property', '=', False)]}" />
+                </xpath>
+                <xpath expr="//field[@name='order_line']//tree/field[@name='price_unit']" position="before">
+                    <field name="rent_price_month" invisible="context.get('default_is_property') != True" />
+                    <field name="service_charge_price_month" invisible="context.get('default_is_property') != True" />
+                </xpath>
+
+                <xpath expr="//button[@name='action_open_delivery_wizard']" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,77 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="view_master_branch_mcs_form">
+        <field name="name">brt_crm_progress.master_progress.form</field>
+        <field name="model">mcs.branch</field>
+        <field name="arch" type="xml">
+            <form string="Branch (Bisnis Unit)">
+            <sheet>
+                <group cols="4">
+                    <group>
+                        <field name="name"/>
+                        <field name="parent_id"/>
+                        <field name="company_id"/>
+                        <field name="telephone_no"/>
+                    </group>
+                    <group>
+                        <field name="address"/>
+                    </group>
+                </group>
+          </sheet>
+          </form>
+        </field>
+    </record>
+
+    <record  id="view_master_branch_mcs_tree" model="ir.ui.view">
+        <field name="name">brt_crm_progress.master_progress.tree</field>
+        <field name="model">mcs.branch</field>
+        <field name="arch" type="xml">
+            <tree string="Branch (Bisnis Unit)">
+                <field name="name"/>
+                <field name="parent_id"/>
+                <field name="address"/>
+                <field name="telephone_no"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- RES.USER -->
+    <record id="view_user_form_extended" model="ir.ui.view">
+        <field name="name">res.user.form.extended</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <group name="preferences" position="before">
+                <group colspan="4" string='Allowed Branches'>
+                    <field name="branch_ids" nolabel="1" widget="many2many_tags"/>
+                    <field name="branch_id"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
+    <!--custom by wgp-->
+    <record id="view_users_form_simple_modif2" model="ir.ui.view">
+        <field name="name">res.users.inherit.view.form2</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="branch_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="act_branch_mcs" model="ir.actions.act_window">
+        <field name="name">Branch (Bisnis Unit)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mcs.branch</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Branch (Bisnis Unit)" id="mcs_branch.branch" parent="base.menu_users" action="act_branch_mcs"/>
+
+  </data>
+</odoo>

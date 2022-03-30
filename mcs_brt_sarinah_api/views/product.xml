@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="inherit_view_product_populer">
+        <field name="name">inherit.view.product.populer</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="after">
+                 <field name="is_populer" />
+            </xpath>
+        </field>
+    </record>
+     
+ 
+</odoo>        

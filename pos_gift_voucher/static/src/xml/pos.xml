@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+    <t t-extend="PaymentScreen-Paymentlines">
+        <t t-jquery=".paymentlines tbody" t-operation="append">
+            <t t-if='is_gift_coupon'>
+                <tr class='gift-coupon-line' t-att-data-cid='0'>
+                    <td class='coupon-edit' colspan="2">
+                        <input type="text" id="gift-coupon" autofocus="autofocus" placeholder="Gift Coupon Code" />
+                    </td>
+                    <td>
+                        <div class="add-coupon">
+                            <i class="add-coupon-button fa  fa-check-circle"></i>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cancel-coupon">
+                            <i class="cancel-coupon-button fa fa-minus-circle "></i>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+            </t>
+            <!-- <t t-if='extradue'>
+                <tr class='paymentline extra' t-att-data-cid='0'>
+                    <td class='col-due'>
+                        <t t-esc='widget.format_currency_no_symbol(extradue)' />
+                    </td>
+                </tr>
+            </t> -->
+        </t>
+    </t>
+
+    <t t-extend="ScaleScreenWidget">
+        <t t-jquery=".product-price" t-operation="replace">
+            <div class='product-price'>
+                <t t-esc="widget.format_currency(widget.get_product_price()) + '/lb(s)'" />
+            </div>
+        </t>
+    </t>
+
+    <t t-name="PosCoupon">
+        <div class="pos-sale1-ticket">
+            <label style="margin-top:100px;margin-left:100px;font-weight:80px">Barcodes</label>
+            <tr t-foreach="widget.currentOrderLines.toArray()" t-as="order">
+                <td t-foreach="order.get_serial_no()" t-as="o">
+                    <div id="bar1" style="margin-left:70px"></div>
+
+                    <script type="text/javascript">
+                        OnLoadDiv('bar1',"
+                        <t t-esc="o" />
+                        ");
+                    </script>
+                </td>
+            </tr>
+
+        </div>
+    </t>
+
+    <t t-name="CouponScreenWidget">
+        <div id="coupon-screen" class="screen">
+            <header>
+                <h2>Coupon</h2>
+            </header>
+            <div class="pos-step-container">
+                <div class="pos-coupon-container"></div>
+            </div>
+        </div>
+    </t>
+
+    <t t-extend="OrderReceipt">
+        <t t-jquery=".orderlines" t-operation="after">
+            <div width="1" height="1" class="recipt-sperator"></div>
+            <div id="canv" width="1" height="1" style="border:1px solid #fff;visibility:hidden;"></div>
+            <div id="output" style="white-space:pre"></div>
+        </t>
+    </t>
+
+    <t t-extend="SaleDetailsReport">
+        <t t-jquery=".orderlines" t-operation="replace">
+            <div class='orderlines' line-ratio='0.6'>
+                <t t-foreach='receipt.orderlines' t-as='line'>
+                    <t t-set='simple' t-value='line.discount === 0 and line.unit_name === "Unit(s)" and line.quantity === 1' />
+                    <t t-if='simple'>
+                        <line>
+                            <left>
+                                <t t-esc='line.product_name' />
+                            </left>
+                            <right>
+                                <value>
+                                    <t t-esc='line.price_display' />
+                                </value>
+                            </right>
+                        </line>
+                    </t>
+                    <t t-if='!simple'>
+                        <line>
+                            <left>
+                                <t t-esc='line.product_name' />
+                            </left>
+                        </line>
+                        <t t-if='line.discount !== 0'>
+                            <line indent='1'>
+                                <left>
+                                    Discount:
+                                    <t t-esc='line.discount' />
+                                    %
+                                </left>
+                            </line>
+                        </t>
+                        <line indent='1'>
+                            <left>
+                                <value value-decimals='3' value-autoint='on'>
+                                    <t t-esc='line.quantity' />
+                                </value>
+                                <t t-if='line.unit_name !== "Unit(s)"'>
+                                    <t t-esc='line.unit_name' />
+                                </t>
+                                x
+                                <value value-decimals='2'>
+                                    <t t-esc='line.price' />
+                                </value>
+                            </left>
+                            <right>
+                                <value>
+                                    <t t-esc='line.price_display' />
+                                </value>
+                            </right>
+                        </line>
+                    </t>
+                </t>
+                <t t-foreach='receipt.coupon_unique_nos' t-as="voucher_no">
+                    <code128>
+                        <t t-esc='voucher_no' />
+                    </code128>
+                    <div bold='on'>
+                        <t t-esc='voucher_no' />
+                    </div>
+                    <br />
+                </t>
+            </div>
+
+        </t>
+    </t>
+
+</templates>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record model="ir.module.category" id="bs_sarinah_purchase.module_category_purchase_request">
+      <field name="name">Purchase Request Approval</field>
+    </record>
+    <record id="group_purchase_request_manager" model="res.groups">
+      <field name="name">Kepala Bagian</field>
+      <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+      <field name="category_id" ref="bs_sarinah_purchase.module_category_purchase_request"/>
+    </record>
+    <record id="group_purchase_request_tim_pengadaan" model="res.groups">
+      <field name="name">Tim Pengadaan</field>
+      <field name="category_id" ref="bs_sarinah_purchase.module_category_purchase_request"/>
+      <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="group_purchase_request_tim_lelang" model="res.groups">
+      <field name="name">Tim Lelang</field>
+      <field name="category_id" ref="bs_sarinah_purchase.module_category_purchase_request"/>
+      <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+  </data>
+</odoo>

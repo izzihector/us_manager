@@ -1,0 +1,111 @@
+<odoo>
+    <template id="report_purchase_history">
+        <t t-call="web.html_container">
+            <t t-as="o" t-foreach="docs">
+                <t t-call="purchase_rmdoo.report_purchase_history_template"/>
+            </t>
+        </t>
+    </template>
+    <template id="report_purchase_history_template">
+        <t t-call="base_rmdoo.rmdoo_internal_layout">
+            <style>
+                table {
+                    font-size:12px;
+                }
+            </style>
+            <div class="page">
+                <div class="oe_structure"/>
+                <h5>Purchase History by P/O</h5>
+                <br/>
+                <table style="width:100%;table-layout:fixed">
+                    <tr>
+                        <td style="width:140px;">Date</td>
+                        <td style="width:10px;">:</td>
+                        <td>
+                            <span t-field="o.date_from"/> - <span t-field="o.date_to"/>
+                        </td>
+                        <td style="width:10px;">&amp;nbsp;</td>
+                        <td style="width:140px;">Product</td>
+                        <td style="width:10px;">:</td>
+                        <td>
+                            <span t-field="o.product_ids"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Created By</td>
+                        <td>:</td>
+                        <td>
+                            <span t-field="o.create_uids"/>
+                        </td>
+                        <td>&amp;nbsp;</td>
+                        <td>Purchase Order</td>
+                        <td>:</td>
+                        <td>
+                            <span t-field="o.purchase_ids"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Last Updated By</td>
+                        <td>:</td>
+                        <td>
+                            <span t-field="o.write_uids"/>
+                        </td>
+                        <td>&amp;nbsp;</td>
+                        <td>Vendor</td>
+                        <td>:</td>
+                        <td>
+                            <span t-field="o.partner_ids"/>
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <td colspan="4">&amp;nbsp;</td>
+                        <td>Status</td>
+                        <td>:</td>
+                        <td>
+                            <span t-field="o.state"/>
+                        </td>
+                    </tr> -->
+                </table>
+                <br/>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Order Date</th>
+                            <th>Vendor</th>
+                            <th>Order Reference</th>
+                            <th>Product</th>
+                            <th style="text-align:center;">Price B/Discount</th>
+                            <th style="text-align:center;">Price A/Discount</th>
+                            <th style="text-align:center;">Price Different</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-as="line" t-foreach="o.lines">
+                            <td>
+                                <span t-field="line.date_order" t-options="{'widget':'date'}"/>
+                            </td>
+                            <td>
+                                <span t-field="line.partner_id"/>
+                            </td>
+                            <td>
+                                <span t-field="line.order_id"/>
+                            </td>
+                            <td>
+                                <span t-field="line.product_id"/>
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.price_unit"/>
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.price_unit_disc"/>
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.price_unit_dif"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

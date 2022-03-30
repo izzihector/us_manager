@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mcs_property_contract_form" model="ir.ui.view">
+            <field name="name">Contract Form</field>
+            <field name="model">mcs_property.contract</field>
+            <field name="arch" type="xml">
+                <form name="Contract Form" string="Contract Form" class="o_sale_order">
+                    <header>
+                        <!-- <button name="do_clear_sequence" type="object" string="do_clear_sequence" class="btn btn-danger" /> -->
+                        <button name="do_confirm" type="object" string="KONFIRMASI" class="oe_highlight" attrs="{'invisible': ['|','|','|',('is_cancel', '=', True),('is_cancel_requested', '=', True),('state', '!=', '0'),('id', '=', 'False')]}" icon="fa-check" groups="mcs_property.mcs_property_sales_staff" />
+
+                        <button name="do_approve" type="object" string="TERIMA" class="oe_highlight" attrs="{'invisible': [('state', '!=', '10')]}" icon="fa-check" groups="mcs_property.mcs_property_sales_manager" />
+                        <!-- <button name="do_approve_denied" type="object" string="TOLAK" class="btn btn-default" attrs="{'invisible': [('state', '!=', '10')]}" icon="fa-check" groups="mcs_property.mcs_property_sales_manager" /> -->
+
+                        <button name="do_running" type="object" icon="fa-play" string="JALANKAN KONTRAK" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', '20'), ('is_security_deposit_required', '=', True)]}" groups="mcs_property.mcs_property_sales_manager" />
+                        <button name="do_done" type="object" icon="fa-calendar-check-o" string="SELESAI" class="oe_highlight" attrs="{'invisible': [('can_selesai', '=', False)]}" groups="mcs_property.mcs_property_sales_manager" />
+
+                        <button name="do_expired" type="object" icon="fa-calendar-minus-o" string="KADALUARSA" class="btn btn-danger" attrs="{'invisible': [('can_selesai', '=', False)]}" groups="mcs_property.mcs_property_sales_manager" />
+
+                        <button name="ask_surat_peringatan" type="object" icon="fa-info" string="SURAT PERINGATAN" class="btn btn-warning text-white" attrs="{'invisible': ['|', ('is_wanprestasi_requested', '=', True), ('state', '!=', '30')]}" groups="mcs_property.mcs_property_sales_staff" />
+                        <button name="konfirmasi_surat_peringatan" type="object" icon="fa-info" string="TERIMA SURAT PERINGATAN" class="btn btn-warning text-white" attrs="{'invisible': ['|', '|', ('is_wanprestasi_approved', '=', True), ('is_wanprestasi_requested', '=', False), ('state', '!=', '30')]}" groups="mcs_property.mcs_property_sales_manager" />
+
+                        <button name="ask_surat_peringatan_alasan" type="object" icon="fa-info" string="ALASAN PEMBATALAN" class="btn btn-warning text-white" attrs="{'invisible': ['|', '|', ('is_wanprestasi_alasan_requested', '=', True), ('is_wanprestasi_approved', '=', False), ('state', '!=', '30')]}" groups="mcs_property.mcs_property_sales_staff" />
+                        <button name="konfirmasi_surat_peringatan_alasan" type="object" icon="fa-info" string="TERIMA ALASAN PEMBATALAN" class="btn btn-warning text-white" attrs="{'invisible': [('can_approve_wanprestasi', '=', False)]}" groups="mcs_property.mcs_property_sales_manager" />
+
+                        <!-- <button name="do_extend" type="object" icon="fa-plus" string="EXTEND" class="btn btn-warning text-white" attrs="{'invisible': ['|','|',('state', '=', '0'),('state', '=', '10')]}"/> -->
+                        <button name="do_extend" type="object" icon="fa-plus" string="PERPANJANGAN" class="btn btn-warning text-white" attrs="{'invisible': [('can_extend', '=', False)]}" groups="mcs_property.mcs_property_sales_staff" />
+
+                        <button name="do_adendum" type="object" icon="fa-refresh" string="PERUBAHAN" class="oe_highlight" style="background-color: #4caf50 !important; border-color: #4caf50 !important;" groups="mcs_property.mcs_property_sales_staff" attrs="{'invisible': [('can_adendum', '=', False)]}" />
+                        <!-- ['|', '|', ('is_extended', '=', True), ('state', '!=', '30'), ('is_adendum_ok', '=', True)] -->
+
+                        <button name="do_cancel" type="object" groups="mcs_property.mcs_property_sales_staff" icon="fa-times" string="CANCEL" class="btn btn-default" attrs="{'invisible': ['|','|',('state', 'not in', ['0']),('is_cancel_requested', '=', True),('id', '=', 'False')]}" />
+
+                        <button name="do_confirm_cancel" type="object" groups="mcs_property.mcs_property_sales_manager" icon="fa-times" string="TERIMA PEMBATALAN" class="btn btn-default" attrs="{'invisible': ['|', ('is_cancel', '=', True), ('is_cancel_requested', '=', False)]}" />
+                        <button name="do_deny_cancel" type="object" groups="mcs_property.mcs_property_sales_manager" icon="fa-times" string="TOLAK PEMBATALAN" class="btn btn-default" attrs="{'invisible': ['|', ('is_cancel', '=', True), ('is_cancel_requested', '=', False)]}" />
+
+                        <field name="state" widget="statusbar" statusbar_visible="0,10,20,30,40,50" />
+                    </header>
+
+                    <div attrs="{'invisible': [('is_security_deposit_required', '=', False)]}" style="background-color: #875a7bed; padding: 15px 30px; margin-bottom: 10px;">
+                        <span style="color: #fff;">Selesaikan pembayaran security deposit</span>
+                    </div>
+
+                    <div attrs="{'invisible': [('is_cancel_requested_required', '=', False)]}" style="background-color: #875a7bed; padding: 15px 30px; margin-bottom: 10px;">
+                        <span style="color: #fff;">Menunggu konfirmasi manager terkait permintaan pembatalan</span>
+                    </div>
+
+                    <div attrs="{'invisible': ['|', '|', ('is_wanprestasi_approved', '=', True), ('is_wanprestasi_requested', '=', False), ('state', '!=', '30')]}" style="background-color: #875a7bed; padding: 15px 30px; margin-bottom: 10px;">
+                        <span style="color: #fff;">Menunggu konfirmasi manager terkait permintaan wanprestasi</span>
+                    </div>
+
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" attrs="{'invisible': [('state', '=', '0')]}">
+                            <button class="oe_stat_button" name="open_sale_orders" type="object" icon="fa-usd">
+                                <field string="Sale Orders" name="sale_order_count" widget="statinfo" />
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="CANCEL" bg_color="bg-danger" attrs="{'invisible': [('is_cancel', '=', False)]}" />
+                        <widget name="web_ribbon" title="RUNNING" attrs="{'invisible': [('state', '!=', '30')]}" />
+                        <widget name="web_ribbon" title="EXPIRED" bg_color="bg-warning" attrs="{'invisible': [('state', '!=', '40')]}" />
+                        <widget name="web_ribbon" title="HISTORICAL" bg_color="bg-grey" attrs="{'invisible': ['|',('contract_type', '!=', 'Historical'),('state', '!=', '50')]}" />
+                        <widget name="web_ribbon" title="WANPRESTASI" bg_color="bg-danger" attrs="{'invisible': [('is_wanprestasi', '=', False)]}" />
+
+                        <div class="oe_title">
+                            <h1>
+                                <field name="id" invisible="1" />
+                                <field name="name" readonly="1" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="is_cancel_requested_required" invisible="1" />
+                                <field name="is_wanprestasi_alasan_requested" invisible="1" />
+                                <field name="is_wanprestasi" invisible="1" />
+                                <field name="is_wanprestasi_requested" invisible="1" />
+                                <field name="is_wanprestasi_approved" invisible="1" />
+                                <field name="is_extended" invisible="1" />
+                                <field name="contract_type" invisible="1" />
+                                <field name="extended_contract_id" attrs="{'invisible': ['|', '|', ('extended_contract_id', '=', False), ('state', '=', False), ('state', '=', '0')]}" />
+                                <field name="extend_contract_id" attrs="{'invisible': [('extend_contract_id', '=', False)]}" />
+                                <field name="acive_sale_order_id" context="{'default_is_property': True}" attrs="{'invisible': [('acive_sale_order_id', '=', False)]}" />
+                                <field name="historical_contract_id" attrs="{'invisible': [('historical_contract_id', '=', False)]}" />
+                                <field name="adendum_contract_id" attrs="{'invisible': [('adendum_contract_id', '=', False)]}" />
+
+                                <field name="so_security_deposit_id" attrs="{'invisible': [('so_security_deposit_id', '=', False)]}" />
+
+                                <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True, 'default_is_property': True}" options="{&quot;always_reload&quot;: True}" />
+                                <field name="partner_invoice_id" invisible="1" />
+                                <field name="partner_shipping_id" invisible="1" />
+                                <field name="product_location_id" widget="many2one" required="1" />
+                                <field name="contract_active" invisible="1" />
+                                <field name="is_cancel" invisible="1" />
+                                <field name="lost_reason" attrs="{'invisible': [('is_cancel_requested', '=', False)]}" />
+                                <field name="lost_reason_detail" attrs="{'invisible': [('is_cancel_requested', '=', False)]}" widget="html" />
+                                <field name="can_extend" invisible="1" />
+                                <field name="can_selesai" invisible="1" />
+                                <field name="can_adendum" invisible="1" />
+                                <field name="can_approve_wanprestasi" invisible="1" />
+                                <field name="is_adendum_ok" invisible="1" />
+                                <field name="is_cancel_requested" invisible="1" />
+                                <field name="contract_recurring_type" />
+                                <field name="contract_recurring_value" />
+                                <field name="is_security_deposit_required" invisible="1" />
+                            </group>
+                            <group>
+                                <field name="start_date" />
+                                <field name="end_date" readonly="True" />
+                                <field name="end_date" invisible="True" />
+                                <field name="warning_date" />
+
+                                <field name="validity_date" invisible="1" />
+
+                                <field name="date_order" string="Quotation Date" />
+
+                                <field name="company_id" invisible="True" />
+                                <field name="pricelist_id" options="{'no_open':True,'no_create': True}" invisible="1" />
+                                <field name="currency_id" invisible="1" />
+                                <field name="payment_term_id" options="{'no_open':True,'no_create': True}" />
+                            </group>
+                        </group>
+                        <group>
+                            <field name="wanprestasi_reason" readonly="1" attrs="{'invisible': [('is_wanprestasi_approved', '=', False)]}" />
+                            <field name="wanprestasi_file" readonly="1" filename="wanprestasi_filename" attrs="{'invisible': [('is_wanprestasi_approved', '=', False)]}" />
+                            <field name="wanprestasi_filename" invisible="True" attrs="{'invisible': [('is_wanprestasi_approved', '=', False)]}" />
+                        </group>
+                        <notebook attrs="{'invisible': [('state', '=', False)]}">
+                            <page string="Contract Lines" name="contract_lines">
+                                <!-- <field name="contract_line_ids" widget="section_and_note_one2many" attrs="{'readonly': [('state', 'in', ('20','30','40','50'))]}" context="{'default_contract_id' : id, 'default_product_location_id' : product_location_id}"> -->
+                                <field name="contract_line_ids" widget="section_and_note_one2many" context="{'default_contract_id' : id, 'default_product_location_id' : product_location_id, 'default_recurring_type' : contract_recurring_type, 'default_recurring_value' : contract_recurring_value}">
+                                    <tree string="Sales Order Lines" editable="bottom">
+                                        <field name="name" invisible="1" />
+                                        <field name="contract_id" invisible="1" />
+                                        <field name="product_location_id" invisible="1" />
+                                        <field name="product_parent_code" invisible="1" />
+                                        <field name="sequence" widget="handle" />
+
+                                        <field name="product_id" options="{'no_open': True}" force_save="1" context="{'default_is_property': True,'partner_id': parent.partner_id}" domain="[('is_property', '=', True)]" widget="product_configurator" />
+
+                                        <field name="category" />
+                                        <field name="product_uom" invisible="1" />
+                                        <field name="recurring_type" invisible="1" />
+                                        <field name="recurring_value" invisible="1" />
+                                        <field name="payment_timeframe_type" />
+                                        <field name="payment_timeframe_value" />
+                                        <field name="currency_id" invisible="1" />
+                                        <field name="jenis_sharing" attrs="{'readonly': [('category', '!=', 'Property')]}"/>
+                                        <field name="nilai_sharing" attrs="{'readonly': [('category', '!=', 'Property')]}"/>
+                                        <field name="price_unit" />
+                                        <field name="product_uom_category_id" invisible="1" />
+                                        <field name="price_total" widget="monetary" string="Nett Revenue" />
+                                        <field name="include_in_total" nolabel="1" />
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="currency_id" invisible="1" />
+                                    <field name="price_total" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                                </group>
+                            </page>
+                            <!-- <page string="Contract Information" name="property_information">
+                                <group>
+                                    <group>
+                                        <field name="contract_recurring_type" />
+                                        <field name="contract_recurring_value" />
+                                        <field name="start_date" />
+                                    </group>
+                                    <group>
+                                        <field name="end_date" readonly="True" />
+                                        <field name="end_date" invisible="True" />
+                                        <field name="company_id" invisible="True" />
+                                        <field name="warning_date" />
+                                    </group>
+                                </group>
+                            </page> -->
+                            <page string="Document Contract" name="document_properties">
+                                <field name="document_properties" />
+                            </page>
+                            <page string="Order Information" name="order_information">
+                                <group>
+                                    <field name="create_uid" />
+                                    <field name="create_date" />
+                                    <field name="approved_by" />
+                                    <field name="approved_at" />
+                                </group>
+                            </page>
+                            <page string="Customer Information" name="customer_information">
+                                <group>
+                                    <field name="partner_id" />
+                                    <field name="partner_npwp" />
+                                    <field name="partner_phone" />
+                                    <field name="partner_mobile" />
+                                    <field name="partner_email" />
+                                </group>
+                            </page>
+                            <page string="Riwayat Penagihan" name="riwayat_penagihan">
+                                <field name="riwayat_penagihan_ids" readonly="True">
+                                    <tree string="Riwayat Penagihan" editable="bottom">
+                                        <field name="create_date" />
+                                        <field name="name" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_tree" model="ir.ui.view">
+            <field name="name">Contract Tree</field>
+            <field name="model">mcs_property.contract</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="state == '0'" decoration-success="state=='30'" decoration-danger="state=='40' or state=='50' or is_cancel==True or state_name=='Wanprestasi'" default_order='date_order desc' edit="0">
+                    <field name="name" />
+                    <field name="partner_id" />
+                    <field name="product_location_id" />
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="price_total" widget="monetary" options="{'currency_field': 'currency_id'}" string="Nilai Kontrak" />
+                    <field name="state_name" string="Status" />
+                    <field name="contract_type" string="Type" />
+                    <field name="state" invisible="1" />
+                    <field name="is_cancel" invisible="1" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_manager_action" model="ir.actions.act_window">
+            <field name="name">Contract</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mcs_property.contract</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph</field>
+            <field name="view_ids" eval="[(5,0,0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('mcs_property_contract_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('mcs_property_contract_form')})]" />
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Theres no contract</p>
+            </field>
+            <field name="domain">['|', ('is_cancel_requested', '=', True), ('state', 'not in', ['0'])]</field>
+        </record>
+
+        <record id="mcs_property_contract_staff_action" model="ir.actions.act_window">
+            <field name="name">Contract</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mcs_property.contract</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph</field>
+            <field name="view_ids" eval="[(5,0,0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('mcs_property_contract_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('mcs_property_contract_form')})]" />
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create a new contract</p>
+            </field>
+            <field name="domain">[('create_uid', '=', uid)]</field>
+        </record>
+
+        <record id="mcs_property_contract_action" model="ir.actions.act_window">
+            <field name="name">Contract</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mcs_property.contract</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph</field>
+            <field name="view_ids" eval="[(5,0,0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('mcs_property_contract_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('mcs_property_contract_form')})]" />
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Theres no contract, create a new contract</p>
+            </field>
+        </record>
+    </data>
+</odoo>

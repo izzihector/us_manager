@@ -1,0 +1,525 @@
+<odoo>
+    <!-- Content Purchase Order RMDOO -->
+    <!-- START: Template A4 Portrait -->
+    <template id="report_purchaseorder_rmdoo_content">
+        <t t-call="base_rmdoo.rmdoo_external_layout">
+            <style>
+                table{
+                    width:100%;
+                    border-collapse: collapse;
+                }
+                .table_custom{
+                    border: 1px solid black;
+                    padding: 3px 3px 4px 2px;
+                }
+                div{
+                    margin-top: 5px;
+                    margin-bottom: 10px;
+                }
+                .page{
+                    font-size: 10pt;
+                }
+                .cust_caption {
+                    text-align: center;
+                    padding: 5px;
+                }
+                .cust_caption &gt; div &gt; strong &gt; h1{
+                    text-decoration: underline;
+                }
+                
+                .cust_vendor &gt; div &gt; table &gt; tr &gt; td{
+                    padding: 10px;
+                    text-align: center;
+                }
+            </style>
+            <div class="page">
+                <div class="cust_caption">
+                    <div style="height:30px;"/>
+                    <div>
+                        <strong>
+                            <h1>PURCHASE ORDER</h1>
+                        </strong>
+                        <h5>P/O No. <strong>
+                                <span t-field="o.name"/>
+                            </strong>
+                        </h5>
+                    </div>
+                </div>
+                <div class="cust_vendor">
+                    <div style="float:left; width:35%;">
+                        <table>
+                            <tr>
+                                <td width="25%">P/O Date</td>
+                                <td width="5%">:</td>
+                                <td width="70%">
+                                    <span t-field="o.date_order" t-options="{'widget':'date'}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Vendor</td>
+                                <td>:</td>
+                                <td rowspan="3">
+                                    <strong>
+                                    <span t-field="o.partner_id"/>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr rowspan="2">
+                                <td/>
+                                <td/>
+                            </tr>
+                            <tr>
+                                <td width=""/>
+                                <td width=""/>
+                            </tr>
+                            <tr>
+                                <td/>
+                                <td/>
+                                <td/>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="float:right; width:50%;">
+                        <table align="right">
+                            <tr>
+                                <th width="25%"/>
+                                <th width="3%"/>
+                                <th width="27%"/>
+                                <th width="17%"/>
+                                <th width="3%"/>
+                                <th width="25%"/>
+                            </tr>
+                            <tr>
+                                <td>Ven.Code</td>
+                                <td>:</td>
+                                <td/>
+                                <td>Ship Via</td>
+                                <td>:</td>
+                                <td/>
+                            </tr>
+                            <tr>
+                                <td>Cont. Person</td>
+                                <td>:</td>
+                                <td colspan="4"/>
+                            </tr>
+                            <tr>
+                                <td>Phone</td>
+                                <td>:</td>
+                                <td>
+                                    <span t-field="o.partner_id.phone"/>
+                                </td>
+                                <td>Mobile</td>
+                                <td>:</td>
+                                <td>
+                                    <span t-field="o.partner_id.mobile"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>:</td>
+                                <td colspan="4">
+                                    <span t-field="o.partner_id.email"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Delivery Date</td>
+                                <td>:</td>
+                                <td colspan="4">
+                                    <span t-field="o.date_planned" t-options="{'widget':'date'}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <!-- <table class="border:1px solid black;"> -->
+                        <table class="table_custom">
+                            <thead>
+                                <tr class="table_custom">
+                                    <th class="table_custom text-center" width="4%">
+                                    <strong>No</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="14%">
+                                    <strong>Product</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="26%">
+                                    <strong>Name</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="6%">
+                                    <strong>UOM</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="5%">
+                                    <strong>Qty</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="10%">
+                                    <strong>Price</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="9%">
+                                    <strong>Disc[%]</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="10%">
+                                    <strong>Amount</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="16%">
+                                    <strong>Remarks</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table_custom" t-as="line" t-foreach="o.order_line">
+                                    <td class="table_custom text-left"/>
+                                    <td class="table_custom text-left">
+                                    <span t-field="line.product_id.default_code"/>
+                                    </td>
+                                    <td class="text-left table_custom">
+                                    <span t-field="line.product_id.name"/>
+                                    </td>
+                                    <td class="text-left table_custom">
+                                    <span t-field="line.product_uom"/>
+                                    </td>
+                                    <td class="text-right table_custom">
+                                    <span t-esc="int(round(line.product_qty))"/>
+                                    </td>
+                                    <!-- <td><span t-esc="'{:f}'.format(int(line.product_qty))"/></td> -->
+                                    <!-- <td><span t-field="'{:d}'.format(line.product_qty)"/></td> -->
+                                    <td class="text-right table_custom">
+                                    <span t-field="line.price_unit" t-field-option=""/>
+                                    </td>
+                                    <td class="text-right table_custom">
+                                    <span t-field="line.discount_display"/>
+                                    </td>
+                                    <td class="text-right table_custom">
+                                    <span t-field="line.price_subtotal"/>
+                                    </td>
+                                    <td class="table_custom">
+                                    <span/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="">
+                    <div style="float:left; width:68%;">
+                        <strong>NOTE :</strong>
+                        <p>
+                            <span t-field="o.notes"/>
+                        </p>
+                    </div>
+                    <div style="float:right; width:32%;">
+                        <table>
+                            <tr>
+                                <td width="45%">Sub Total</td>
+                                <td width="5%">:</td>
+                                <td class="text-right" width="50%">
+                                    <span t-field="o.amount_untaxed" t-field-options="{&quot;widget&quot;:&quot;float&quot;}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Disc.</td>
+                                <td>:</td>
+                                <td class="text-right">
+                                    <span t-field="o.discounts"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tax</td>
+                                <td>:</td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_tax"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Shipping Charge</td>
+                                <td>:</td>
+                                <td class="text-right">
+                                    <span/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>GRAND TOTAL</strong>
+                                </td>
+                                <td>:</td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_total"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+        </t>
+    </template>
+    <!-- Container P/O RMDOO -->
+    <template id="report_purchaseorder_rmdoo">
+        <t t-call="web.html_container">
+            <t t-as="o" t-foreach="docs">
+                <t
+                    t-call="purchase_rmdoo.report_purchaseorder_rmdoo_content" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+    <!-- END: Template A4 Portrait -->
+    <!-- START: Template A5 Landscape -->
+    <template id="report_purchaseorder_rmdoo_a5_content">
+        <t t-call="base_rmdoo.rmdoo_external_layout">
+            <style>
+                table{
+                    width:100%;
+                    border-collapse: collapse;
+                }
+                .table_custom{
+                    border: 1px solid black;
+                    padding: 3px 3px 4px 2px;
+                }
+                div{
+                    margin-top: 5px;
+                    margin-bottom: 10px;
+                }
+                .page{
+                    font-size: 10pt;
+                }
+                .cust_caption {
+                    text-align: center;
+                    padding: 5px;
+                }
+                .cust_caption &gt; div &gt; strong &gt; h1{
+                    text-decoration: underline;
+                }
+                
+                .cust_vendor &gt; div &gt; table &gt; tr &gt; td{
+                    padding: 10px;
+                    text-align: center;
+                }
+            </style>
+            <div class="page">
+                <div class="cust_caption">
+                    <div style="height:30px;"/>
+                    <div>
+                        <strong>
+                            <h1>PURCHASE ORDER</h1>
+                        </strong>
+                        <h5>P/O No. <strong>
+                                <span t-field="o.name"/>
+                            </strong>
+                        </h5>
+                    </div>
+                </div>
+                <div class="cust_vendor">
+                    <div style="float:left; width:35%;">
+                        <table>
+                            <tr>
+                                <td width="25%">P/O Date</td>
+                                <td width="5%">:</td>
+                                <td width="70%">
+                                    <span t-field="o.date_order" t-options="{'widget':'date'}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Vendor</td>
+                                <td>:</td>
+                                <td rowspan="3">
+                                    <strong>
+                                    <span t-field="o.partner_id"/>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr rowspan="2">
+                                <td/>
+                                <td/>
+                            </tr>
+                            <tr>
+                                <td width=""/>
+                                <td width=""/>
+                            </tr>
+                            <tr>
+                                <td/>
+                                <td/>
+                                <td/>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="float:right; width:50%;">
+                        <table align="right">
+                            <tr>
+                                <th width="25%"/>
+                                <th width="3%"/>
+                                <th width="27%"/>
+                                <th width="17%"/>
+                                <th width="3%"/>
+                                <th width="25%"/>
+                            </tr>
+                            <tr>
+                                <td>Ven.Code</td>
+                                <td>:</td>
+                                <td/>
+                                <td>Ship Via</td>
+                                <td>:</td>
+                                <td/>
+                            </tr>
+                            <tr>
+                                <td>Cont. Person</td>
+                                <td>:</td>
+                                <td colspan="4"/>
+                            </tr>
+                            <tr>
+                                <td>Phone</td>
+                                <td>:</td>
+                                <td>
+                                    <span t-field="o.partner_id.phone"/>
+                                </td>
+                                <td>Mobile</td>
+                                <td>:</td>
+                                <td>
+                                    <span t-field="o.partner_id.mobile"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>:</td>
+                                <td colspan="4">
+                                    <span t-field="o.partner_id.email"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Delivery Date</td>
+                                <td>:</td>
+                                <td colspan="4">
+                                    <span t-field="o.date_planned" t-options="{'widget':'date'}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <!-- <table class="border:1px solid black;"> -->
+                        <table class="table_custom">
+                            <thead>
+                                <tr class="table_custom">
+                                    <th class="table_custom text-center" width="4%">
+                                    <strong>No</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="14%">
+                                    <strong>Product</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="26%">
+                                    <strong>Name</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="6%">
+                                    <strong>UOM</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="5%">
+                                    <strong>Qty</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="10%">
+                                    <strong>Price</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="9%">
+                                    <strong>Disc[%]</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="10%">
+                                    <strong>Amount</strong>
+                                    </th>
+                                    <th class="table_custom text-center" width="16%">
+                                    <strong>Remarks</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table_custom" t-as="line" t-foreach="o.order_line">
+                                    <td class="table_custom text-left"/>
+                                    <td class="table_custom text-left">
+                                    <span t-field="line.product_id.default_code"/>
+                                    </td>
+                                    <td class="text-left table_custom">
+                                    <span t-field="line.product_id.name"/>
+                                    </td>
+                                    <td class="text-left table_custom">
+                                    <span t-field="line.product_uom"/>
+                                    </td>
+                                    <td class="text-right table_custom">
+                                    <span t-esc="int(round(line.product_qty))"/>
+                                    </td>
+                                    <!-- <td><span t-esc="'{:f}'.format(int(line.product_qty))"/></td> -->
+                                    <!-- <td><span t-field="'{:d}'.format(line.product_qty)"/></td> -->
+                                    <td class="text-right table_custom">
+                                    <span t-field="line.price_unit" t-field-option=""/>
+                                    </td>
+                                    <td class="text-right table_custom">
+                                    <span t-field="line.discount_display"/>
+                                    </td>
+                                    <td class="text-right table_custom">
+                                    <span t-field="line.price_subtotal"/>
+                                    </td>
+                                    <td class="table_custom">
+                                    <span/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="">
+                    <div style="float:left; width:68%;">
+                        <strong>NOTE :</strong>
+                        <p>
+                            <span t-field="o.notes"/>
+                        </p>
+                    </div>
+                    <div style="float:right; width:32%;">
+                        <table>
+                            <tr>
+                                <td width="45%">Sub Total</td>
+                                <td width="5%">:</td>
+                                <td class="text-right" width="50%">
+                                    <span t-field="o.amount_untaxed" t-field-options="{&quot;widget&quot;:&quot;float&quot;}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Disc.</td>
+                                <td>:</td>
+                                <td class="text-right">
+                                    <span t-field="o.discounts"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tax</td>
+                                <td>:</td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_tax"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Shipping Charge</td>
+                                <td>:</td>
+                                <td class="text-right">
+                                    <span/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>GRAND TOTAL</strong>
+                                </td>
+                                <td>:</td>
+                                <td class="text-right">
+                                    <span t-field="o.amount_total"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+        </t>
+    </template>
+    <!-- Container P/O RMDOO -->
+    <template id="report_purchaseorder_rmdoo_a5">
+        <t t-call="web.html_container">
+            <t t-as="o" t-foreach="docs">
+                <t
+                    t-call="purchase_rmdoo.report_purchaseorder_rmdoo_a5_content" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+    <!-- END: Template A5 Landscape -->
+</odoo>

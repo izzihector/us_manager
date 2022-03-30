@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="OrderReceipt">
+        <t t-jquery="img.pos-receipt-logo" t-operation="replace">
+            <t t-if="widget.pos.config.sh_pos_logo">
+                <img t-att-src="receipt_logo_url" alt="Logo" class="pos-receipt-logo" />
+            </t>
+            <t t-else="">
+                <t t-if="widget.pos.company and widget.pos.company.sh_pos_global_logo">
+                    <img class="pos-receipt-logo" t-att-src="receipt_global_logo_url" alt="Logo" />
+                </t>
+                <t t-else="">
+                    <img class="pos-receipt-logo" t-att-src="receipt.company.logo" alt="Logo" />
+                </t>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="Chrome">
+        <t t-jquery="img.pos-logo" t-operation="replace">
+            <t t-if="widget.pos.config and widget.pos.config.sh_pos_header_logo">
+                <img t-att-src="widget.get_header_logo_url(widget.pos.config.id)" alt="Logo" class="pos-logo" />
+            </t>
+            <t t-else="">
+                <t t-if="widget.pos.company and widget.pos.company.sh_pos_global_header_logo">
+                    <img t-att-src="widget.get_global_header_logo_url(widget.pos.company.id)" alt="Logo" class="pos-logo" />
+                </t>
+                <t t-else="">
+                    <img class="pos-logo" src="/point_of_sale/static/src/img/logo.png" alt="Logo" />
+                </t>
+            </t>
+        </t>
+    </t>
+</templates>

@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="mcs_property_contract_sales_manager" model="ir.rule">
+            <field name="name">Property - Contract - Sales Manager</field>
+            <field name="model_id" ref="model_mcs_property_contract"/>
+            <field name="domain_force">
+                ['|', ('is_cancel_requested', '=', True), ('state', 'not in', ['0'])]
+            </field>
+            <field name="groups" eval="[(4, ref('mcs_property.mcs_property_sales_manager'))]"/>
+        </record>
+        
+        <record id="mcs_property_contract_sales_staff" model="ir.rule">
+            <field name="name">Property - Contract - Sales Manager</field>
+            <field name="model_id" ref="model_mcs_property_contract"/>
+            <field name="domain_force">
+                [('create_uid', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('mcs_property.mcs_property_sales_staff'))]"/>
+        </record>
+    </data>
+</odoo>

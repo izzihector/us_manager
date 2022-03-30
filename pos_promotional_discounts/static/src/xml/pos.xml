@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : <https://store.webkul.com/license.html/> -->
+<templates id="template" xml:space="preserve">
+    <t t-extend="Chrome">
+        <t t-jquery=".pos-logo" t-operation="after">
+            <t t-if='widget.pos.config'>
+                <div class="apply_promotions" style="float: right;height: 90%;width: 12%;">
+                    <i class="fa fa-gift fa-4x" style="color: #6EC89B;" aria-hidden="true"></i>
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="Orderline">
+        <t t-jquery=".info-list" t-operation="append">
+            <t t-if='line.is_discount_product'>
+                <li>
+                    <span style="color: #fff;font-size: 13px;line-height: 13px;background: none repeat scroll 0% 0% #7f82ac;
+                        padding: 0px 6px;border-radius: 21px;margin:1px;">
+                        Order Discount
+                    </span>
+                </li>
+            </t>
+            <t t-if='line.is_buy_x_get_y_product || line.is_buy_x_get_y__qty_product'>
+                <li>
+                    <span style="color: #fff;font-size: 13px;line-height: 13px;background: none repeat scroll 0% 0% #7f82ac;
+                        padding: 0px 6px;border-radius: 21px;margin:1px;">
+                        <t t-if="!line.related_product_id">
+                            Free Product
+                        </t>
+                        <t t-if="line.related_product_id">
+                            Free Product of <t t-esc="widget.pos.db.product_by_id[line.related_product_id].display_name"/>
+                        </t>
+                    </span>
+                </li>
+            </t>
+            <t t-if='line.is_discounted_product || line.is_buy_x_get_discount_on_y'>
+                <li>
+                    <span style="color: #fff;font-size: 13px;line-height: 13px;background: none repeat scroll 0% 0% #7f82ac;
+                        padding: 0px 6px;border-radius: 21px;margin:1px;">
+                        Discounted Product
+                    </span>
+                </li>
+            </t>
+            <t t-if="line.check_if_offer_can_be_applied()">
+                <div>
+                    <i class="fa fa-gift show_promotions" style="color: tomato;font-size: 18px;" aria-hidden="true"></i>
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="OfferDetails">
+        <div id='info_tooltip' class='product_info_div' style="position: absolute;display: none;z-index: 1;height: auto;
+            width: 250px;font-weight: bold;background-color: grey;border: 1px #ffffff solid;color: #efefef;opacity: 0.85;">
+            <img class='cross_img_top close_button' style="margin-left:-90%; width:8%;" src='/pos_promotional_discounts/static/src/js/icon-cross.png'/>
+            <h2 style="margin-top: 0%;margin-bottom: 1%;">Available Offers</h2>
+            <div class="inner_div" style="position:relative; margin: 3%; margin-top: 0% !important; border-top: 1px solid aliceblue;">
+                <div>
+                    <t t-foreach="offers" t-as="offer">
+                        <div style="margin: 5%;">
+                            <t t-if="offer.discount_product_id">
+                                <t t-if="offer.offer_name">
+                                    <t t-esc="offer.offer_name"/>
+                                </t>
+                                <t t-if="!offer.offer_name">
+                                    <t t-esc="offer.discount_product_id[1]"/>
+                                </t>
+                            </t>
+                            <t t-if="offer.buy_x_get_y_id">
+                                <t t-if="offer.offer_name">
+                                    <t t-esc="offer.offer_name"/>
+                                </t>
+                                <t t-if="!offer.offer_name">
+                                    <t t-esc="offer.buy_x_get_y_id[1]"/>
+                                </t>
+                            </t>
+                            <t t-if="offer.buy_x_get_y_qty_id">
+                                <t t-if="offer.offer_name">
+                                    <t t-esc="offer.offer_name"/>
+                                </t>
+                                <t t-if="!offer.offer_name">
+                                    <t t-esc="offer.buy_x_get_y_qty_id[1]"/>
+                                </t>
+                            </t>
+                            <t t-if="offer.buy_x_get_discount_on_y_id">
+                                <t t-if="offer.offer_name">
+                                    <t t-esc="offer.offer_name"/>
+                                </t>
+                                <t t-if="!offer.offer_name">
+                                    <t t-esc="offer.buy_x_get_discount_on_y_id[1]"/>
+                                </t>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+            </div>
+            <img class='cross_img_bottom close_button' src='/pos_promotional_discounts/static/src/js/icon-cross.png'/>
+        </div>
+    </t>
+
+    <t t-extend="OrderReceipt">
+		<t t-jquery='.orderlines t[t-call="OrderReceiptWrappedProductNameLines"]' t-operation="after">
+            <t t-if="line.data">
+                <t t-set='wk_offer_tag_val' t-value='line.data'/>
+                <t t-if='wk_offer_tag_val'>
+                    <div class="pos-disc-font">
+                        <t t-esc="wk_offer_tag_val"/>
+                    </div>
+                </t>
+            </t>
+		</t>
+	</t>
+</templates>

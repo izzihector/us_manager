@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_consignment_bills.wizard_consignment_bills" model="ir.ui.view">
+      <field name="name">Wizard Consignment Bills View</field>
+      <field name="model">wizard.consignment.bills</field>
+      <field name="arch" type="xml">
+        <form string="Consignment Bills">
+          <sheet>
+            <group>
+              <group>
+                <field name="branch_ids" widget="many2many_tags" required="1"/>
+                <div class="o_row o_td_label d-inline-block" style="tex-align: right;">
+                  <label for="start_date" string="Date"/>
+                </div>
+                <div class="o_row">
+                  <field name="start_date"/>
+                  <label for="end_date" string="to"/>
+                  <field name="end_date"/>
+                </div>
+                <field name="partner_id"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Details">
+                <field name="line_ids" readonly="1" force_save="1">
+                  <tree>
+                    <field name="wizard_id" invisible="1"/>
+                    <field name="branch_id"/>
+                    <field name="department_id" invisible="1"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="product_uom_id"/>
+                    <field name="product_qty"/>
+                    <field name="sale_price" widget="monetary"/>
+                    <field name="price_unit" widget="monetary"/>
+                    <field name="tax_ids" widget="many2many_tags"/>
+                    <field name="subtotal" widget="monetary" invisible="1"/>
+                    <field name="total" widget="monetary"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="sale_line_ids" invisible="1"/>
+                    <field name="pos_line_ids" invisible="1"/>
+                  </tree>
+                </field>
+                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                  <field name="currency_id" invisible="1"/>
+                  <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                    <label for="price_total" string="Amount Untaxed"/>
+                  </div>
+                  <field name="price_subtotal" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"
+                         options="{'currency_field': 'currency_id'}"/>
+                  <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                    <label for="price_total"/>
+                  </div>
+                  <field name="price_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"
+                         options="{'currency_field': 'currency_id'}"/>
+                </group>
+                <div class="oe_clear"/>
+              </page>
+            </notebook>
+          </sheet>
+          <footer>
+            <button name="create_bills" type="object" string="Create Bills" class="btn-primary"/>
+            <button string="Cancel" class="btn-secondary" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

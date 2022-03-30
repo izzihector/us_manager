@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="bs_sarinah_portal.web_ppbk_report">
+      <div style="width:100%; overflow: auto;">
+        <div class="container o_ppbk_report_page card shadow">
+          <div class="row">
+            <div class="col-lg-12">
+              <h2 class="text-center">PPBK Report</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8">
+              <small style="font-weight: bold;">Company:</small>
+              <div>
+                <span t-esc="company.name"/>
+              </div>
+              <small style="font-weight: bold;">Branch:</small>
+              <div>
+                <span t-esc="branch.name"/>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <small style="font-weight: bold;">Period Date:</small>
+              <div t-if="start_date">
+                <span t-esc="start_date"/> -
+                <span t-esc="end_date"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mt16">
+                <table width="100%" class="o_ppbk_expandable">
+                  <thead>
+                    <tr>
+                      <th width="5%">A</th>
+                      <th colspan="5">MASTER VENDOR</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="font-weight-bold">
+                      <td width="5%"/>
+                      <td width="10%">
+                        <span>Kode Vendor</span>
+                      </td>
+                      <td width="15%">
+                        <span>Nama Vendor</span>
+                      </td>
+                      <td width="10%">
+                        <span>PKP</span>
+                      </td>
+                      <td width="15%">
+                        <span>No. NPWP</span>
+                      </td>
+                      <td width="15%">
+                        Bank
+                      </td>
+                      <td width="15%">
+                        No Rekening
+                      </td>
+                      <td width="15%">
+                        Nama Rekening
+                      </td>
+                    </tr>
+                    <tr>
+                      <td/>
+                      <td>
+                        <span t-field="partner.ref"/>
+                      </td>
+                      <td>
+                        <span t-field="partner.name"/>
+                      </td>
+                      <td>
+                        <span t-esc="'YA' if partner.l10n_id_pkp else 'TIDAK'"/>
+                      </td>
+                      <td>
+                        <span t-esc="partner.vat"/>
+                      </td>
+                      <td colspan="3">
+                        <table width="100%">
+                          <t t-if="partner.bank_ids">
+                              <t t-foreach="partner.bank_ids" t-as="bank">
+                                <tr style="border: 0px;">
+                                  <td width="33%">
+                                    <span t-field="bank.bank_id"/>
+                                  </td>
+                                  <td width="33%">
+                                    <span t-field="bank.acc_number"/>
+                                  </td>
+                                  <td width="34%">
+                                    <span t-field="bank.acc_holder_name"/>
+                                  </td>
+                                </tr>
+                              </t>
+                            </t>
+                            <t t-if="not partner.bank_ids">
+                              <tr style="border: 0px;">
+                                  <td width="33%">
+                                    -
+                                  </td>
+                                  <td width="33%">
+                                    -
+                                  </td>
+                                  <td width="34%">
+                                    -
+                                  </td>
+                                </tr>
+                            </t>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mt16">
+                <table width="100%" class="o_ppbk_expandable">
+                  <thead>
+                    <tr>
+                      <th width="5%">B</th>
+                      <th colspan="5">MASTER VENDOR CONCESSION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="font-weight-bold">
+                      <td width="5%"/>
+                      <td width="10%">
+                        <span>Kode Vendor</span>
+                      </td>
+                      <td width="20%">
+                        <span>Lokasi</span>
+                      </td>
+                      <td width="25%">
+                        <span>Kode Konsesi/Brand</span>
+                      </td>
+                      <td width="30%">
+                        <span>Produk Kategori</span>
+                      </td>
+                      <td width="10%" class="text-right">
+                        <span>Sarinah Margin (%)</span>
+                      </td>
+                    </tr>
+                    <t t-foreach="brands" t-as="brand">
+                      <tr>
+                        <td/>
+                        <td>
+                          <span t-field="partner.ref"/>
+                        </td>
+                        <td>
+                          <span t-esc="branch.name or '-'"/>
+                        </td>
+                        <td>
+                          <span t-esc="brand.code"/>
+                        </td>
+                        <td colspan="2">
+                          <table width="100%">
+                            <t t-if="brand.margin_ids">
+                              <t t-foreach="brand.margin_ids" t-as="margin">
+                                <tr style="border: 0px;">
+                                  <td width="75%">
+                                    <span t-field="margin.category_id"/>
+                                  </td>
+                                  <td class="text-right">
+                                    <span t-field="margin.consignment_margin"/>
+                                  </td>
+                                </tr>
+                              </t>
+                            </t>
+                            <t t-if="not brand.margin_ids">
+                              <tr style="border: 0px;">
+                                  <td width="75%">
+                                    -
+                                  </td>
+                                  <td class="text-right">
+                                    <span t-field="brand.consignment_margin"/>
+                                  </td>
+                                </tr>
+                            </t>
+                          </table>
+                        </td>
+                      </tr>
+                    </t>
+                  </tbody>
+                </table>
+                <div class="text-center text-danger font-weight-bold" t-if="not brands" style="margin: 10px;">
+                  <span>
+                    There is no transaction data found for this date period.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mt16">
+                <table width="100%" class="o_ppbk_expandable">
+                  <thead>
+                    <tr>
+                      <th width="5%">C</th>
+                      <th colspan="5">PROMOTION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="font-weight-bold">
+                      <td width="5%"/>
+                      <td width="15%">
+                        <span>Kode Promotion</span>
+                      </td>
+                      <td width="10%">
+                        <span>Lokasi</span>
+                      </td>
+                      <td width="15%">
+                        <span>Kode Vendor</span>
+                      </td>
+                      <td width="30%">
+                        <span>Kode Produk</span>
+                      </td>
+                      <td width="10%" class="text-right">
+                        <span>Diskon (%)</span>
+                      </td>
+                      <td width="15%" class="text-right">
+                        <span>Sharing Diskon Vendor (%)</span>
+                      </td>
+                    </tr>
+                    <t t-foreach="discounts" t-as="discount">
+                      <tr>
+                        <td/>
+                        <td>
+                          <span t-field="discount.name"/>
+                        </td>
+                        <td>
+                          <span t-esc="branch.name"/>
+                        </td>
+                        <td>
+                          <span t-field="discount.vendor_id.ref"/>
+                        </td>
+                        <td>
+                          <span t-esc="', '.join(discount.product_ids.mapped('default_code')) if discount.product_ids else '-'"/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="discount.value" t-options='{"widget": "float", "precision": 2}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="discount.vendor_shared" t-options='{"widget": "float", "precision": 2}'/>
+                        </td>
+                      </tr>
+                    </t>
+                  </tbody>
+                </table>
+                <div class="text-center text-danger font-weight-bold" t-if="not discounts" style="margin: 10px;">
+                  <span>
+                    There is no transaction data found for this date period.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mt16">
+                <table width="100%" class="o_ppbk_expandable">
+                  <thead>
+                    <tr>
+                      <th width="5%">D</th>
+                      <th colspan="5">TRANSAKSI POS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="font-weight-bold">
+                      <td width="5%"/>
+                      <td width="5%">
+                        <span>Branch</span>
+                      </td>
+                      <td width="15%">
+                        <span>Kode Produk</span>
+                      </td>
+                      <td width="10%" class="text-right">
+                        <span>Qty Sales</span>
+                      </td>
+                      <td width="15%" class="text-right">
+                        <span>Subtotal</span>
+                      </td>
+                      <td width="10%" class="text-right">
+                        <span>Diskon</span>
+                      </td>
+                      <td width="15%" class="text-right">
+                        <span>Total</span>
+                      </td>
+                      <td width="10%" class="text-right">
+                        <span>PPN Keluaran</span>
+                      </td>
+                      <td width="15%" class="text-right">
+                        <span>Omset Setelah PPN</span>
+                      </td>
+                    </tr>
+                    <t t-foreach="orders" t-as="order">
+                      <tr>
+                        <td/>
+                        <td>
+                          <span t-esc="branch.name"/>
+                        </td>
+                        <td>
+                          <span t-esc="order.get('product_id').default_code"/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="order.get('qty')" t-options='{"widget": "float", "precision": 2}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="order.get('subtotal')" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="order.get('discount')" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="order.get('total')" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="order.get('taxes_amount')" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="order.get('omset_amount')" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                        </td>
+                      </tr>
+                    </t>
+                    <tr class="font-weight-bold">
+                      <td/>
+                      <td colspan="2" class="text-center">
+                        <span>TOTAL</span>
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="orders_summary[0]" t-options='{"widget": "float", "precision": 2}'/>
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="orders_summary[1]" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="orders_summary[2]" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="orders_summary[3]" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="orders_summary[4]" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="orders_summary[5]" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="text-center text-danger font-weight-bold" t-if="not orders" style="margin: 10px;">
+                  <span>
+                    There is no transaction data found for this date period.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mt16">
+                <table width="100%" class="o_ppbk_expandable">
+                  <thead>
+                    <tr>
+                      <th width="5%">E</th>
+                      <th colspan="5">PERHITUNGAN BAGI HASIL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="font-weight-bold">
+                      <td width="5%"/>
+                      <td width="5%">
+                        <span>Kode Produk</span>
+                      </td>
+                      <td width="10%">
+                        <span>Nama Produk</span>
+                      </td>
+                      <td width="5%" class="text-right">
+                        <span>Sarinah Margin(%)</span>
+                      </td>
+                      <td width="10%" class="text-right">
+                        <span>Sarinah Margin</span>
+                      </td>
+                      <td width="5%" class="text-right">
+                        <span>Vendor Margin(%)</span>
+                      </td>
+                      <td width="10%" class="text-right">
+                        <span>Vendor Margin</span>
+                      </td>
+                      <td width="5%" class="text-right">
+                        <span>Shared Disc Sarinah (%)</span>
+                      </td>
+                      <td width="10%" class="text-right">
+                        <span>Diskon Beban Sarinah</span>
+                      </td>
+                      <td width="5%" class="text-right">
+                        <span>Shared Disc Vendor (%)</span>
+                      </td>
+                      <td width="10%" class="text-right">
+                        <span>Diskon Beban Vendor</span>
+                      </td>
+                      <td width="10%" class="text-right">
+                        <span>Income Sarinah</span>
+                      </td>
+                      <td width="10%" class="text-right">
+                        <span>Income Vendor</span>
+                      </td>
+                    </tr>
+                    <t t-foreach="profit_sharings" t-as="line">
+                      <tr>
+                        <td/>
+                        <td>
+                          <span t-esc="line.get('product_id').default_code"/>
+                        </td>
+                        <td>
+                          <span t-esc="line.get('product_id').name"/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="line.get('sarinah_margin')" t-options='{"widget": "float", "precision": 2}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="line.get('sarinah_margin_amount')" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="line.get('vendor_margin')" t-options='{"widget": "float", "precision": 2}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="line.get('vendor_margin_amount')" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="line.get('sarinah_shared')" t-options='{"widget": "float", "precision": 2}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="line.get('sarinah_shared_amount')" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="line.get('vendor_shared')" t-options='{"widget": "float", "precision": 2}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="line.get('vendor_shared_amount')" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="line.get('sarinah_income')" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="line.get('vendor_income')" t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                        </td>
+                      </tr>
+                    </t>
+                    <tr class="font-weight-bold">
+                      <td/>
+                      <td colspan="3" class="text-center">
+                        <span>TOTAL</span>
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="profit_summary[0]"
+                              t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                      </td>
+                      <td class="text-right">
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="profit_summary[1]"
+                              t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                      </td>
+                      <td class="text-right">
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="profit_summary[2]"
+                              t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                      </td>
+                      <td class="text-right">
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="profit_summary[3]"
+                              t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="profit_summary[4]"
+                              t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="profit_summary[5]"
+                              t-options='{"widget": "monetary", "display_currency": company.currency_id}'/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="text-center text-danger font-weight-bold" t-if="not profit_sharings" style="margin: 10px;">
+                  <span>
+                    There is no transaction data found for this date period.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mt16">
+                <table width="100%" class="o_ppbk_expandable">
+                  <thead>
+                    <tr>
+                      <th width="5%">F</th>
+                      <th colspan="6">BILL CONSIGNMENT PAYMENT</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="font-weight-bold">
+                      <td width="5%"/>
+                      <td width="20%">
+                        <span>Bill Nomor</span>
+                      </td>
+                      <td width="15%">
+                        <span>Periode</span>
+                      </td>
+                      <td width="15%">
+                        <span>Lokasi</span>
+                      </td>
+                      <td width="10%">
+                        <span>Kode Vendor</span>
+                      </td>
+                    </tr>
+                    <t t-foreach="bills" t-as="bill">
+                      <tr>
+                        <td/>
+                        <td>
+                          <span t-field="bill.name"/>
+                        </td>
+                        <td>
+                          <span t-field="bill.consignment_date_start"/> -
+                          <span t-field="bill.consignment_date_end"/>
+                        </td>
+                        <td>
+                          <span t-field="bill.branch_id"/>
+                        </td>
+                        <td>
+                          <span t-field="bill.partner_id"/>
+                        </td>
+                      </tr>
+                    </t>
+                  </tbody>
+                </table>
+                <div class="text-center text-danger font-weight-bold" t-if="not bills" style="margin: 10px;">
+                  <span>
+                    There is no transaction data found for this date period.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </data>
+</odoo>

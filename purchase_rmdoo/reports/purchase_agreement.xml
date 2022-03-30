@@ -1,0 +1,163 @@
+<odoo>
+	<template id="report_purchase_agreement">
+		<t t-call="web.html_container">
+			<t t-as="o" t-foreach="docs">
+				<t t-call="purchase_rmdoo.report_purchase_agreement_template" />
+			</t>
+		</t>
+	</template>
+	<template id="report_purchase_agreement_template">
+		<t t-call="base_rmdoo.rmdoo_internal_layout">
+			<style>
+				table {
+				font-size:12px;
+				}
+			</style>
+			<div class="page">
+				<div class="oe_structure" />
+				<h5>Purchase Agreement Report</h5>
+				<br />
+				<table style="width:100%;table-layout:fixed">
+					<tr>
+						<td style="width:140px;">Date</td>
+						<td style="width:10px;">:</td>
+						<td>
+							<span t-field="o.date_from" />
+							-
+							<span t-field="o.date_to" />
+						</td>
+						<td style="width:10px;">&amp;nbsp;</td>
+						<td style="width:140px;">Purchase Agreement</td>
+						<td style="width:10px;">:</td>
+						<td>
+							<span t-field="o.requisition_ids" />
+						</td>
+					</tr>
+					<tr>
+						<td>Created By</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.create_uids" />
+						</td>
+						<td>&amp;nbsp;</td>
+						<td>Agreement Type</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.agreement_type_ids" />
+						</td>
+					</tr>
+					<tr>
+						<td>Last Updated By</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.write_uids" />
+						</td>
+						<td>&amp;nbsp;</td>
+						<td>Product</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.product_ids" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">&amp;nbsp;</td>
+						<td>Status</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.state" />
+						</td>
+					</tr>
+				</table>
+				<br />
+				<table class="table table-sm o_main_table">
+					<thead>
+						<tr>
+							<th>Representative</th>
+							<th style="text-align:center;">Type</th>
+							<th>Vendor</th>
+							<th style="text-align:center;">Orderline</th>
+							<th style="text-align:center;">Deadline</th>
+							<th>Source Doc.</th>
+							<th style="text-align:center;">Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<t t-as="head" t-foreach="o.headers">
+							<tr>
+								<td>
+									<span t-field="head.name" />
+								</td>
+								<td style="text-align:center;">
+									<span t-field="head.type_id" />
+								</td>
+								<td>
+									<span t-field="head.vendor_id" />
+								</td>
+								<td style="text-align:center;">
+									<span t-field="head.ordering_date"
+										t-options="{'widget':'date'}" />
+								</td>
+								<td style="text-align:center;">
+									<span t-field="head.date_end"
+										t-options="{'widget':'date'}" />
+								</td>
+								<td>
+									<span t-field="head.origin" />
+								</td>
+								<td style="text-align:center;">
+									<span t-field="head.state" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="7">
+									<table width="95%" style="float:right;">
+										<thead>
+											<tr>
+												<th>P/A</th>
+												<th>Schedule Date</th>
+												<th>Product</th>
+												<th style="text-align:right;">Qty</th>
+												<th style="text-align:right;">Ordered Qty</th>
+												<th>UoM</th>
+												<th style="text-align:right;">Unit Price</th>
+											</tr>
+										</thead>
+										<tbody>
+											<t t-as="line" t-foreach="o.lines">
+												<t t-if="head.id == line.requisition_id.id">
+													<tr>
+														<td>
+															<span t-field="line.requisition_id" />
+														</td>
+														<td>
+															<span t-field="line.schedule_date" />
+														</td>
+														<td>
+															<span t-field="line.product_id" />
+														</td>
+														<td style="text-align:right;">
+															<span t-field="line.product_qty" />
+														</td>
+														<td style="text-align:right;">
+															<span t-field="line.qty_ordered" />
+														</td>
+														<td>
+															<span t-field="line.product_uom_id" />
+														</td>
+														<td style="text-align:right;">
+															<span t-field="line.price_unit" />
+														</td>
+													</tr>
+												</t>
+											</t>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</t>
+					</tbody>
+				</table>
+			</div>
+		</t>
+	</template>
+</odoo>

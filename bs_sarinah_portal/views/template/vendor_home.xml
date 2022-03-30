@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="portal_layout" name="Portal layout: Vendor Portal"
+    inherit_id="portal.portal_breadcrumbs" priority="40">
+  <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+    <li t-if="page_name == 'Low Stock Products' or low_stock_product" t-attf-class="breadcrumb-item #{'active ' if not low_stock_product else ''}">
+      <a t-if="low_stock_product" t-attf-href="/my/low_stock_products?{{ keep_query() }}">
+        Low Stock Products
+      </a>
+      <t t-else="">
+        Low Stock Products
+      </t>
+    </li>
+    <li t-if="low_stock_product" class="breadcrumb-item active">
+        [<t t-esc="low_stock_product.product_code"/>]
+        <t t-esc="low_stock_product.product_name"/>
+    </li>
+    <li t-if="page_name == 'Vendor Delivery Orders' or picking_ids or picking" t-attf-class="breadcrumb-item #{'active ' if not picking_ids else ''}">
+      <a t-if="picking" t-attf-href="/my/delivery_orders/{{ picking.operation_type }}?{{ keep_query() }}">
+        Delivery Order
+        <t t-if="picking.operation_type == 'outgoing'">
+          Return
+        </t>
+      </a>
+      <t t-else="">
+        Delivery Orders
+        <t t-if="all([type == 'outgoing' for type in picking_ids.mapped('operation_type')])">
+          Return
+        </t>
+      </t>
+    </li>
+    <li t-if="picking" class="breadcrumb-item active">
+        <t t-esc="picking.name"/>
+        (<t t-esc="picking.vendor_reference"/>)
+    </li>
+    <t t-if="variant">
+      <li class="breadcrumb-item active">
+        <a t-attf-href="/my/products?{{ keep_query() }}">
+          My Products
+        </a>
+      </li>
+      <li t-if="variant.vendor_product_id" t-attf-class="breadcrumb-item #{'active ' if variant.vendor_product_id.active else ''}">
+        <a t-attf-href="/my/products/{{ variant.vendor_product_id.id }}">
+          My Products
+            [<t t-esc="variant.vendor_product_id.product_code"/>]
+            <t t-esc="variant.vendor_product_id.product_name"/>
+          </a>
+        </li>
+        <li t-if="variant" t-attf-class="breadcrumb-item #{'active ' if variant.active else ''}">
+          <t t-foreach="variant.attribute_value_ids" t-as="attr">
+            <t t-if="attr_index != 0">,</t>
+            <span t-field="attr.name"/>
+          </t>
+        </li>
+      </t>
+    <li t-if="page_name == 'Sales Report'" class="breadcrumb-item">
+        Sales Report
+    </li>
+</xpath>
+</template>
+
+<template id="portal_my_home_vendor" name="Portal My Home : vendor entries"
+  inherit_id="portal.portal_my_home" priority="20">
+<xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+  <t t-call="portal.portal_docs_entry">
+    <t t-set="title">Vendor Delivery Order</t>
+    <t t-set="url" t-value="'/my/delivery_orders/incoming'"/>
+    <t t-set="count" t-value="delivery_order_count"/>
+  </t>
+  <t t-call="portal.portal_docs_entry">
+    <t t-set="title">Vendor DO Return</t>
+    <t t-set="url" t-value="'/my/delivery_orders/outgoing'"/>
+    <t t-set="count" t-value="outgoing_do_count"/>
+  </t>
+  <t t-call="portal.portal_docs_entry">
+    <t t-set="title">Low Stock Products</t>
+    <t t-set="url" t-value="'/my/low_stock_products'"/>
+    <t t-set="count" t-value="low_stock_product_count"/>
+  </t>
+  <t t-call="portal.portal_docs_entry">
+    <t t-set="title">Sales Report</t>
+    <t t-set="url" t-value="'/my/sales_report'"/>
+    <t t-set="count" t-value="sales_report_count"/>
+  </t>
+</xpath>
+    </template>
+  </odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_discount,access_res_discount,model_res_discount,base.group_user,1,1,1,1
+access_product_replenish_request,access_product_replenish_request,model_product_replenish_request,base.group_user,1,1,1,1
+access_replenish_request,access_replenish_request,model_replenish_request,base.group_user,1,1,1,1
+access_no_content,access_no_content,model_no_content,base.group_user,1,0,0,1
+access_ir_module_category_base_rmdoo,ir_module_category_base_rmdoo,base.model_ir_module_category,base.group_user,1,0,0,0

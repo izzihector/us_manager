@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="pos_custom_dicount_inherit_pos_form_inherit" model="ir.ui.view">
+            <field name="name">POS Order</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='price_subtotal_incl']" position="after">
+                    <field name='custom_discount_reason'/>
+                </xpath>
+                <field name="price_unit" position="after">
+                    <field name="fix_discount"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="pos_discount_form_view" model="ir.ui.view">
+            <field name="name">pos.custom.discount</field>
+            <field name="model">pos.custom.discount</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="form session">
+                    <sheet>
+                        <group>
+                            <field name="name" id="name" placeholder="Discount Name"/>
+                        </group>
+                        <group col="4">
+                            <field name="discount_type"/>
+                            <field name="value"/>
+                        </group>
+                        <group>
+                            <field name="available_in_pos" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="day_of_week_ids" widget="many2many_tags"
+                                   options="{'no_create': True,'no_edit':True}"/>
+                        </group>
+                        <group col="4">
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                        </group>
+                        <group>
+                            <field name="apply_on"/>
+                            <field name="product_ids" attrs="{'invisible':[('apply_on','!=','product')],'required': [('apply_on','=','product')]}"
+                             	domain="[('available_in_pos','=', True)]" widget="many2many_tags"/>
+                            <field name="categ_ids" attrs="{'invisible':[('apply_on','!=','category')],'required': [('apply_on','=','category')]}"
+                                   widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="description" id="discription" placeholder="Description for Internal Purpose"/>
+                        </group>
+                        <notebook>
+                            <page string="Exception Dates">
+                                <field name="exception_date_ids">
+                                    <tree editable="bottom">
+                                        <field name="start_date"/>
+                                        <field name="end_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_discount_tree_view" model="ir.ui.view">
+            <field name="name">pos.custom.discount</field>
+            <field name="model">pos.custom.discount</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="tree session">
+                    <field name="name"/>
+                    <field name="discount_type"/>
+                    <field name="value"/>
+                    <field name="description"/>
+                    <field name="start_date"/>
+					<field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_discount_form_view_action" model="ir.actions.act_window">
+            <field name="name">POS Custom Discount</field>
+            <field name="res_model">pos.custom.discount</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="pos_config_inherit_view" model="ir.ui.view">
+            <field name="name">pos.config.inherit.view</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <div id="category_reference" position="before">
+                   <div class="col-12 col-lg-6 o_setting_box" id="config_discount_ids">
+                       <div class="o_setting_right_pane">
+                           <label string="Select Discount" for="discount_ids"/>
+                           <div class="text-muted">
+	                            Select Discount
+                           </div>
+                           <div class="content-group mt16">
+                               <field name="discount_ids" colspan="4" nolabel="1" widget="many2many_tags"/>
+                           </div>
+                        </div>
+                   </div>
+                </div>
+                <div id="category_reference" position="before">
+		            <div class="col-12 col-lg-6 o_setting_box" id="config_discount_ids">
+		                <div class="o_setting_left_pane">
+		                    <field name='allow_custom_discount'/>
+		                </div>
+	                	<div class="o_setting_right_pane">
+	                     	<label for="allow_custom_discount"/>
+	                     	<div class="text-muted" id="lbl_allow_custom_discount">
+	                        	Allow Custom Discount
+	                     	</div>
+	                    </div>
+	                </div>
+                </div>
+                <div id="category_reference" position="before">
+		            <div class="col-12 col-lg-6 o_setting_box" id="config_discount_ids">
+		                <div class="o_setting_left_pane">
+		                    <field name="allow_security_pin"/>
+		                </div>
+	                	<div class="o_setting_right_pane">
+	                     	<label for="allow_security_pin"/>
+	                     	<div class="text-muted" id="lbl_allow_security_pin">
+	                        	Allow To Ask Security Pin
+	                     	</div>
+	                    </div>
+	                </div>
+                </div>
+                <div id="category_reference" position="before">
+		            <div class="col-12 col-lg-6 o_setting_box" id="config_discount_ids">
+	                    <div class="o_setting_right_pane">
+	                        <label string="Shortcut Key" for="open_discount_popup"/>
+	                        <div class="text-muted">
+	                            Shortcut Key To Open Discount Popup
+	                        </div>
+	                        <div class="content-group mt16">
+	                            <field name="open_discount_popup" colspan="4" nolabel="1"/>
+	                        </div>
+	                    </div>
+	                </div>
+                </div>
+            </field>
+        </record>
+
+        <menuitem id="wk_pos_discount_menu" name="Discount" parent="point_of_sale.menu_point_config_product"
+                  action="pos_discount_form_view_action"/>
+    </data>
+</odoo>

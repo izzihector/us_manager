@@ -1,0 +1,35 @@
+<odoo>
+  <data>
+    <record id="send_to_vernoss_action" model="ir.ui.view">
+      <field name="name">Product Category</field>
+      <field name="model">product.category.vernoss</field>
+      <field name="arch" type="xml">
+        <form>
+          <p>Send to Vernoss?</p>
+          <footer>
+            <button name="send" string="Send" type="object" class="btn-primary" />
+            <button string="Cancel" class="btn-secondary" special="cancel" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <act_window name="Send to Vernoss" id="send_to_vernoss_action" res_model="product.category.vernoss" binding_model="product.category" binding_views="list,form" view_mode="form" target="new" />
+    
+    <record id="product_to_vernoss_action" model="ir.ui.view">
+      <field name="name">Product</field>
+      <field name="model">product.template.vernoss</field>
+      <field name="arch" type="xml">
+        <form>
+          <p>Send to Vernoss?</p>
+          <footer>
+            <button name="send" string="Send" type="object" class="btn-primary" />
+            <button string="Cancel" class="btn-secondary" special="cancel" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <act_window name="Send to Vernoss" id="product_to_vernoss_action" res_model="product.template.vernoss" binding_model="product.template" binding_views="list,form" view_mode="form" target="new" />
+  </data>
+</odoo>

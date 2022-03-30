@@ -1,0 +1,126 @@
+.discount_percent{
+    color: #555;
+    background: none;
+    height: 10px;
+    width: 10px;
+    padding-bottom: 8px;
+    margin-top: -27px;
+    margin-left: 21px; 
+    font-style: bold
+}
+.product_discount.selected {
+    background: #6EC89B;
+}
+.product_discount.selected > td {
+	font-size: 13px;
+}
+.fa-stack-discount{
+        position:relative;
+        padding-left:6px;
+        margin-right: 125px;
+        width: 90px;
+}
+.fa-scissors {
+        position:absolute;
+        left:2px;
+        top:-1px;
+}
+.fa-scissors:before {
+        font-size:12px;
+}
+.discount-list{
+    font-size: 16px;
+    width: 100%;
+    line-height: 40px;
+}
+.discount-list th {
+    padding: 0px 8px;
+}
+.discount-list td {
+    padding: 0px 8px;
+    font-size:12px
+}
+.discount-list tr{
+    transition: all 150ms linear;
+    background: rgb(230,230,230);
+}
+/* .discount-list thead > tr, */
+/* .discount-list tr:nth-child(even) { */
+/*     background: rgb(247,247,247); */
+/* } */
+.discount-list tr.highlight{
+    transition: all 150ms linear;
+    background: rgb(110,200,155) !important;
+    color: white;
+}
+.discount-list tr.lowlight{
+    transition: all 150ms linear;
+    background: rgb(216, 238, 227);
+}
+.discount-list tr.lowlight:nth-child(even){
+    transition: all 150ms linear;
+    background: rgb(227, 246, 237);
+}
+.selection.scrollable-y.touch-scrollable.discount-list tbody tr {
+    background: #fff;
+}
+.selection.scrollable-y.touch-scrollable.discount-list tbody tr.selected {
+    background: #6EC89B;
+    color:#fff;
+}
+.selection.scrollable-y.touch-scrollable.discount-list tbody tr.selected td{
+    font-size: 13px;
+    color:#fff;
+}
+#custom_discount_type {
+    width: 140px;
+    float: left;
+    margin-left: 70px;
+    height: 32px;
+    background: #fff;
+    box-shadow: 0px 0px 0px 1px rgb(220,220,220) inset;
+    border: none;
+    color: #444;
+    font-size: 15px;
+}
+.pos #custom_discount_popup .popup , .pos #inbuilt_discount .popup , .pos #discount_error_popup .popup{
+	background: white;
+}
+.pos #inbuilt_discount .title , .pos #custom_discount_popup .title , .pos #discount_error_popup .title{
+    background: #6EC89B !important;
+    color: #fff;
+}
+
+#discount, #discount_fix {
+    float: left;
+    width: 170px;
+    margin-left: 20px;
+    min-height: 35px;
+    padding: 0 5px;
+    font-size: 15px;
+}
+.show_discount_type th, .receipt-total tr {
+    font-size: 15px;
+}
+#custom_discount_popup .hidden-field{
+	display:none;
+}
+#reason{
+	margin-left: 70px;
+	margin-top: 10px;
+	width: 310px;
+	float: left;
+}
+#error_div{
+	background: rgb(255, 165, 102);
+    height: 20px;
+    padding: 10px 0;
+	float: left;
+    width: 100%;
+    margin-top: 35px;
+}
+#custom_discount_type:focus {
+    box-shadow: 0px 0px 0px 3px #6EC89B;
+    border-radius: 3px;
+    outline: 0;
+}

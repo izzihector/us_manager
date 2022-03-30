@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mcs_property_product_template_form_inherit" model="ir.ui.view">
+            <field name="name">mcs_property.product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_button_box']" position="inside">
+                    <button class="oe_stat_button" name="action_childs_products" type="object" icon="fa-list" attrs="{'invisible': ['|', ('is_property', '=', False), ('is_contract_item', '=', True)]}">
+                        <field string="Sub Products" name="childs_products_count" widget="statinfo" />
+                    </button>
+                    <!-- <button class="oe_stat_button" name="fixing_parent_root" type="object" icon="fa-list" /> -->
+                </xpath>
+                <xpath expr="//div[@name='options']" position="inside">
+                    <div>
+                        <field name="is_property" />
+                        <label for="is_property" />
+                    </div>
+                </xpath>
+
+                <xpath expr="//page[@name='inventory']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('type', '=', 'service'), ('is_property', '=', True)]}</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='purchase']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('purchase_ok','=',False), ('is_property', '=', True)]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='purchase_ok']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//label[@for='purchase_ok']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='pos']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('type', 'not in', ['product', 'consu']), ('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//page[@name='general_information']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('type', 'not in', ['product', 'consu', 'service']), ('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//page[@name='general_information']" position="before">
+                    <page name="property_information" string="Property Information" attrs="{'invisible': [('is_property', '=', False)]}">
+                        <group>
+                            <group string="Property Information">
+                                <field name="have_parent" />
+                                <field name="parent_id" attrs="{'invisible': [('have_parent', '=', False)]}" />
+
+                                <field name="location_id" />
+                                <field name="categ_id" />
+                                <field name="category" attrs="{'required': [('is_property', '=', True)]}" />
+                                <!-- <field name="uom_id" attrs="{'invisible': [('category', '!=', 'Service')], 'required': [('category', '=', 'Service')]}" /> -->
+                                <field name="is_contract_item" attrs="{'invisible': [('category', '!=', 'Property')]}" />
+
+                                <field name="available" />
+                                <!-- <field name="revenue_sharing_or_minimum_rental" attrs="{'invisible': [('is_property', '=', False)]}" /> -->
+                                <!-- <field name="revenue_sharing_plus_minimum_rental" attrs="{'invisible': [('is_property', '=', False)]}" /> -->
+                                <field name="revenue_sharing" attrs="{'invisible': [('is_property', '=', False)]}" />
+                                <field name="minimum_rental" attrs="{'invisible': [('is_property', '=', False)]}" />
+                            </group>
+                            <group string="Property Detail" attrs="{'invisible': [('category', '!=', 'Property')]}">
+                                <field name="property_code" attrs="{'invisible': [('is_contract_item', '=', False)]}" />
+                                <field name="property_space" attrs="{'invisible': [('is_contract_item', '=', False)]}" />
+                                <field name="recurring_type" attrs="{'invisible': ['|',('category', '!=', 'Property'),('is_contract_item', '=', False)]}" />
+                                <!-- <field name="contract_price" attrs="{'invisible': ['|',('category', '!=', 'Property'),('is_contract_item', '=', False)]}" string="Total Price"/> -->
+                                <!-- <field name="contract_price_uom_id" context="{'order_display': 'name asc' }" attrs="{'invisible': ['|',('category', '!=', 'Property'),('is_contract_item', '=', False)]}" /> -->
+                                <field name="version" invisible="1" />
+
+                                <field name="total_childs" invisible="True" />
+
+                                <field name="total_large" attrs="{'invisible': [('category', '!=', 'Property')], 'required': [('category', '=', 'Property')]}" />
+                                <field name="total_large_available" attrs="{'invisible': [('category', '!=', 'Property')], 'required': [('category', '=', 'Property')]}" />
+                                <field name="space_rent_out" readonly="1" attrs="{'invisible': [('category', '!=', 'Property')]}" />
+                                <!-- <field name="total_large_uom_id" attrs="{'readonly': [('total_childs', '&gt;', 0)]}" /> -->
+
+                                <field name="total_large_available_text" attrs="{'invisible': [('is_contract_item', '=', True)]}" />
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Rent. Price" attrs="{'invisible': [('category', '!=', 'Property')]}">
+                                <field name="rent_price" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                                <field name="rent_price_month" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                            </group>
+                            <group string="Service Charge" attrs="{'invisible': [('category', '!=', 'Property')]}">
+                                <field name="service_charge_price" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                                <field name="service_charge_price_month" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                            </group>
+                        </group>
+                        <group string="Total Price">
+                            <field name="contract_price" widget="monetary" options="{'currency_field': 'currency_id'}" string="Total Price" />
+                        </group>
+                        <group string="Internal Notes">
+                            <field name="description" widget="html" nolabel="1" />
+                        </group>
+                    </page>
+                    <page name="property_location" string="Property Location" attrs="{'invisible': [('is_property', '=', False)]}">
+                        <group attrs="{'invisible': [('category', '!=', 'Property')]}">
+                            <group string="Geolocation">
+                                <field name="latitude" />
+                                <field name="longitude" />
+                            </group>
+                            <group string="Maps">
+                                <widget name="gmap_marker" lat="latitude" lng="longitude" description="name" />
+                            </group>
+                        </group>
+                    </page>
+                    <page name="property_child_rent" string="Sub Product Rented" attrs="{'invisible': ['|', ('is_property', '=', False), ('parent_id', '!=', False)]}">
+                        <field name="child_root_ids" domain="[('is_contract_item','=',True)]">
+                            <tree editable="false" decoration-muted="contract_state == 'Rented'" decoration-success="contract_state == 'Available'">
+                                <field name="name" />
+                                <field name="parent_id" />
+                                <field name="total_large" />
+                                <field name="contract_price" />
+                                <field name="is_contract_item" invisible="1" />
+                                <field name="available" />
+                                <field name="contract_state" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_only_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.template.product.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view" />
+            <field name="arch" type="xml">
+                <field name="default_code" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </field>
+                <field name="barcode" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="mcs_property_product_template_procurement_button_remove" model="ir.ui.view">
+            <field name="name">mcs_property_product_template_procurement_button_remove</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_stock_move_lines']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('type', 'not in', ['product', 'consu']), ('is_property', '=', True)]}</attribute>
+                </xpath>
+                <!-- <xpath expr="//button[@name='346']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('type', 'not in', ['product', 'consu']), ('is_property', '=', True)]}</attribute>
+                </xpath> -->
+                <xpath expr="//button[@name='action_view_related_putaway_rules']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('type', '=', 'service'), ('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_open_product_lot']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('tracking', '=', 'none'), ('is_property', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="mcs_property_product_template_expense_button_remove" model="ir.ui.view">
+            <field name="name">mcs_property_product_template_expense_button_remove</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="hr_expense.view_product_hr_expense_form" />
+            <field name="arch" type="xml">
+                <div name="options" position="inside">
+                    <field name="is_property" invisible="1" />
+                </div>
+                <xpath expr="//field[@name='can_be_expensed']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//label[@for='can_be_expensed']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="mcs_property_product_template_expense_button_remove" model="ir.ui.view">
+            <field name="name">mcs_property_product_template_expense_button_remove</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="hr_expense.view_product_hr_expense_form" />
+            <field name="arch" type="xml">
+                <div name="options" position="inside">
+                    <field name="is_property" invisible="1" />
+                </div>
+                <xpath expr="//field[@name='can_be_expensed']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//label[@for='can_be_expensed']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="mcs_property_product_template_ga_remove" model="ir.ui.view">
+            <field name="name">mcs_property_product_template_ga_remove</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="bs_sarinah_department.form_product_template" />
+            <field name="arch" type="xml">
+                <div name="options" position="inside">
+                    <field name="is_property" invisible="1" />
+                </div>
+                <xpath expr="//field[@name='is_ga']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//label[@for='is_ga']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="mcs_property_product_template_consigment_remove" model="ir.ui.view">
+            <field name="name">mcs_property_product_template_consigment_remove</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="bs_consignment_bills.form_product_template" />
+            <field name="arch" type="xml">
+                <div name="options" position="inside">
+                    <field name="is_property" invisible="1" />
+                </div>
+                <xpath expr="//field[@name='is_consignment']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//label[@for='is_consignment']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='owner_id']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_property', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="mcs_property_product_template_vendor_remove" model="ir.ui.view">
+            <field name="name">mcs_property_product_template_vendor_remove</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="vendor_product_management.view_product_template_purchase_buttons_from" />
+            <field name="arch" type="xml">
+                <button name="%(vendor_product_management.vendor_quant_action)d" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('purchase_ok', '=', False), ('is_property', '=', True)]}</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record id="mcs_property_product_template_purchase_button_remove" model="ir.ui.view">
+            <field name="name">mcs_property_product_template_purchase_button_remove</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="purchase.view_product_template_purchase_buttons_from" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_po']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('purchase_ok', '=', False), ('is_property', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="mcs_property_remove_brand_tree" model="ir.ui.view">
+            <field name="name">mcs_property_remove_brand_tree</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="bi_product_brand.product_template_tree_view_brand" />
+            <field name="arch" type="xml">
+                <field name="brand_id" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="mcs_property_product_template_tree_view_inherit_new" model="ir.ui.view">
+            <field name="name">mcs_property_product_template_tree_view_inherit_new</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view" />
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_property" invisible="1" />
+                    <field name="parent_id" invisible="context.get('default_is_property') != True" />
+                    <field name="parent_root_id" invisible="1" />
+                    <field name="location_id" invisible="context.get('default_is_property') != True" />
+                    <field name="total_large" invisible="context.get('default_is_property') != True" />
+                    <field name="total_large_rent" invisible="1" />
+                    <field name="total_large_child" invisible="1" />
+                    <field name="total_large_available" invisible="context.get('default_is_property') != True" />
+                    <field name="contract_price" invisible="context.get('default_is_property') != True" />
+                    <field name="contract_price_uom_id" invisible="1" />
+                    <field name="available" invisible="context.get('default_is_property') != True" />
+                </field>
+                <field name="barcode" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+                <field name="sequence" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+                <field name="activity_exception_decoration" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+                <field name="default_code" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+                <field name="company_id" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+                <field name="type" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+                <field name="categ_id" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+                <!-- <field name="available_in_pos" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field> -->
+                <field name="list_price" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+                <field name="standard_price" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+                <field name="qty_available" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+                <field name="virtual_available" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+                <field name="uom_id" position="attributes">
+                    <attribute name="invisible">context.get('default_is_property') == True</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!-- <record id="product_product_template_kanban_view_inherit" model="ir.ui.view">
+            <field name="name">product.product_template_kanban_view.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_kanban_view" />
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="parent_id" />
+                    <field name="total_large" />
+                    <field name="total_large_available" />
+                    <field name="is_property" />
+                </field>
+                <xpath expr="//ul" position="after">
+                    <ul t-if="record.is_property == true">
+                        <li t-if="record.parent_id.value">
+                            Parent:
+                            <t t-esc="record.parent_id.value" />
+                        </li>
+                        <li t-if="record.total_large.value">
+                            Total Large (m2):
+                            <t t-esc="record.total_large.value" />
+                        </li>
+                        <li t-if="record.total_large_available.value">
+                            Total Large Available (m2):
+                            <t t-esc="record.total_large_available.value" />
+                        </li>
+                    </ul>
+                </xpath>
+            </field>
+        </record> -->
+
+        <record id="view_product_template_search_extended" model="ir.ui.view">
+            <field name="name">product.template.search.inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view" />
+            <field name="arch" type="xml">
+                <filter name="categ_id" position="after">
+                    <filter string="Parent" name="parent_id" context="{'group_by':'parent_id'}" />
+                </filter>
+            </field>
+        </record>
+
+
+        <record id="mcs_property_product_property_action" model="ir.actions.act_window">
+            <field name="name">Product Property</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">tree,kanban,activity,form</field>
+            <field name="domain">[('is_property','=',True)]</field>
+            <field name="context">{'default_is_property': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No product available.
+                </p>
+            </field>
+        </record>
+
+        <!-- <record model="ir.rule" id="mcs_property_existing_product">
+            <field name="name">Existing Product</field>
+            <field name="model_id" ref="model_product_template" />
+            <field name="global" eval="True" />
+            <field name="domain_force"> ['&#38;', '|', ('company_id', 'in', company_ids), ('company_id', '=', False), ('existing_product', '=', 'Existing')]</field>
+            <field name="domain_force"> [('existing_product', '=', 'Existing')]</field>
+        </record> -->
+    </data>
+</odoo>

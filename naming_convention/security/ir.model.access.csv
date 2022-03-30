@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+naming_convention_commodity,naming_convention.naming_convention,model_naming_convention.commodity,,1,1,1,1
+naming_convention.commodity.attribute,naming_convention.naming_convention,model_naming_convention.commodity.attribute,,1,1,1,1
+naming_convention.commodity.packaging,naming_convention.naming_convention,model_naming_convention.commodity.packaging,,1,1,1,1
+naming_convention.commodity.brand,naming_convention.naming_convention,model_naming_convention.commodity.brand,,1,1,1,1
+naming_convention.commodity.origin,naming_convention.naming_convention,model_naming_convention.commodity.origin,,1,1,1,1
+naming_convention.commodity.pekerjaan,naming_convention.naming_convention,model_naming_convention.commodity.pekerjaan,,1,1,1,1
+naming_convention.commodity.sub.kat.barang,naming_convention.naming_convention,model_naming_convention.commodity.sub.kat.barang,,1,1,1,1

@@ -1,0 +1,391 @@
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record model="ir.ui.view" id="naming_convention.commodity_form">
+            <field name="name">naming_convention.commodity.form</field>
+            <field name="model">naming_convention.commodity</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <h1>
+                            <field name="commodity" placeholder="Nama Komoditas"/>
+                        </h1>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                        <notebook>
+                            <page string="Attribute/Type">
+                                <field name="attribute_line_ids">
+                                    <tree string="Attribute/Type" editable="bottom">
+                                        <field name="commodity" string="Attribute/Type"/>
+                                        <field name="description"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Packaging">
+                                <field name="packaging_line_ids">
+                                    <tree string="Packaging" editable="bottom">
+                                        <field name="commodity" string="Packaging"/>
+                                        <field name="description"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Brand">
+                                <field name="brand_line_ids">
+                                    <tree string="Brand" editable="bottom">
+                                        <field name="commodity" string="Brand"/>
+                                        <field name="description"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="naming_convention.commodity_attribute_form">
+            <field name="name">naming_convention.commodity.attribute.form</field>
+            <field name="model">naming_convention.commodity.attribute</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="commodity"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="naming_convention.commodity_packaging_form">
+            <field name="name">naming_convention.commodity.packaging.form</field>
+            <field name="model">naming_convention.commodity.packaging</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="commodity"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="naming_convention.commodity_brand_form">
+            <field name="name">naming_convention.commodity.brand.form</field>
+            <field name="model">naming_convention.commodity.brand</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="commodity"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="naming_convention.commodity_origin_form">
+            <field name="name">naming_convention.commodity.origin.form</field>
+            <field name="model">naming_convention.commodity.origin</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="commodity"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="naming_convention.commodity_pekerjaan_form">
+            <field name="name">naming_convention.commodity.pekerjaan</field>
+            <field name="model">naming_convention.commodity.pekerjaan</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="commodity"/>
+                                <field name="description"/>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="naming_convention.commodity_sub_kat_barang">
+            <field name="name">naming_convention.commodity.sub.kat.barang.form</field>
+            <field name="model">naming_convention.commodity.sub.kat.barang</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="commodity"/>
+                                <field name="description"/>
+                                <field name="sequence"/>
+                                <field name="pekerjaan_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="inherit_product_template_form">
+            <field name="name">inherit.product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='general_information']" position="before">
+                    <page string="Naming Convention">
+                        <group>
+                            <group>
+                                <field name="pekerjaan_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="commodity_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="attribute_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="origin_id" options="{'no_create': True, 'no_open': True}"/>
+                            </group>
+                            <group>
+                                <field name="sub_barang_id" domain="[('pekerjaan_id','=', pekerjaan_id)]" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="brand_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="packaging_id" options="{'no_create': True, 'no_open': True}"/>
+                                <button name="button_set_name" string="Set Name" type="object" class="oe_stat_button"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="priority">5</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <page name="inventory" position="after">
+                    <page string="Invoicing" name="invoicing">
+                        <group name="properties">
+                            <group string="Receivables">
+                                <field name="taxes_id" widget="many2many_tags"/>
+                                <field name="property_account_income_id"
+                                    domain="[('internal_type','=','other'),('deprecated','=',False)]"
+                                    groups="account.group_account_user"/>
+                            </group>
+                            <group string="Payables" name="payables">
+                                <field name="supplier_taxes_id" widget="many2many_tags"/>
+                                <field name="property_account_expense_id"
+                                    domain="[('internal_type','=','other'),('deprecated','=',False)]"
+                                    groups="account.group_account_user"/>
+                            </group>
+                        </group>
+                        <group name="accounting"/>
+                        <group name="invoicing" invisible="1"/>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+        <!-- Sales -->
+<!--        <record model="ir.ui.view" id="inherit_naming_convention_sales_pivot">-->
+<!--            <field name="name">inherit_naming_convention_sales_pivot</field>-->
+<!--            <field name="model">sale.report</field>-->
+<!--            <field name="inherit_id" ref="sale.view_order_product_pivot"/>-->
+<!--            <field name="arch" type="xml">-->
+                <!--                <xpath expr="//field[@name='price_subtotal']" position="after">-->
+                <!--                    <field name="commodity_id"/>-->
+                <!--                    <field name="attribute_id"/>-->
+                <!--                    <field name="packaging_id"/>-->
+                <!--                    <field name="brand_id"/>-->
+                <!--                    <field name="origin_id"/>-->
+                <!--                </xpath>-->
+<!--                <field name="price_subtotal" position="after">-->
+<!--                    <field name="commodity_id"/>-->
+<!--&lt;!&ndash;                </field>&ndash;&gt; baru komen-->
+<!--                <xpath expr="//filter[@name='brand']" position="after">-->
+<!--                    <filter name='group_by_commodity_id'-->
+<!--                            string="NAMING TES"-->
+<!--                            context="{'group_by':'commodity_id'}"-->
+<!--                            groups="branch.group_branch_user_manager"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <!-- End -->
+
+        <!-- Tree View -->
+        <record model="ir.ui.view" id="naming_convention.commodity_tree">
+            <field name="name">naming_convention.commodity.tree</field>
+            <field name="model">naming_convention.commodity</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="commodity"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="naming_convention.commodity_attribute_tree">
+            <field name="name">naming_convention.commodity.attribute.tree</field>
+            <field name="model">naming_convention.commodity.attribute</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="commodity"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="naming_convention.commodity_packaging_tree">
+            <field name="name">naming_convention.commodity.packaging.tree</field>
+            <field name="model">naming_convention.commodity.packaging</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="commodity"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="naming_convention.commodity_brand_tree">
+            <field name="name">naming_convention.commodity.brand.tree</field>
+            <field name="model">naming_convention.commodity.brand</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="commodity"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="naming_convention.commodity_origin_tree">
+            <field name="name">naming_convention.commodity.origin.tree</field>
+            <field name="model">naming_convention.commodity.origin</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="commodity"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="naming_convention.commodity_pekerjaan_tree">
+            <field name="name">naming_convention.commodity.pekerjaan.tree</field>
+            <field name="model">naming_convention.commodity.pekerjaan</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="commodity"/>
+                    <field name="description"/>
+                    <field name="sequence"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="naming_convention.commodity_sub_kat_barang_tree">
+            <field name="name">naming_convention.commodity.sub.kat.barang.tree</field>
+            <field name="model">naming_convention.commodity.sub.kat.barang</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="commodity"/>
+                    <field name="description"/>
+                    <field name="sequence"/>
+                    <field name="pekerjaan_id" options="{'no_create': True, 'no_open': True}"/>
+                </tree>
+            </field>
+        </record>
+        <!-- End -->
+
+        <!-- Action View -->
+        <record model="ir.actions.act_window" id="naming_convention.commodity_action_window">
+            <field name="name">Naming Jenis Produk</field>
+            <field name="res_model">naming_convention.commodity</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="naming_convention.commodity_attribute_action_window">
+            <field name="name">Naming Spesifikasi Pekerjaan</field>
+            <field name="res_model">naming_convention.commodity.attribute</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="naming_convention.commodity_packaging_action_window">
+            <field name="name">Naming Lain - lain ( Ukuran )</field>
+            <field name="res_model">naming_convention.commodity.packaging</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="naming_convention.commodity_brand_action_window">
+            <field name="name">Naming Tipe Produk</field>
+            <field name="res_model">naming_convention.commodity.brand</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="naming_convention.commodity_origin_action_window">
+            <field name="name">Naming Spesifikasi Produk</field>
+            <field name="res_model">naming_convention.commodity.origin</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="naming_convention.commodity_pekerjaan_action_window">
+            <field name="name">Naming Merk Produk</field>
+            <field name="res_model">naming_convention.commodity.pekerjaan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="naming_convention.commodity_sub_kat_barang_action_window">
+            <field name="name">Naming Sub Kategori Barang</field>
+            <field name="res_model">naming_convention.commodity.sub.kat.barang</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- End -->
+
+        <!-- Menu Item -->
+        <menuitem name="Naming Pekerjaan" id="naming_convention.pekerjaan"
+                  parent="stock.menu_product_in_config_stock" sequence="6"
+                  action="naming_convention.commodity_pekerjaan_action_window"/>
+
+        <menuitem name="Naming Sub Kategori Barang" id="naming_convention.sub_kat_barang"
+                  parent="stock.menu_product_in_config_stock" sequence="6"
+                  action="naming_convention.commodity_sub_kat_barang_action_window"/>
+
+        <menuitem name="Naming Jenis Produk" id="naming_convention.menu_commodity_id"
+                  parent="stock.menu_product_in_config_stock" sequence="6"
+                  action="naming_convention.commodity_action_window"/>
+
+        <menuitem name="Naming Spesifikasi Produk" id="naming_convention.menu_commodity_attribute"
+                  parent="stock.menu_product_in_config_stock" sequence="7"
+                  action="naming_convention.commodity_attribute_action_window"/>
+
+        <menuitem name="Naming Lain - lain ( Ukuran )" id="naming_convention.menu_commodity_packaging"
+                  parent="stock.menu_product_in_config_stock" sequence="8"
+                  action="naming_convention.commodity_packaging_action_window"/>
+
+        <menuitem name="Naming Tipe Produk" id="naming_convention.menu_commodity_brand"
+                  parent="stock.menu_product_in_config_stock" sequence="9"
+                  action="naming_convention.commodity_brand_action_window"/>
+
+        <menuitem name="Naming Merk Produk" id="naming_convention.menu_commodity_origin"
+                  parent="stock.menu_product_in_config_stock" sequence="10"
+                  action="naming_convention.commodity_origin_action_window"/>
+
+    </data>
+</odoo>

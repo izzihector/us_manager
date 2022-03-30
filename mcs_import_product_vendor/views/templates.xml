@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+
+        <record model="ir.actions.server" id="mass_validate_product_action">
+            <field name="name">Validate Product</field>
+            <field name="model_id" ref="vendor_product_management.model_vendor_product"/>
+            <field name="binding_model_id" ref="vendor_product_management.model_vendor_product"/>
+            <field name="state">code</field>
+            <field name="code">
+                records and records.action_mass_validate()
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="mass_validate_do_action">
+            <field name="name">Validate DO</field>
+            <field name="model_id" ref="bs_sarinah_portal.model_vendor_stock_picking"/>
+            <field name="binding_model_id" ref="bs_sarinah_portal.model_vendor_stock_picking"/>
+            <field name="state">code</field>
+            <field name="code">
+                records and records.mass_validate_do()
+            </field>
+        </record>
+
+    </data>
+</odoo>

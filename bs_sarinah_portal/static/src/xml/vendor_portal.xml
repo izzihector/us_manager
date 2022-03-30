@@ -1,0 +1,436 @@
+<templates id="template" xml:space="preserve">
+  <!-- New product template -->
+  <t t-name="vendor_portal_management.vendor_product_dialog">
+      <form>
+          <label for="product_manufacture_code">Manufacture Code</label>
+          <input id="product_manufacture_code"
+                 type="text"
+                 class="form-control o_website_form_input"
+                 t-att-value="widget.product_manufacture_code"
+          />
+          <label for="product_brand_id">Product Brand</label>
+          <select id="product_brand_id" class="form-control o_website_form_input">
+            <t t-foreach="widget.product_brand_ids" t-as="brand">
+                <option t-attf-value="{{ brand.id }}" t-att-selected="widget.product_brand_id == brand.id and 'selected' or null">
+                <t t-esc="brand.display_name" />
+                </option>
+            </t>
+          </select>
+          <div class="row">
+            <div class="col-8">
+              <label for="product_category_id">Product Category</label>
+              <select id="product_category_id" class="form-control o_website_form_input">
+                <t t-foreach="widget.product_category_ids" t-as="categ">
+                  <option t-attf-value="{{ categ.id }}" t-att-selected="widget.product_category_id == categ.id and 'selected' or null">
+                    <t t-esc="categ.display_name" />
+                  </option>
+                </t>
+              </select>
+            </div>
+            <div class="col-4">
+              <label for="product_margin">Share to Sarinah</label>
+              <input id="product_margin" type="text" readonly="true" class="form-control o_website_form_input"
+                t-att-value="(widget.product_margin or (widget.product_category_ids.length and widget.product_category_ids[0].consignment_margin) or '0') + '%'" />
+            </div>
+          </div>
+          <label for="product_name">Product Name</label>
+          <input id="product_name"
+                 type="text"
+                 class="form-control o_website_form_input"
+                 t-att-value="widget.product_name"
+          />
+          <label for="product_uom_id">Unit of Measure</label>
+          <select id="product_uom_id" class="form-control o_website_form_input">
+            <t t-foreach="widget.product_uom_ids" t-as="uom">
+              <option t-attf-value="{{ uom[0] }}" t-att-selected="widget.product_uom_id == uom[0] and 'selected' or null">
+                <t t-esc="uom[1]" />
+              </option>
+            </t>
+          </select>
+          <label for="product_minimum_quantity">Safety Stock</label>
+          <input id="product_minimum_quantity"
+                 type="text"
+                 class="form-control o_website_form_input"
+                 t-att-value="widget.product_minimum_quantity"
+          />
+          <label for="description">Description</label>
+          <textarea id="description"
+                    style="width: 100%; height: 150px;"
+                    t-esc="widget.description"
+                    class="form-control o_website_form_input"
+          />
+      </form>
+  </t>
+  <!-- Price Update / Create Dialog -->
+  <t t-name="vendor_portal_management.vendor_price_dialog">
+          <form>
+              <label for="product_margin">Share to Sarinah</label>
+              <input id="product_margin"
+                     type="text" readonly="true"
+                     class="form-control o_website_form_input"
+                     t-att-value="widget.product_margin + '%'"
+              />
+              <label for="location_id">Location</label>
+              <select id="location_id"
+                      class="form-control o_website_form_input"
+              >
+                  <t t-foreach="widget.location_ids" t-as="loc">
+                      <option t-attf-value="{{ loc[0] }}"
+                              t-att-selected="widget.location_id == loc[0] and 'selected' or null"
+                      >
+                              <t t-esc="loc[1]" />
+                      </option>
+                  </t>
+              </select>
+              <div class="row">
+                <div class="col-12">
+                  <label for="portal_input_price">
+                    Price
+                    <t t-if="widget.is_margin_included">(Margin Included)</t>
+                    <t t-else="">(Margin Excluded)</t>
+                  </label>
+                  <input id="portal_input_price"
+                    type="number"
+                    class="form-control o_website_form_input"
+                    t-att-value="widget.portal_input_price"
+                    min="0"
+                    />
+                </div>
+              </div>
+              <label for="currency_id">Currency</label>
+              <select id="currency_id"
+                      class="form-control o_website_form_input"
+              >
+                  <t t-foreach="widget.currency_ids" t-as="cur">
+                      <option t-attf-value="{{ cur[0] }}"
+                              t-att-selected="widget.currency_id == cur[0] and 'selected' or null"
+                      >
+                              <t t-esc="cur[1]" />
+                      </option>
+                  </t>
+              </select>
+              <label for="min_qty">Minimal Quantity</label>
+              <input id="min_qty"
+                     type="number"
+                     class="form-control o_website_form_input"
+                     t-att-value="widget.min_qty"
+                     min="0"
+              />
+              <label for="date_start">Valid from</label>
+              <input id="date_start"
+                     type="date"
+                     class="form-control o_website_form_input"
+                     t-att-value="widget.date_start"
+              />
+              <label for="date_end">Valid to</label>
+              <input id="date_end"
+                     type="date"
+                     class="form-control o_website_form_input"
+                     t-att-value="widget.date_end"
+              />
+          </form>
+      </t>
+    <!-- Stock Update / Create Dialog -->
+    <t t-name="vendor_portal_management.vendor_quant_dialog">
+        <form>
+            <label for="locaiton_id">Location</label>
+            <select id="location_id"
+                    class="form-control o_website_form_input"
+            >
+                <t t-foreach="widget.location_ids" t-as="loc">
+                    <option t-attf-value="{{ loc[0] }}"
+                            t-att-selected="widget.location_id == loc[0] and 'selected' or null"
+                    >
+                            <t t-esc="loc[1]" />
+                    </option>
+                </t>
+            </select>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="supplier_quantity">Quantity</label>
+                <input id="supplier_quantity"
+                  type="number"
+                  class="form-control o_website_form_input"
+                  t-att-value="widget.supplier_quantity"
+                  min="0"
+                  />
+              </div>
+              <div class="col-md-6">
+                <label for="product_uom_name">Unit of Measure</label>
+                <input id="product_uom_name"
+                  type="text" readonly="true"
+                  class="form-control o_website_form_input"
+                  t-att-value="widget.product_uom_name"
+                  />
+              </div>
+            </div>
+        </form>
+    </t>
+    <!-- Picking Update / Create Dialog -->
+    <t t-name="bs_sarinah_portal.vendor_picking_dialog">
+      <form>
+        <label for="reference">Internal Reference</label>
+        <input id="reference" type="text" class="form-control o_website_form_input"
+                t-att-value="widget.reference"/>
+        <label for="location_id">Location</label>
+        <select id="location_id" class="form-control o_website_form_input">
+          <t t-foreach="widget.location_ids" t-as="loc">
+            <option t-attf-value="{{ loc[0] }}" t-att-selected="widget.location_id == loc[0] and 'selected' or null" >
+              <t t-esc="loc[1]" />
+            </option>
+          </t>
+        </select>
+        <section t-if="widget.move_ids" id="move" style="page-break-inside: auto;" class="mt32">
+          <h3 id="details">Move</h3>
+          <table class="table table-sm" id="move_table">
+            <thead class="bg-100">
+              <tr>
+                <th class="text-left">Product</th>
+                <th class="text-left">Quantity Delivered</th>
+                <th class="text-left" scope="col" width="150px">Unit of Measure</th>
+                <th width="60px"></th>
+              </tr>
+            </thead>
+            <tbody class="move_tbody">
+              <t t-foreach="widget.move_ids" t-as="move">
+                <tr t-att-data-id="move.id" class="move_line">
+                  <td class="text-left">
+                    <select class="move_product form-control o_website_form_input">
+                      <t t-foreach="widget.product_ids" t-as="prod">
+                        <option t-attf-value="{{ prod['id'] }}" t-att-selected="move.vendor_product_variant_id[0] == prod['id'] and 'selected' or null" >
+                          <t t-esc="prod['display_name']" />
+                        </option>
+                      </t>
+                    </select>
+                  </td>
+                  <td class="text-right">
+                    <input type="number" class="move_quantity form-control o_website_form_input"
+                      t-att-value="move.quantity" min="0" />
+                  </td>
+                  <td class="text-right">
+                    <select class="move_uom form-control o_website_form_input" disabled="true">
+                      <t t-foreach="widget.uom_ids" t-as="uom">
+                        <option t-attf-value="{{ uom[0] }}" t-att-selected="move.product_uom_id[0] == uom[0] and 'selected' or null" >
+                          <t t-esc="uom[1]" />
+                        </option>
+                      </t>
+                    </select>
+                  </td>
+                  <td class="text-right">
+                    <a href="#" class="remove_move" id="8">
+                      <i class="fa fa-2x fa-fw fa-times"></i>
+                    </a>
+                  </td>
+                </tr>
+              </t>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-right">
+                  <a href="#" class="add_move">
+                    add
+                  </a>
+                </td>
+              </tr>
+              <tr id="line-template" class="d-none">
+                <td class="text-left">
+                  <select class="move_product form-control o_website_form_input">
+                    <option/>
+                    <t t-foreach="widget.product_ids" t-as="prod">
+                      <option t-attf-value="{{ prod['id'] }}" t-att-selected="prod_index == 0 and 'selected' or null" >
+                        <t t-esc="prod['display_name']" />
+                      </option>
+                    </t>
+                  </select>
+                </td>
+                <td class="text-right">
+                  <input type="number" class="move_quantity form-control o_website_form_input" min="0" />
+                </td>
+                <td class="text-right">
+                  <select class="move_uom form-control o_website_form_input" disabled="true">
+                    <option/>
+                    <t t-foreach="widget.uom_ids" t-as="uom">
+                      <option t-attf-value="{{ uom[0] }}">
+                        <t t-esc="uom[1]" />
+                      </option>
+                    </t>
+                  </select>
+                </td>
+                <td class="text-right">
+                  <a href="#" class="remove_move" id="8">
+                    <i class="fa fa-2x fa-fw fa-times"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </form>
+    </t>
+
+    <!-- Picking Delete Dialog -->
+    <t t-name="bs_sarinah_portal.vendor_picking_dialog_delete">
+      <form>
+        Are you sure to delete delivery order <t t-esc="widget.picking_name"/>?
+      </form>
+    </t>
+
+
+    <!-- Product Attribute List -->
+    <t t-name="bs_sarinah_portal.product_attribute_list">
+      <h3 id="details">Attributes</h3>
+      <table class="table table-sm" id="attributes_table">
+        <thead class="bg-100">
+          <tr>
+            <t t-set="colspan" t-value="5"/>
+            <th class="d-sm-table-cell">Attribute</th>
+            <th class="text-left">Values</th>
+            <th/>
+          </tr>
+        </thead>
+        <tbody class="attributes_tbody">
+          <t t-foreach="widget.data.attributes" t-as="attr">
+            <tr t-att-data-line-id="attr.id">
+              <td>
+                <div id="attribute_id">
+                  <span t-esc="attr.name"/>
+                </div>
+              </td>
+              <td>
+                <div class="value_ids">
+                  <select multiple="true" style="width:100%; line-height: 1;" t-att-disabled="widget.data.is_readonly || None">
+                    <t t-foreach="attr.values" t-as="value">
+                      <option t-if="attr.selected_value_ids.includes(value.id)" t-att-value="value.id" selected="">
+                        <span t-esc="value.name"/>
+                      </option>
+                      <option t-else="" t-att-value="value.id">
+                        <span t-esc="value.name"/>
+                      </option>
+                    </t>
+                  </select>
+                </div>
+              </td>
+              <td class="text-right">
+                <a t-if="!widget.data.is_readonly" href="#" class="remove_attribute" t-att-id="attr.id"
+                  t-att-data-product="widget.data.product_id">
+                  <i class="fa fa-1x fa-fw fa-times text-danger"/>
+                </a>
+              </td>
+            </tr>
+          </t>
+          <!-- <tr t-att-class="'' if available_attributes else 'd-none'"> -->
+            <tr t-if="widget.data.available_attributes.length and !widget.data.is_readonly">
+            <td>
+              <div id="attribute_id">
+                <select class="custom-select custom-select-sm" id="action-change-attribute">
+                  <option selected="true"/>
+                  <t t-foreach="widget.data.available_attributes" t-as="attr">
+                    <option t-esc="attr.name" t-att-value="attr.id" t-att-data-values="JSON.stringify(attr.values)"/>
+                  </t>
+                </select>
+              </div>
+            </td>
+            <td>
+              <select id="value_ids" multiple="true" style="width:100%; line-height: 1;">
+                <option value=""></option>
+              </select>
+            </td>
+            <td class="text-right">
+              <a href="#" t-att-id="widget.data.product_id" class="add_attribute" >
+                <i class="fa fa-1x fa-fw fa-plus"/>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </t>
+
+    <!-- Product Variant List -->
+    <t t-name="bs_sarinah_portal.product_variant_list">
+      <h3 id="details">Variants</h3>
+      <table class="table table-sm" id="variants_table">
+        <thead class="bg-100">
+          <tr style="white-space: nowrap;">
+            <t t-set="colspan" t-value="4"/>
+            <th class="d-sm-table-cell">Product</th>
+            <th class="text-left">Variant</th>
+            <th class="text-left">Sales Prices</th>
+            <th class="text-left">Vendor Prices</th>
+            <th class="text-right">Manage Prices</th>
+          </tr>
+        </thead>
+        <tbody class="variants_tbody">
+          <t t-if="widget.variants.length">
+            <t t-foreach="widget.variants" t-as="variant">
+              <tr>
+                <td>
+                  <div id="product_name">
+                    <span t-esc="variant.product_name"/>
+                  </div>
+                </td>
+                <td>
+                  <div id="attribute_value_ids">
+                    <t t-foreach="variant.attributes" t-as="attr">
+                      <span t-esc="attr" class="badge badge-secondary"/>
+                    </t>
+                  </div>
+                </td>
+                <td>
+                  <div id="variant_price_ids">
+                    <t t-foreach="variant.prices" t-as="price">
+                      <span t-esc="price" class="badge badge-secondary"/>
+                    </t>
+                  </div>
+                </td>
+                <td>
+                  <div id="variant_price_ids">
+                    <t t-foreach="variant.vendor_prices" t-as="price">
+                      <span t-esc="price" class="badge badge-secondary"/>
+                    </t>
+                  </div>
+                </td>
+                <td class="text-right">
+                  <a t-attf-href="/my/product_variants/#{variant.id}?" class="edit_variant_price" >
+                    <i class="fa fa-1x fa-fw fa-edit"/>
+                  </a>
+                </td>
+              </tr>
+            </t>
+          </t>
+          <t t-else="">
+            <tr class="text-warning text-center">
+              <td t-att-colspan="colspan">
+                Add multiple attributes to generate variants and add prices.
+              </td>
+            </tr>
+          </t>
+        </tbody>
+      </table>
+    </t>
+
+    <!-- Product Image List -->
+    <t t-name="bs_sarinah_portal.product_image_list">
+      <h3 id="details">Images</h3>
+      <input type="file" id="new-image-input" class="d-none" accept=".png, .jpeg, .jpg" multiple="true"/>
+      <input type="file" id="change-image-input" class="d-none" accept=".png, .jpeg, .jpg"/>
+      <div class="mb-4" style="display: flex;flex-wrap: wrap;">
+        <t t-foreach="widget.images" t-as="image">
+          <div t-att-id="image.id" class="change-image" style="width: 20%; padding: 5px; position: relative;">
+            <span t-att-id="image.id" class="remove-image text-white bg-danger edit_variant_price"
+              style="top: 0; right: 0; position: absolute; border-radius: 50%; width: 1.5em; height: 1.5em; text-align: center; line-height: 1.5em;">
+            <i class="fa fa-1x fa-fw fa-times"/>
+          </span>
+          <img t-attf-src="data:image/png;base64,{{image.binary}}" t-att-title="image.name" width="100%"/>
+        </div>
+      </t>
+      <div id="add-image" style="width: 20%; height: 200px; padding: 5px; position: relative;">
+        <div style="width: 100%; height: 200px; border: 1px dashed grey;"/>
+        <span  class="text-black-50 text-center edit_variant_price"
+            style="border: 4px solid gray; top: calc(50% - 4.5em / 2); right: calc(50% - 4.5em / 2); position: absolute; border-radius: 50%; width: 4.5em; height: 4.5em; line-height: 6em;">
+          <i class="fa fa-3x fa-fw fa-plus"/>
+        </span>
+      </div>
+    </div>
+  </t>
+</templates>

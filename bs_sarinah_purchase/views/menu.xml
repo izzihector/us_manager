@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <menuitem id="menu_purchase_request_approval" name="Approval"
+            parent="purchase_rmdoo.menu_replenish_root" sequence="10"/>
+        <menuitem groups="base.group_user"
+            id="menu_purchase_request_to_approve" name="PR to Approve"
+            parent="menu_purchase_request_approval" sequence="100"/>
+        <menuitem action="purchase_request_to_approve_manager"
+            groups="bs_sarinah_purchase.group_purchase_request_manager"
+            id="menu_purchase_request_to_approve_manager" name="By Kepala Bagian"
+            parent="menu_purchase_request_to_approve" sequence="100"/>
+        <menuitem action="purchase_request_to_approve_tim_pengadaan"
+            groups="bs_sarinah_purchase.group_purchase_request_tim_pengadaan"
+            id="menu_purchase_request_to_approve_tim_pengadaan" name="By Tim Pengadaan"
+            parent="menu_purchase_request_to_approve" sequence="200"/>
+        <menuitem action="purchase_request_to_approve_tim_lelang2"
+            groups="bs_sarinah_purchase.group_purchase_request_tim_lelang"
+            id="menu_purchase_request_to_approve_tim_lelang" name="By Tim Lelang"
+            parent="menu_purchase_request_to_approve" sequence="300"/>
+  </data>
+</odoo>

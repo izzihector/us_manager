@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="assets_backend" name="pos_fast assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/pos_fast/static/src/js/pos_backend.js"/>
+                <script type="text/javascript" src="/pos_fast/static/src/js/bus.js"/>
+            </xpath>
+        </template>
+
+        <template id="pos_fast_assets_backend" name="pos_fast assets" inherit_id="point_of_sale.assets">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/pos_fast/static/src/js/big_data.js"/>
+                <script type="text/javascript" src="/pos_fast/static/src/js/indexed_db.js"/>
+                <script type="text/javascript" src="/pos_fast/static/src/js/rpc.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

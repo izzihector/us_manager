@@ -1,0 +1,183 @@
+<odoo>
+    <data>
+        <record id="mcs_property_contract_addendum" model="ir.ui.view">
+            <field name="name">mcs_property_contract_addendum</field>
+            <field name="model">mcs_property.contract.addendum</field>
+            <field name="arch" type="xml">
+                <form string="Addendum Kontrak">
+                    <group>
+                        <p>Addendum Kontrak?</p>
+                    </group>
+                    <footer>
+                        <button string="Submit" name="submit" type="object" default_focus="1" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_expired" model="ir.ui.view">
+            <field name="name">mcs_property_contract_expired</field>
+            <field name="model">mcs_property.contract.expired</field>
+            <field name="arch" type="xml">
+                <form string="Expired Kontrak">
+                    <group>
+                        <p>Expired Kontrak?</p>
+                    </group>
+                    <footer>
+                        <button string="Submit" name="submit" type="object" default_focus="1" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_done" model="ir.ui.view">
+            <field name="name">mcs_property_contract_done</field>
+            <field name="model">mcs_property.contract.done</field>
+            <field name="arch" type="xml">
+                <form string="Done Kontrak">
+                    <group>
+                        <p>Done Kontrak?</p>
+                    </group>
+                    <footer>
+                        <button string="Submit" name="submit" type="object" default_focus="1" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_surat_peringatan" model="ir.ui.view">
+            <field name="name">mcs_property_contract_surat_peringatan</field>
+            <field name="model">mcs_property.contract.surat_peringatan</field>
+            <field name="arch" type="xml">
+                <form string="Surat Peringatan Kontrak">
+                    <group>
+                        <p>Surat Peringatan Kontrak?</p>
+                    </group>
+                    <footer>
+                        <button string="Submit" name="submit" type="object" default_focus="1" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_surat_peringatan_alasan" model="ir.ui.view">
+            <field name="name">mcs_property_contract_surat_peringatan_alasan</field>
+            <field name="model">mcs_property.contract.surat_peringatan_alasan</field>
+            <field name="arch" type="xml">
+                <form string="Surat Peringatan Kontrak Alasan">
+                    <group>
+                        <field name="wanprestasi_reason" required="1" widget="html"/>
+                        <field name="wanprestasi_file" filename="wanprestasi_filename" />
+                        <field name="wanprestasi_filename" invisible="True" />
+                    </group>
+                    <footer>
+                        <button string="Submit" name="submit" type="object" default_focus="1" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_running" model="ir.ui.view">
+            <field name="name">mcs_property_contract_running</field>
+            <field name="model">mcs_property.contract.running</field>
+            <field name="arch" type="xml">
+                <form string="Running Kontrak">
+                    <group>
+                        <p>Running Kontrak?</p>
+                    </group>
+                    <footer>
+                        <button string="Submit" name="submit" type="object" default_focus="1" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_approve_denied" model="ir.ui.view">
+            <field name="name">mcs_property_contract_approve_denied</field>
+            <field name="model">mcs_property.contract.approve.denied</field>
+            <field name="arch" type="xml">
+                <form string="Approve Denied Kontrak">
+                    <group>
+                        <p>Approve Denied `Kontrak?</p>
+                    </group>
+                    <footer>
+                        <button string="Submit" name="submit" type="object" default_focus="1" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_approve" model="ir.ui.view">
+            <field name="name">mcs_property_contract_approve</field>
+            <field name="model">mcs_property.contract.approve</field>
+            <field name="arch" type="xml">
+                <form string="Approve Kontrak">
+                    <group>
+                        <p>Approve Kontrak?</p>
+                    </group>
+                    <footer>
+                        <button string="Submit" name="submit" type="object" default_focus="1" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_confirm" model="ir.ui.view">
+            <field name="name">mcs_property_contract_confirm</field>
+            <field name="model">mcs_property.contract.confirm</field>
+            <field name="arch" type="xml">
+                <form string="Konfirmasi Kontrak">
+                    <group>
+                        <p>Konfirmasi Kontrak?</p>
+                    </group>
+                    <footer>
+                        <button string="Submit" name="submit" type="object" default_focus="1" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_lost_reason" model="ir.ui.view">
+            <field name="name">mcs_property_contract_lost_reason</field>
+            <field name="model">mcs_property.contract.lost.reason</field>
+            <field name="arch" type="xml">
+                <form string="Contract Lost Reason">
+                    <group>
+                        <field name="lost_reason" required="1" />
+                        <field name="lost_reason_detail" required="1" string="Detail" widget="html" />
+                    </group>
+                    <footer>
+                        <button string="Submit" name="submit_lost_reason" type="object" default_focus="1" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="mcs_property_contract_extend" model="ir.ui.view">
+            <field name="name">mcs_property_contract_extend</field>
+            <field name="model">mcs_property.contract.extend</field>
+            <field name="arch" type="xml">
+                <form string="Contract Lost Reason">
+                    <group>
+                        <field name="start_date" required="1" />
+                        <field name="end_date" required="1" />
+                    </group>
+                    <footer>
+                        <button string="Submit" name="submit" type="object" default_focus="1" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

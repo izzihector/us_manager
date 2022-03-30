@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="mcs_inherit_bi_product_brand" model="ir.ui.view">
+            <field name="name">inherit bi_product_brand</field>
+            <field name="model">product.brand</field>
+            <field name="inherit_id" ref="bi_product_brand.product_brand_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="code"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="mcs_inherit_product_template_only_form_view" model="ir.ui.view">
+            <field name="name">inherit product_template_only_form_view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='type']" position="before">
+                    <field name="is_autonaming"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="mcs_inherit_product_attribute_view_form" model="ir.ui.view">
+            <field name="name">inherit product_attribute_view_form</field>
+            <field name="model">product.attribute</field>
+            <field name="inherit_id" ref="product.product_attribute_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="show_in_desc"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Pos Order Report Template -->
+    <template id="template_report_pos_order_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <!-- header-->
+                <div class="page" style="color: #555555;">
+                    <!-- Company Details -->
+                    <center>
+                        <table width="100%" align="center">
+                            <th style="font-size: 8px">
+                                <tr>
+                                    <img
+                                        t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
+                                        style="max-height:40px; max-width:60px;"
+                                    />
+                                </tr>
+                            </th>
+                            <br />
+                            <tr style="font-family: Lato; font-size: 8px">
+                                <span
+                                    style="font-family: Lato; font-size: 8px"
+                                    t-field="o.company_id.name"
+                                />
+                            </tr>
+                            <br />
+                            <tr style="font-family: Lato; font-size: 8px">
+                                <span
+                                    style="font-family: Lato; font-size: 8px"
+                                >Tel</span>
+                                <span style="font-family: Lato; font-size: 8px">:</span>
+                                <span
+                                    style="font-family: Lato; font-size: 8px"
+                                    t-field="o.company_id.phone"
+                                />
+                            </tr>
+                            <br />
+                            <tr style="font-family: Lato; font-size: 8px">
+                                <span
+                                    style="font-family: Lato; font-size: 8px"
+                                >Vat</span>
+                                <span style="font-family: Lato; font-size: 8px">:</span>
+                                <span
+                                    style="font-family: Lato; font-size: 8px"
+                                    t-field="o.company_id.vat"
+                                />
+                            </tr>
+                            <br />
+                            <tr>
+                                <span
+                                    style="font-family: Lato; font-size: 8px"
+                                    t-field="o.company_id.email"
+                                />
+                            </tr>
+                            <br />
+                            <tr>
+                                <span
+                                    style="font-family: Lato; font-size: 8px;"
+                                    t-field="o.company_id.website"
+                                />
+                            </tr>
+                            <br />
+                            <div>--------------------</div>
+                            <tr>
+                                <span
+                                    style="font-family: Lato;font-size: 8px;"
+                                >Served by </span>
+                                <span
+                                    style="font-family: Lato; font-size: 8px"
+                                    t-field=" o.current_user_id"
+                                />
+                                <br />
+                            </tr>
+                        </table>
+                    </center>
+                    <!-- Pos Line Details -->
+                    <table
+                        style="margin-top: 1px;font-family: Lato; font-size: 8px;color: #555555;"
+                    >
+                        <t t-foreach="o.lines" t-as="line">
+                            <tr>
+                                <td>
+                                    <span
+                                        style="text-align:left; font-family: Lato; font-size: 8px"
+                                        t-field="line.product_id"
+                                    />
+                                    <br />
+                                    <t t-if="line.discount">
+                                        <span>
+                                                <span
+                                                style="font-family: Lato; font-size: 8px"
+                                                t-field="line.price_unit"
+                                            />
+                                                <br />
+                                                <span
+                                                style="font-family: Lato; font-size: 8px"
+                                            >Discount:</span>
+                                                <span
+                                                style="font-family: Lato; font-size: 8px"
+                                                t-field="line.discount"
+                                            />
+                                                %
+                                            </span>
+                                        <br />
+                                        <span>
+                                            <span
+                                                style="font-family: Lato; font-size: 8px"
+                                                t-field="line.qty"
+                                            />
+                                            <span
+                                                style="font-family: Lato; font-size: 8px"
+                                            >*</span>
+                                            <span
+                                                style="font-family: Lato; font-size: 8px"
+                                                t-field="line.price_subtotal"
+                                            />
+                                        </span>
+                                    </t>
+                                </td>
+                                <td width="10%" style="text-align:right;">
+                                    <t t-if="line.discount">
+                                        <span t-field="line.price_subtotal_incl" />
+                                    </t>
+                                    <t t-else="line.price_unit">
+                                        <span t-field="line.price_unit" />
+                                    </t>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                    <!-- Pos Line's Total -->
+                    <table
+                        width="100%"
+                        style="font-family: Lato; font-size: 8px;color: #555555;"
+                    >
+                        <tr>
+                            <td colspan="10" style="text-align:right;">
+                                <span
+                                    style="font-family: Lato; font-size: 10px"
+                                >TOTAL</span>
+                            </td>
+                            <td>
+                                <span
+                                    t-field="o.amount_paid"
+                                    t-options="{'widget':
+                                    'monetary', 'display_currency': o.company_id.currency_id}"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <t t-set="total_change" t-value="0" />
+                            <t t-foreach="o.payment_ids" t-as="statement">
+                                <t t-if="statement.amount &gt; 0">
+                                    <td colspan="10">
+                                        <span
+                                            style="text-align:left;"
+                                            t-field="statement.payment_method_id"
+                                        />
+                                    </td>
+                                    <td>
+                                        <span t-field="statement.amount" />
+                                    </td>
+                                </t>
+                                <t t-else="0">
+                                    <t
+                                        t-set="total_change"
+                                        t-value="total_change+statement.amount"
+                                    />
+                                </t>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td colspan="10" style="text-align:right;">
+                                <span
+                                    style="font-family: Lato; font-size: 10px"
+                                >CHANGE</span>
+                            </td>
+                            <td style="text-align:right;">
+                                <span
+                                    t-esc="abs(total_change)"
+                                    t-options="{'widget':
+                                    'monetary', 'display_currency': o.company_id.currency_id}"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span
+                                    style="text-align:left; font-family: Lato; font-size: 8px"
+                                >Discount</span>
+                            </td>
+                            <td width="75%">
+                                <span>:</span>
+                            </td>
+                            <td />
+                            <td />
+                            <td />
+                            <td />
+                            <td style="text-align:right;">
+                                <t t-set="total_discount" t-value="0" />
+                                <t t-foreach="o.lines" t-as="line">
+                                    <t
+                                        t-set="total_discount"
+                                        t-value="total_discount+(line.discount * line.price_unit / 100)"
+                                    />
+                                </t>
+                                <span
+                                    t-esc="total_discount"
+                                    t-options="{'widget':
+                                    'monetary', 'display_currency': o.company_id.currency_id}"
+                                />
+                            </td>
+                            <td>
+                                <span t-esc="qty" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span
+                                    style="text-align:left; font-family: Lato; font-size: 8px"
+                                >Total Taxes</span>
+                            </td>
+                            <td />
+                            <td />
+                            <td />
+                            <td />
+                            <td />
+                            <td style="text-align:right;">
+                                <span
+                                    t-field="o.amount_tax"
+                                    t-options="{'widget':
+                                    'monetary', 'display_currency': o.company_id.currency_id}"
+                                />
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+                    <center>
+                        <span
+                            style="font-family: Lato; font-size: 8px"
+                            t-field="o.pos_reference"
+                        />
+                        <br />
+                        <span
+                            style="font-family: Lato; font-size: 8px"
+                            t-field="o.date_order"
+                        />
+                    </center>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

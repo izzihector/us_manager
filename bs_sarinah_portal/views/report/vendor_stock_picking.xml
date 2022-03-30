@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+
+    <template id="bs_sarinah_portal.vendor_stock_picking_report">
+      <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+          <style>
+            * {
+            margin: 0;
+            padding: 0;
+            }
+
+            .page {
+            font-size: 14px;
+            }
+
+            .table th {
+            white-space: nowrap;
+            }
+
+            .table-border-black th,
+            .table-border-black td {
+            border-color: black!important;
+            }
+
+          </style>
+          <t t-foreach="docs" t-as="doc">
+            <div class="page">
+              <div class="row mt-4">
+                <div class="col-6">
+                  <h1 t-esc="doc.name"/>
+                </div>
+                <div class="col-6">
+                  <strong>Vendor Address</strong>
+                  <t t-set="partner" t-value="doc.partner_id or False"/>
+                  <t t-if="partner" name="partner_header">
+                    <div t-esc="partner"
+                      t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'/>
+                  </t>
+                </div>
+              </div>
+              <div class="row mt-4">
+                <div class="col-6">
+                  <table class="table table-borderless table-sm">
+                    <tbody>
+                      <tr>
+                        <th scope="row">Reference</th>
+                        <td width="1">:</td>
+                        <td class="w-100"><span t-field="doc.vendor_reference"/></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Location</th>
+                        <td width="1">:</td>
+                        <td class="w-100"><span t-field="doc.vendor_location_id"/></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-6">
+                  <table class="table table-borderless table-sm">
+                    <tbody>
+                      <tr>
+                        <th scope="row">Status</th>
+                        <td width="1">:</td>
+                        <td class="w-100">
+                          <span t-if="doc.state == 'draft'" class="badge badge-pill badge-warning">
+                            Draft
+                          </span>
+                          <span t-if="doc.state == 'validate'" class="badge badge-pill badge-info">
+                            Validated
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row mt-4">
+                <div class="col-12">
+                  <table class="table table-bordered table-border-black">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="40">No</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity Delivered</th>
+                        <th scope="col">Quantity Received</th>
+                        <th scope="col">Balance</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr t-foreach="doc.vendor_move_ids" t-as="move">
+                        <th scope="row" class="text-right">
+                          <span t-esc="move_index +1"/>
+                        </th>
+                        <td><span t-field="move.vendor_product_id"/></td>
+                        <td width="100" class="text-right">
+                          <span t-field="move.quantity"/>
+                          <span t-field="move.product_uom_id"/>
+                        </td>
+                        <td width="100" class="text-right">
+                          <span t-field="move.quantity_received"/>
+                          <span t-field="move.product_uom_id"/>
+                        </td>
+                        <td width="100" class="text-right">
+                          <span t-field="move.balance"/>
+                          <span t-field="move.product_uom_id"/>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </t>
+        </t>
+      </t>
+    </template>
+
+    <record id="bs_sarinah_portal.vendor_stock_picking_paperformat" model="report.paperformat">
+      <field name="name">A4 Sarinah Vendor Stock Picking Paper Format</field>
+      <field name="format">A4</field>
+      <field name="orientation">Portrait</field>
+      <field name="margin_top">45</field>
+      <field name="margin_bottom">5</field>
+      <field name="margin_left">3</field>
+      <field name="margin_right">3</field>
+      <field name="header_line" eval="False"/>
+      <field name="header_spacing">40</field>
+      <field name="dpi">90</field>
+    </record>
+
+    <report
+            id="bs_sarinah_portal.vendor_stock_picking_report_action"
+            string="Sarinah Vendor Stock Picking"
+            model="vendor.stock.picking"
+            report_type="qweb-pdf"
+            name="bs_sarinah_portal.vendor_stock_picking_report"
+            paperformat="bs_sarinah_portal.vendor_stock_picking_paperformat"
+            print_report_name="'Vendor DO - %s' % (object.name)"
+    />
+
+  </data>
+</odoo>

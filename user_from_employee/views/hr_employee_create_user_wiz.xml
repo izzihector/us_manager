@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+############################################################################
+#
+#  Module Name: hr
+#  Class Name : employeeUserCreate
+#  File Name: employee_create_user.xml
+#  Created On: 09/12/2020, 7.12
+#  Description:  Sistem Informasi hr
+#  Author: Matrica Consulting - (Teguh)
+#  Snipet: tp_view_basic_action
+#
+############################################################################-->
+
+<odoo>
+	<data>
+
+		<!-- Start - Celsa Add (8 des 2020) -->
+		<!-- User Multiple Creation From Employee Wizard -->
+		<record id="view_employee_user_create_wizard" model="ir.ui.view">
+            <field name="name">employee.user.creation.wizard</field>
+            <field name="model">employee.user.creation</field>
+            <field name="arch" type="xml">
+                <form string="Create User">
+					<group>
+						<span>Create user from this employee?</span>
+					</group>
+					<footer>
+						<button string="Create User" name="user_from_emp" type="object" class="btn-primary"/>
+						<button string="Cancel" class="btn-default" special="cancel"/>
+					</footer>
+               </form>
+            </field>
+        </record>
+
+		<!-- User Multiple Creation From Employee Wizard -->
+		<act_window id="emp_user_create"
+					name="Create User"
+					res_model="employee.user.creation"
+					binding_model="hr.employee"
+					view_mode="form"
+					target="new"
+					binding_views="list"
+					groups="base.group_no_one"
+		/>
+		<!-- End - Celsa Add (8 des 2020) -->
+
+	</data>
+</odoo>
+

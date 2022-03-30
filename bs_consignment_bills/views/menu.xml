@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <menuitem id="bs_consignment_bills.menu_item_consignment_bills"
+              name="Consignment Bills"
+              parent="account.menu_finance_payables"
+              action="bs_consignment_bills.action_window_wizard_consignment_bills"
+              sequence="1"/>
+  </data>
+</odoo>

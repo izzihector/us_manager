@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_pos_config_form_whatsapp" model="ir.ui.view">
+        <field name="name">pos.config.form.extend</field>
+        <field name="model">pos.config</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form" />
+        <field name="arch" type="xml">
+            <div id="inventory_location" position="after">
+                <h2>WhatsApp Configuration</h2>
+                <div class="row mt16 o_settings_container" id="is_send_whatsapp">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="is_send_whatsapp" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label
+                                for="is_send_whatsapp"
+                                string='Automatic send invoice via WhatsApp'
+                            />
+                            <div class="text-muted">
+                               Send Receipt number and total to customer's whatsapp number.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="select_template">
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Select Template</span>
+                            <div class="text-muted">
+                                Select Template For Whatsapp Message
+                            </div>
+                            <div class="content-group mt16">
+                                <field
+                                    name="templated_id"
+                                    colspan="4"
+                                    nolabel="1"
+                                    options="{'no_create': True, 'no_create_edit':True, 'no_open':True}"
+                                    required="1"
+                                    attrs="{'invisible' : [('is_send_whatsapp', '=', False)]}"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+</odoo>

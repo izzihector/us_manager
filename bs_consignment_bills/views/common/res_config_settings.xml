@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_consignment_bills.form_res_config_settings" model="ir.ui.view">
+      <field name="name">Res Config Settings Form View</field>
+      <field name="model">res.config.settings</field>
+      <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+      <field name="arch" type="xml">
+        <div data-key="account" position="inside">
+          <h2>Consignment Bills</h2>
+          <div class="row mt16 o_settings_container">
+            <div class="col-6 col-lg-6 o_setting_box">
+              <div class="o_setting_left_pane"/>
+              <div class="o_setting_right_pane">
+                <span class="o_form_label">Auto Add Taxes</span>
+                <span class="fa fa-lg fa-building-o" role="img"/>
+                <div class="text-muted">
+                  Taxes will be applied automatically to consignment bills
+                </div>
+                <div class="content-group">
+                  <div class="row mt16">
+                    <label string="Taxes" for="consignment_tax_id" class="col-lg-3 o_light_label"/>
+                    <field name="consignment_tax_id"
+                           domain="[('company_id', '=', company_id)]"/>
+                  </div>
+                  <div class="row">
+                    <label string="Limit Amount" for="auto_add_tax_amount" class="col-lg-3 o_light_label"/>
+                    <field name="auto_add_tax_amount" attrs="{'invisible': [('consignment_tax_id', '=', False)]}"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-6 o_setting_box">
+              <div class="o_setting_left_pane"/>
+              <div class="o_setting_right_pane">
+                <span class="o_form_label">Auto Add Taxes</span>
+                <span class="fa fa-lg fa-building-o" role="img"/>
+                <div class="text-muted">
+                  Taxes will be applied automatically to consignment bills
+                </div>
+                <div class="content-group">
+                  <div class="row mt16">
+                    <label string="Taxes" for="consignment_second_tax_id" class="col-lg-3 o_light_label"/>
+                    <field name="consignment_second_tax_id"
+                           domain="[('company_id', '=', company_id)]"/>
+                  </div>
+                  <div class="row">
+                    <label string="Limit Amount" for="auto_add_second_tax_amount" class="col-lg-3 o_light_label"/>
+                    <field name="auto_add_second_tax_amount" attrs="{'invisible': [('consignment_second_tax_id', '=', False)]}"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+  </data>
+</odoo>

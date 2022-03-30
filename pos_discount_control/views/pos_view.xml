@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script src="/pos_discount_control/static/src/js/screens/numpad_widget.js" type="text/javascript"/>
+        </xpath>
+    </template>
+</odoo>

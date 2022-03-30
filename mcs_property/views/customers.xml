@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mcs_property_res_partner_form_inherit" model="ir.ui.view">
+            <field name="name">mcs_property.res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="is_property" />
+                    <field name="npwp" />
+                    <field name="business_type_id" attrs="{'invisible': [('is_property', '=', False)]}" />
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page name="property_documents" string="Property Documents" attrs="{'invisible': [('is_property', '=', False)]}">
+                        <field name="document_properties" context="{'default_res_partner_id': active_id}">
+                            <tree editable="bottom">
+                                <field name="res_partner_id" invisible="True" />
+                                <field name="document_category_id" />
+                                <field name="file" filename="file_name" widget="binnary" />
+                                <field name="file_name" invisible="True" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="history_unit" string="History Unit" attrs="{'invisible': [('is_property', '=', False)]}">
+                        <field name="contracts" context="{'default_res_partner_id': active_id}">
+                            <tree editable="false">
+                                <field name="name" />
+                                <!-- <field name="partner_id" /> -->
+                                <field name="date_order" />
+                                <field name="start_date" />
+                                <field name="end_date" />
+                                <field name="state" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

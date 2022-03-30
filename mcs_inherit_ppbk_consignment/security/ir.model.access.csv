@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mcs_inherit_ppbk_consignment_mcs_inherit_ppbk_consignment,mcs_inherit_ppbk_consignment.mcs_inherit_ppbk_consignment,model_mcs_inherit_ppbk_consignment_mcs_inherit_ppbk_consignment,base.group_user,1,1,1,1

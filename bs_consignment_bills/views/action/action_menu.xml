@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_consignment_bills.action_window_wizard_consignment_bills" model="ir.actions.act_window">
+      <field name="name">Consignment Bills</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">wizard.consignment.bills</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+  </data>
+</odoo>

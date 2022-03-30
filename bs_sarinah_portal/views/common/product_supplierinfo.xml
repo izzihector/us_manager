@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_portal.search_product_supplierinfo" model="ir.ui.view">
+      <field name="name">Product Supplierinfo Search View</field>
+      <field name="model">product.supplierinfo</field>
+      <field name="inherit_id" ref="product.product_supplierinfo_search_view"/>
+      <field name="priority">100</field>
+      <field name="mode">primary</field>
+      <field name="arch" type="xml">
+        <field name="product_tmpl_id" position="before">
+          <field name="vendor_product_id" string="Vendor Product"/>
+        </field>
+        <filter name="groupby_vendor" position="after">
+          <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
+        </filter>
+      </field>
+    </record>
+    <record id="bs_sarinah_portal.view_product_supplier_inherit" model="ir.ui.view">
+      <field name="name">product.template.inherit.view.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="purchase.view_product_supplier_inherit"/>
+      <field name="arch" type="xml">
+        <field name="variant_seller_ids" position="replace">
+          <field name="is_consignment" invisible="1"/>
+          <field name="variant_seller_ids" context="{'default_product_tmpl_id': context.get('product_tmpl_id', active_id)}" nolabel="1" attrs="{'invisible': [('product_variant_count','&lt;=',1)]}">
+            <tree string="Vendor Information" multi_edit="1">
+              <field name="sequence" widget="handle"/>
+              <field name="vendor_product_variant_id" attrs="{'column_invisible': [('parent.is_consignment','=',False)]}"/>
+              <field name="name" readonly="1"/>
+              <field name="product_id" readonly="1" optional="hide" invisible="context.get('product_template_invisible_variant', False)" groups="product.group_product_variant"/>
+              <field name="product_tmpl_id" string="Product" readonly="1" invisible="context.get('visible_product_tmpl_id', True)"/>
+              <field name="purchase_requisition_id"/>
+              <field name="product_name" optional="hide"/>
+              <field name="product_code" optional="hide"/>
+              <field name="currency_id" groups="base.group_multi_currency"/>
+              <field name="date_start" optional="hide"/>
+              <field name="date_end" optional="hide"/>
+              <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+              <field name="min_qty"/>
+              <field name="product_uom" groups="uom.group_uom"/>
+              <field name="price" string="Price"/>
+              <field name="discount"/>
+            </tree>
+          </field>
+        </field>
+      </field>
+    </record>
+    <record id="bs_sarinah_portal.tree_product_supplierinfo" model="ir.ui.view">
+      <field name="name">Product Supplierinfo Tree View</field>
+      <field name="model">product.supplierinfo</field>
+      <field name="inherit_id" ref="product.product_supplierinfo_tree_view"/>
+      <field name="priority">100</field>
+      <field name="mode">primary</field>
+      <field name="arch" type="xml">
+        <field name="vendor_product_id" position="attributes">
+          <attribute name="optional">hide</attribute>
+        </field>
+        <field name="vendor_product_id" position="after">
+          <field name="vendor_product_variant_id"/>
+          <field name="product_id" position="move"/>
+        </field>
+        <field name="product_id" position="attributes">
+          <attribute name="optional">show</attribute>
+        </field>
+        <field name="sequence" position="after">
+          <field name="location_id"/>
+          <field name="branch_id"/>
+          <field name="pricelist_id"/>
+        </field>
+        <field name="price" position="after">
+          <field name="portal_input_price" string="Sales Price"/>
+          <field name="price_wo_tax" invisible="1"/>
+          <field name="price_after_margin" string="Vendor Price"/>
+          <field name="state"/>
+        </field>
+        <field name="price" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+        <xpath expr="//tree" position="attributes">
+          <attribute name="decoration-warning">state == 'to_validate'</attribute>
+          <attribute name="decoration-success">state == 'validate'</attribute>
+        </xpath>
+        <field name="purchase_requisition_id" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+        <field name="min_qty" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+        <field name="product_uom" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+        <field name="company_id" position="attributes">
+          <attribute name="optional">hide</attribute>
+        </field>
+      </field>
+    </record>
+    <record id="bs_sarinah_portal.form_product_supplierinfo" model="ir.ui.view">
+      <field name="name">Product Supplierinfo Form View</field>
+      <field name="model">product.supplierinfo</field>
+      <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+      <field name="priority">100</field>
+      <field name="mode">primary</field>
+      <field name="arch" type="xml">
+        <xpath expr="//group[1]" position="before">
+          <header>
+            <button name="action_create_pricelist" string="Validate Price" class="oe_highlight" states="to_validate" type="object"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,to_validate,validate"/>
+          </header>
+        </xpath>
+        <field name="vendor_product_id" position="attributes">
+          <attribute name="attrs">{'readonly': [('id', '!=', False)]}</attribute>
+        </field>
+        <field name="vendor_product_id" position="after">
+          <field name="id" invisible="1"/>
+          <field name="vendor_product_variant_id" domain="[('vendor_product_id', '=', vendor_product_id)]" attrs="{'readonly': [('id', '!=', False)]}"/>
+        </field>
+        <field name="product_name" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+        <field name="product_code" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+        <label for="price" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </label>
+        <xpath expr="//label[@for='price']/following::div" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <label for="price" position="before">
+          <label for="portal_input_price" string="Sales Price"/>
+          <div class="o_row">
+            <field name="portal_input_price"/>
+            <field name="currency_id" groups="base.group_multi_currency"/>
+          </div>
+          <label for="price_after_margin" string="Vendor Price"/>
+          <div class="o_row">
+            <field name="price_after_margin"/>
+            <field name="currency_id" groups="base.group_multi_currency"/>
+          </div>
+          <field name="price_wo_tax" invisible="1"/>
+          <field name="margin_percentage" string="Margin (%)"/>
+        </label>
+        <field name="company_id" position="before">
+          <field name="location_id"/>
+          <field name="branch_id"/>
+          <field name="pricelist_id"/>
+          <field name="pricelist_item_id" readonly="1" force_save="1"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

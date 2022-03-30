@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="menu_action_loyalty_form" name="Gift Voucher"
+              parent="point_of_sale.menu_point_root" groups="point_of_sale.group_pos_manager"></menuitem>
+
+    <record id="loyalty_management_coupen_form" model="ir.ui.view">
+        <field name="name">loyalty.management.coupen.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <label for="sale_ok" position="after">
+                <newline/>
+                <field name="coupon" string="coupon"/>
+                <label for="coupon"/>
+            </label>
+
+            <label for="list_price" position="before">
+                <newline/>
+                <field name="validity" string="Validity"
+                       attrs="{'invisible':[('coupon','=',False)]}"/>
+            </label>
+        </field>
+    </record>
+
+    <record id="hide_is_coupon_bs_sarinah_product" model="ir.ui.view">
+        <field name="name">hide_is_coupon_bs_sarinah_product</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="bs_sarinah_product.form_product_template" />
+        <field name="arch" type="xml">
+            <div name="options" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </div>
+        </field>
+    </record>
+
+
+    <record id="loyalty_gift_coupon_tree_view" model="ir.ui.view">
+        <field name="name">loyalty_gift_coupon_tree_view</field>
+        <field name="model">gift.voucher</field>
+        <field name="arch" type="xml">
+
+            <tree string="Gift Coupon">
+                <field name="source"/>
+                <!-- <field name="shop_id" /> -->
+                <field name="company_id"/>
+                <field name="voucher_name"/>
+                <field name="voucher_validity"/>
+                <field name="date"/>
+                <field name="last_date"/>
+                <field name="qty" sum="Total Qty"/>
+                <!--<field name="uom" /> -->
+                <field name="amount" sum="Total Amount"/>
+                <field name="remaining_amt" sum="Remaining Amount"/>
+                <field name="used_amt" sum="Used Amount"/>
+                <field name="voucher_serial_no"/>
+                <field name="redeemed_in"/>
+                <field name="redeemed_out"/>
+            </tree>
+
+        </field>
+    </record>
+
+    <record id="action_loyalty_gift_coupon_form1" model="ir.actions.act_window">
+        <field name="name">Gift Voucher Analysis</field>
+        <field name="res_model">gift.voucher</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">tree</field>
+        <!--<field name="search_view_id" ref="loyalty_gift_coupon_tree_view_filter1"/> -->
+
+    </record>
+
+    <record id="pos_payment_method_view_form2" model="ir.ui.view">
+        <field name="name">pos.payment.method.form</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+        <field name="arch" type="xml">
+            <field name="is_cash_count" position="after">
+                <field name="for_gift_coupens"/>
+            </field>
+        </field>
+    </record>
+
+    <menuitem id="menu_pos_scheme_submenu3" parent="menu_action_loyalty_form"
+              action="action_loyalty_gift_coupon_form1"/>
+
+</odoo>

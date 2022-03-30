@@ -1,0 +1,172 @@
+<odoo>
+	<template id="report_purchase_replenish_request">
+		<t t-call="web.html_container">
+			<t t-as="o" t-foreach="docs">
+				<t
+					t-call="purchase_rmdoo.report_purchase_replenish_request_template" />
+			</t>
+		</t>
+	</template>
+	<template id="report_purchase_replenish_request_template">
+		<t t-call="base_rmdoo.rmdoo_internal_layout">
+			<style>
+				table {
+				font-size:12px;
+				}
+			</style>
+			<div class="page">
+				<div class="oe_structure" />
+				<h5>Purchase Request Report</h5>
+				<br />
+				<table style="width:100%;table-layout:fixed">
+					<tr>
+						<td style="width:140px;">Date</td>
+						<td style="width:10px;">:</td>
+						<td>
+							<span t-field="o.date_from" />
+							-
+							<span t-field="o.date_to" />
+						</td>
+						<td style="width:10px;">&amp;nbsp;</td>
+						<td style="width:140px;">Purchase Request</td>
+						<td style="width:10px;">:</td>
+						<td>
+							<span t-field="o.replenish_request_ids" />
+						</td>
+					</tr>
+					<tr>
+						<td>Created By</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.create_uids" />
+						</td>
+						<td>&amp;nbsp;</td>
+						<td>Confirm By</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.confirm_uids" />
+						</td>
+					</tr>
+					<tr>
+						<td>Last Updated By</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.write_uids" />
+						</td>
+						<td>&amp;nbsp;</td>
+						<td>Warehouse</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.warehouse_ids" />
+						</td>
+					</tr>
+					<tr>
+						<td>Product</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.product_ids" />
+						</td>
+						<td>&amp;nbsp;</td>
+						<td>Status</td>
+						<td>:</td>
+						<td>
+							<span t-field="o.state" />
+						</td>
+					</tr>
+				</table>
+				<br />
+				<table class="table table-sm o_main_table">
+					<thead>
+						<tr>
+							<th>Description</th>
+							<th>Create By</th>
+							<th>Req. Department</th>
+							<th>Confirm By</th>
+							<th style="text-align:center;">Ordered Date</th>
+							<th style="text-align:center;">Scheduled Date</th>
+							<th>Warehouse</th>
+							<th style="text-align:center;">Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<t t-as="head" t-foreach="o.headers">
+							<t t-set="accum" t-value="0" />
+							<tr>
+								<td>
+									<span t-field="head.name" />
+								</td>
+								<td>
+									<span t-field="head.create_uid" />
+								</td>
+								<td>
+									<span t-field="head.request_department_id" />
+								</td>
+								<td>
+									<span t-field="head.confirm_uid" />
+								</td>
+								<td style="text-align:center;">
+									<span t-field="head.date_ordered"
+										t-options="{'widget':'date'}" />
+								</td>
+								<td style="text-align:center;">
+									<span t-field="head.date_planned"
+										t-options="{'widget':'date'}" />
+								</td>
+								<td>
+									<span t-field="head.warehouse_id" />
+								</td>
+								<td style="text-align:center;">
+									<span t-field="head.state" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="8">
+									<table width="95%" style="float:right;">
+										<tr>
+											<th width="65%">Product</th>
+											<th>Qty</th>
+											<th>Price</th>
+											<th>Amount</th>
+											<th>Status</th>
+										</tr>
+										<t t-as="line" t-foreach="o.lines">
+											<t t-if="head.id == line.replenish_request_id.id">
+												<tr>
+													<td>
+														<span t-field="line.product_id" />
+													</td>
+													<td style="text-align:right;">
+														<span t-field="line.quantity" />
+														<span t-field="line.product_uom_id" />
+													</td>
+													<td style="text-align:right;">
+														<span t-field="line.price_estimation" />
+													</td>
+													<td style="text-align:right;">
+														<span t-field="line.amount_estimation" />
+													</td>
+													<td>
+														<span t-field="line.state" />
+													</td>
+													<t t-set="accum" t-value="accum+line.amount_estimation" />
+												</tr>
+											</t>
+										</t>
+										<tr>
+											<td colspan="4" style="text-align:right;">
+												<strong>TOTAL</strong>
+											</td>
+											<td style="text-align:right;">
+												<span t-esc="accum" />
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</t>
+					</tbody>
+				</table>
+			</div>
+		</t>
+	</template>
+</odoo>

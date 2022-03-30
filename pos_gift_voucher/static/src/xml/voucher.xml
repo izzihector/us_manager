@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="SelectVoucherButton">
+        <span class="control-button">
+            Voucher
+        </span>
+    </t>
+
+    <t t-name="VoucherActivatePopupWidget">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup popup-textinput" id="form_voucher">
+                <header class="title">
+                    Voucher Activate
+                </header>
+
+                <input type='text' value="" id="order_id" placeholder="Order ID" />
+
+                <div class="voucher_group">
+                    <input type='text' value="" class="voucher_code" placeholder="Scan Voucher Code" style="margin-top: 20px;" />
+                </div>
+
+                <div style="margin-top: 20px; cursor: pointer;" onclick="addMoreVoucher()" id="btn_more">
+                    Add More
+                </div>
+
+                <script>
+                    var voucher_count = 0
+                    var addMoreVoucher = () => {
+                        voucher_count += 1
+                        $('#form_voucher').css('height', `${((voucher_count* 50) + 350)}px`)
+                        if(voucher_count == 4) {
+                            $('#btn_more').css('display', 'none')
+                        }
+                        $('.voucher_group').append('<input type="text" value="" class="voucher_code" placeholder="Scan Voucher Code" style="margin-top: 10px;" />')
+                        $('.voucher_code').last().focus()
+                        return true
+                    }
+                </script>
+
+                <div class="footer">
+                    <div class="button confirm highlight">
+                        Submit
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

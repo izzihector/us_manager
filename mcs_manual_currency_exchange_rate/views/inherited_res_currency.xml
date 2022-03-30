@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+############################################################################
+#
+#  Module Name: res
+#  Class Name: currency, Model Name: res.currency
+#  File Name: inherited_res_currency.xml
+#  Created On: 15/02/2022, 15:00
+#  Description:  Sistem Informasi res
+#  Author: teguh
+#  snipet: tp_view_inherit_generic
+#
+############################################################################-->
+<odoo>
+    <data>
+
+        <!-- INHERIT VIEW Tree res.curreny_tree_view_id ========= -->
+        <record model="ir.ui.view" id="view_curreny_tree_inherited">
+            <field name="name">Currency Tree</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_tree"/>
+            <field name="arch" type="xml">
+                <field name="rate" position="after">
+                	<field name="inverted_rate" />
+                </field>
+            </field> <!-- end arch -->
+        </record> <!-- end view generic -->
+        <!-- INHERIT VIEW Tree res.curreny_tree_view_id ========= -->
+        <record model="ir.ui.view" id="view_curreny_form_inherited">
+            <field name="name">Currency Form</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_form"/>
+            <field name="arch" type="xml">
+                <field name="rate" position="after">
+                	<field name="inverted_rate" />
+                </field>
+            </field> <!-- end arch -->
+        </record> <!-- end view generic -->
+        <!-- INHERIT VIEW Tree res.curreny_tree_view_id ========= -->
+        <record model="ir.ui.view" id="view_curreny_rate_tree_inherited">
+            <field name="name">Currency Rate Tree</field>
+            <field name="model">res.currency.rate</field>
+            <field name="inherit_id" ref="base.view_currency_rate_tree"/>
+            <field name="arch" type="xml">
+                <field name="rate" position="after">
+                	<field name="inverted_rate" />
+                </field>
+            </field> <!-- end arch -->
+        </record> <!-- end view generic -->
+        
+    </data>
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- Inherit Form View to Modify it -->
+    <record id="bs_sarinah_department.form_pos_config_inherit" model="ir.ui.view">
+      <field name="name">view.pos.config.form.inherit</field>
+      <field name="model">pos.config</field>
+      <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+      <field name="arch" type="xml">
+        <div id="company" position="before">
+          <div id="branch" class="col-12 col-lg-6 o_setting_box">
+            <div class="o_setting_right_pane">
+              <label for="branch_id"/>
+              <div><field name="branch_id" required="1"/></div>
+            </div>
+          </div>
+          <div id="department" class="col-12 col-lg-6 o_setting_box">
+            <div class="o_setting_right_pane">
+              <label for="department_id"/>
+              <div><field name="department_id" required="1"/></div>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+
+  </data>
+</odoo>

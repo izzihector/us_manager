@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="MobileBCSannerButton">
+      <div class="oe_status pos-bc-sanner-button">
+          <div class="js_connected oe_icon">
+            <span class="fa-stack fa-lg" aria-hidden="true" aria-label="Scan BarCode" role="img" title="Scan BarCode">
+              <i class="fa fa-barcode fa-stack-2x"></i>
+              <i class="fa fa-camera fa-stack-1x fa-inverse"></i>
+            </span>
+          </div>
+      </div>
+    </t>
+    <t t-name="CameraScannerScreenWidget">
+        <div class="camera-scanner-screen screen">
+            <div class="screen-content">
+                <div class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                    <div id="sourceSelectPanel" class="oe_hidden">
+                      <span>Camera</span>
+                      <select name="input-stream_constraints" id="deviceSelection">
+                      </select>
+                    </div>
+                </div>
+                <div class="full-content">
+                  <div id="camera-video-scanner" class="viewport"></div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

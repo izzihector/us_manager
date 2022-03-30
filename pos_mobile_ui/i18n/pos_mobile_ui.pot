@@ -1,0 +1,66 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* pos_mobile_ui
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0-20200629\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-17 16:22+0000\n"
+"PO-Revision-Date: 2020-07-17 16:22+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: pos_mobile_ui
+#. openerp-web
+#: code:addons/pos_mobile_ui/static/src/xml/mobile_pos.xml:22
+#, python-format
+msgid "Hide"
+msgstr ""
+
+#. module: pos_mobile_ui
+#. openerp-web
+#: code:addons/pos_mobile_ui/static/src/xml/mobile_pos.xml:29
+#, python-format
+msgid "Hide categories"
+msgstr ""
+
+#. module: pos_mobile_ui
+#. openerp-web
+#: code:addons/pos_mobile_ui/static/src/xml/mobile_pos.xml:7
+#, python-format
+msgid "Order info and actions"
+msgstr ""
+
+#. module: pos_mobile_ui
+#. openerp-web
+#: code:addons/pos_mobile_ui/static/src/xml/mobile_pos.xml:21
+#, python-format
+msgid "Show"
+msgstr ""
+
+#. module: pos_mobile_ui
+#. openerp-web
+#: code:addons/pos_mobile_ui/static/src/xml/mobile_pos.xml:14
+#, python-format
+msgid "Show All"
+msgstr ""
+
+#. module: pos_mobile_ui
+#. openerp-web
+#: code:addons/pos_mobile_ui/static/src/xml/mobile_pos.xml:28
+#, python-format
+msgid "Show categories"
+msgstr ""
+
+#. module: pos_mobile_ui
+#. openerp-web
+#: code:addons/pos_mobile_ui/static/src/xml/mobile_pos.xml:15
+#, python-format
+msgid "Show less"
+msgstr ""
+

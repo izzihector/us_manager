@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="bs_sarinah_portal.vendor_sales_report_list" name="Vendor Sales Report List">
+    <t t-call="portal.portal_layout">
+      <t t-set="breadcrumbs_searchbar" t-value="True"/>
+      <t t-call="portal.portal_searchbar">
+        <t t-set="title">Vendor Sales Report</t>
+      </t>
+      <div class="pull-right">
+         <a href="/report/xlsx/bs_sarinah_portal.xlsx_sale_report" role="button" class="btn btn-primary btn-sm mb8">
+           <i class="fa fa-download"/>
+           Export
+         </a>
+      </div>
+      <t t-if="not report_ids">
+        <p>There are currently no sales report found by your criteria.</p>
+      </t>
+      <t t-if="report_ids" t-call="portal.portal_table">
+        <thead>
+          <tr class="active">
+            <th>Date</th>
+            <th>No SO</th>
+            <th>Location</th>
+            <th>Brand</th>
+            <th>Variant</th>
+            <th>Qty</th>
+            <th>Gross Sale</th>
+            <th>Discount</th>
+            <th>Net Sales</th>
+            <th>Hak Mitra</th>
+            <th>Discount Beban Mitra</th>
+            <th>Hak Mitra Setelah Discount</th>
+          </tr>
+        </thead>
+        <t t-foreach="report_ids" t-as="report">
+          <tr t-att-class="'inactive_row' if report.state == 'draft' else ''">
+            <td>
+              <!-- <a t-attf-href="/my/sales_report/#{report.id}?#{keep_query()}"> -->
+                <span t-field="report.date"/>
+              <!-- </a> -->
+            </td>
+            <td>
+              <span t-field="report.name"/>
+            </td>
+            <td>
+              <span t-field="report.branch_id"/>
+            </td>
+            <td>
+              <span t-field="report.brand_id"/>
+            </td>
+            <td>
+              <span t-foreach="report.product_id.product_template_attribute_value_ids"
+                t-as="attr" class="badge badge-pill badge-info">
+                <t t-esc="report.product_id.name"/>
+                (<t t-esc="attr.name"/>)
+              </span>
+            </td>
+            <td class="text-right">
+              <span t-field="report.product_uom_qty"/>
+            </td>
+            <td class="text-right">
+              <span t-esc="report.price_total + report.discount_amount"/>
+            </td>
+            <td class="text-right">
+              <span t-field="report.discount_amount"/>
+            </td>
+            <td class="text-right">
+              <span t-field="report.price_total"/>
+            </td>
+            <td class="text-right">
+              <span t-field="report.supplier_revenue"/>
+            </td>
+            <td class="text-right">
+              <span t-field="report.supplier_discount"/>
+            </td>
+            <td class="text-right">
+              <span t-field="report.supplier_gross_revenue"/>
+            </td>
+            <td/>
+            <td/>
+            <td/>
+          </tr>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

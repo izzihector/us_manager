@@ -1,0 +1,350 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sh_pos_order_return_exchange
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-22 09:41+0000\n"
+"PO-Revision-Date: 2021-02-22 09:41+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "(Non-Exchangeable)"
+msgstr "（不可兌換）"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "(Non-Returnable)"
+msgstr "（不可退貨）"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "(Non-Returnable) (Non-Exchangeable)"
+msgstr "（不可退貨）（不可兌換）"
+
+#. module: sh_pos_order_return_exchange
+#: model_terms:ir.ui.view,arch_db:sh_pos_order_return_exchange.view_pos_new_form_extended
+msgid "<span class=\"o_stat_text\">Exchange</span>"
+msgstr "<span class=\"o_stat_text\">交換</span>"
+
+#. module: sh_pos_order_return_exchange
+#: model_terms:ir.ui.view,arch_db:sh_pos_order_return_exchange.view_pos_new_form_extended
+msgid "<span class=\"o_stat_text\">Return</span>"
+msgstr "<span class=\"o_stat_text\">返回</span>"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__sh_allow_exchange
+msgid "Allow Exchange Order"
+msgstr "允許交換訂單"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__sh_return_more_qty
+msgid "Allow Return More Than Purchase Item"
+msgstr "允許返回超過購買項目"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__sh_allow_return
+msgid "Allow Return Order"
+msgstr "允許退貨訂單"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Cancel"
+msgstr "取消"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#, python-format
+msgid "Complete Exchange"
+msgstr "完全交換"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#, python-format
+msgid "Complete Return"
+msgstr "完全回報"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Discount (%)"
+msgstr "折扣 （％）"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__display_name
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__display_name
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order_line__display_name
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_product_product__display_name
+msgid "Display Name"
+msgstr "顯示名稱"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: model_terms:ir.ui.view,arch_db:sh_pos_order_return_exchange.pos_return_order_select
+#, python-format
+msgid "Exchange"
+msgstr "交換"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/receipt.xml:0
+#, python-format
+msgid "Exchange Order"
+msgstr "交換訂單"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#, python-format
+msgid "Exchange Products"
+msgstr "交換產品"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order_line__sh_exchange_qty
+#, python-format
+msgid "Exchange Qty."
+msgstr "交換數量。"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#, python-format
+msgid "Exchange With Same Products"
+msgstr "交換與同一產品"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields.selection,name:sh_pos_order_return_exchange.selection__pos_order__return_status__fully_return
+msgid "Fully Returned"
+msgstr "完全返回"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Fully-Returned"
+msgstr "完全返回"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__id
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__id
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order_line__id
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_product_product__id
+msgid "ID"
+msgstr "ID"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__is_exchange_order
+msgid "Is Exchange Order?"
+msgstr "是交換訂單嗎？"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__is_return_order
+msgid "Is Return Order?"
+msgstr "是退貨訂單嗎？"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config____last_update
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order____last_update
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order_line____last_update
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_product_product____last_update
+msgid "Last Modified on"
+msgstr "最後修改了"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_product_product__sh_product_non_exchangeable
+msgid "Non Exchangeable"
+msgstr "不可兌換"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_product_product__sh_product_non_returnable
+msgid "Non Returnable"
+msgstr "不可退貨"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields.selection,name:sh_pos_order_return_exchange.selection__pos_order__return_status__nothing_return
+msgid "Nothing Returned"
+msgstr "什麼都沒有退回"
+
+#. module: sh_pos_order_return_exchange
+#: model_terms:ir.ui.view,arch_db:sh_pos_order_return_exchange.sh_pos_config_settings_pos_return_exchange
+msgid "POS Order Return Exchange"
+msgstr "POS訂單返回交換"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Partially-Returned"
+msgstr "部分返回"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields.selection,name:sh_pos_order_return_exchange.selection__pos_order__return_status__partialy_return
+msgid "Partialy Returned"
+msgstr "部分返回"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model,name:sh_pos_order_return_exchange.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "銷售點配置"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model,name:sh_pos_order_return_exchange.model_pos_order_line
+msgid "Point of Sale Order Lines"
+msgstr "銷售點訂單線"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model,name:sh_pos_order_return_exchange.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "銷售點訂單"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__sh_exchange_print_receipt
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_config__sh_return_print_receipt
+msgid "Print Information In Receipt"
+msgstr "打印收據中的信息"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#: model:ir.model,name:sh_pos_order_return_exchange.model_product_product
+#, python-format
+msgid "Product"
+msgstr "產品"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Qty."
+msgstr "數量。"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/js/screen.js:0
+#, python-format
+msgid "Remaining unsynced orders"
+msgstr "剩下的毫無悅訂單"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: model_terms:ir.ui.view,arch_db:sh_pos_order_return_exchange.pos_return_order_select
+#, python-format
+msgid "Return"
+msgstr "返回"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/receipt.xml:0
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__old_pos_reference
+#, python-format
+msgid "Return Order"
+msgstr "返回訂單"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Return Order Reference :"
+msgstr "返回訂單參考："
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Return Orders"
+msgstr "退貨訂單"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#, python-format
+msgid "Return Products"
+msgstr "退貨產品"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/popup.xml:0
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order_line__sh_return_qty
+#, python-format
+msgid "Return Qty."
+msgstr "返回數量。"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Return Quantity"
+msgstr "返回數量"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__return_status
+#, python-format
+msgid "Return Status"
+msgstr "返回狀態"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,help:sh_pos_order_return_exchange.field_pos_order__return_status
+msgid "Return status of Order"
+msgstr "返回訂單狀態"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Sub Total"
+msgstr "次總計"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/js/screen.js:0
+#, python-format
+msgid "There are unsynced orders. Do you want to sync these orders?"
+msgstr "有不悅的訂單。你想同步這些訂單嗎？"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__total_exchange_order
+msgid "Total Exchange Order"
+msgstr "總交換訂單"
+
+#. module: sh_pos_order_return_exchange
+#: model:ir.model.fields,field_description:sh_pos_order_return_exchange.field_pos_order__total_return_order
+msgid "Total Return Order"
+msgstr "總回報率"
+
+#. module: sh_pos_order_return_exchange
+#. openerp-web
+#: code:addons/sh_pos_order_return_exchange/static/src/xml/screen.xml:0
+#, python-format
+msgid "Unit Price"
+msgstr "單價"

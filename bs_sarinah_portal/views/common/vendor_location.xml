@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_portal.tree_vendor_location" model="ir.ui.view">
+      <field name="name">Vendor Location Tree View</field>
+      <field name="model">vendor.location</field>
+      <field name="inherit_id" ref="vendor_product_management.vendor_location_view_tree"/>
+      <field name="arch" type="xml">
+        <field name="name" position="after">
+          <field name="branch_id" required="1"/>
+          <field name="location_id" required="1" domain="[('branch_id', '=', branch_id), ('usage', '=', 'internal')]"/>
+        </field>
+        <field name="partner_id" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+      </field>
+    </record>
+    <record id="bs_sarinah_portal.form_vendor_location" model="ir.ui.view">
+      <field name="name">Vendor Location Form View</field>
+      <field name="model">vendor.location</field>
+      <field name="inherit_id" ref="vendor_product_management.vendor_location_view_form"/>
+      <field name="arch" type="xml">
+        <field name="company_id" position="before">
+          <field name="branch_id" required="1"/>
+          <field name="location_id" required="1" domain="[('branch_id', '=', branch_id), ('usage', '=', 'internal')]"/>
+        </field>
+        <field name="partner_id" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

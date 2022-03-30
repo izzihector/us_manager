@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : <https://store.webkul.com/license.html/> -->
+<templates id="template" xml:space="preserve">
+
+    <t t-name="DiscountPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup wk_custom_popup">
+                <p class="title">Discounts List</p>
+                <div class="wk_popup_body">
+                    <t t-foreach="widget.options.value || []" t-as="item">
+                        <span class='product' t-att-data-product-id="item.id">
+                            <a href="#" t-att-id="item.id">
+                                <div class="product-img">
+                                    <img t-att-src='widget.get_discount_image_url(item.id)'/>
+                                    <span class="price-tag"><t t-esc="item.name"/></span>
+                                </div>
+                                <div class="product-name wk_discount_name">
+                                    <t t-if="item.short_description">
+                                        <t t-esc="item.short_description" />
+                                    </t>
+                                </div>
+                            </a>
+                        </span>
+                    </t>
+                </div>
+                <div class="footer">
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+
+    <t t-extend="OrderReceipt">
+        <t t-jquery="div.pos-receipt-amount:eq(0)" t-operation="replace">
+
+            <t t-if="order.wk_get_discount()">
+                <div class="pos-receipt-amount">
+                    TOTAL
+                    <span t-esc='widget.format_currency_no_symbol(receipt.total_with_tax)' class="pos-receipt-right-align" style="text-decoration:line-through;"/>
+                </div>
+                <div style='padding-left: 6em;'>
+                    Global Discount
+                    <span t-esc='widget.format_currency(order.wk_get_discount())' class="pos-receipt-right-align"/>
+                </div>
+                <div class="pos-receipt-amount">
+                    TOTAL
+                    <span t-esc='widget.format_currency_no_symbol(receipt.total_with_tax-order.wk_get_discount())' class="pos-receipt-right-align"/>
+                </div>
+            </t>
+            <t t-if="!order.wk_get_discount()">
+                <div class="pos-receipt-amount">
+                    TOTAL
+                    <span t-esc='widget.format_currency_no_symbol(receipt.total_with_tax)' class="pos-receipt-right-align"/>
+                </div>
+            </t>
+        </t>
+    </t>
+
+</templates>

@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_users_form_simple_modif" model="ir.ui.view">
+            <field name="name">res.users.preferences.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+            <field name="arch" type="xml">
+                <field name="tz" position="replace"/>
+                <field name="tz_offset" position="replace"/>
+            </field>
+        </record>
+        <!-- account_parent -->
+<!--        <record id="view_account_chart" model="ir.ui.view">-->
+<!--            <field name="name">account.open.chart.form</field>-->
+<!--            <field name="model">account.open.chart</field>-->
+<!--            <field name="inherit_id" ref="account_parent.view_account_chart"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//footer[1]" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//p[hasclass('oe_grey')]" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//form/group[1]" position="before">-->
+<!--                    <header>-->
+<!--                        <button class="oe_read_only" name="do_reload"-->
+<!--                            string="Edit" type="object"/>-->
+<!--                        <button class="btn-primary" icon="fa-magic"-->
+<!--                            name="generate" string="" type="object"/>-->
+<!--                        <button-->
+<!--                            attrs="{'invisible':[('is_result','=',False)]}"-->
+<!--                            class="oe_highlight"-->
+<!--                            name="account_chart_open_window"-->
+<!--                            string="Open Charts" type="object"/>-->
+<!--                        <field name="defocus"/>-->
+<!--                    </header>-->
+<!--                    <h1 style="text-align:center;">Chart of Account</h1>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//form/group[last()]" position="after">-->
+<!--                    <notebook>-->
+<!--                        <page string="Result">-->
+<!--                            <field name="result"/>-->
+<!--                            <field invisible="1" name="is_result"/>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+<!--                </xpath>-->
+<!--                &lt;!&ndash; <xpath expr="//footer" position="replace">-->
+<!--                    <footer>-->
+<!--                        <button class="oe_highlight"-->
+<!--                            name="account_chart_open_window"-->
+<!--                            string="Open Charts" type="object"/>-->
+<!--                        <button special="cancel" string="Cancel" type="object"/>-->
+<!--                    </footer>-->
+<!--                </xpath> &ndash;&gt;-->
+<!--            </field>-->
+<!--        </record>-->
+<!--        <record id="account_parent.action_account_chart" model="ir.actions.act_window">-->
+<!--            <field name="target">inline</field>-->
+<!--        </record>-->
+<!--        <menuitem action="account_parent.action_account_chart"-->
+<!--            id="account_parent.menu_action_account_chart"-->
+<!--            name="Chart of Account"-->
+<!--            parent="account.account_reports_management_menu" sequence="21"/>-->
+        <!-- Start:Batch Picking -->
+        <menuitem id="stock_picking_batch_menu_all"
+            name="Batch Operations"
+            parent="stock.menu_stock_warehouse_mgmt" sequence="10"/>
+        <record id="view_picking_internal_search" model="ir.ui.view">
+            <field name="name">stock.picking.internal.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <filter name="picking_type" position="after">
+                    <filter context="{'group_by':'partner_id'}"
+                        domain="[]" name="group_partner_id" string="Partner"/>
+                </filter>
+            </field>
+        </record>
+        <record id="stock_picking_batch_form" model="ir.ui.view">
+            <field name="name">stock.picking.batch.form</field>
+            <field name="model">stock.picking.batch</field>
+            <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
+            <field name="arch" type="xml">
+                <field name="picking_ids" position="before">
+                    <field invisible="1" name="code"/>
+                </field>
+                <field name="picking_ids" position="attributes">
+                    <attribute name="domain">[('state','not in',('done','cancel')),('picking_type_id.code','=',code)]</attribute>
+                    <attribute name="context">{'search_default_group_partner_id':True}</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="stock_picking_batch_action_out" model="ir.actions.act_window">
+            <field name="name">Batch Deliveries</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.picking.batch</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{"search_default_in_progress":True,"default_code":"outgoing"}</field>
+            <field name="domain">[('code','=','outgoing')]</field>
+            <field name="search_view_id" ref="stock_picking_batch.stock_picking_batch_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                Create a new batch picking
+              </p>
+                <p>
+                The goal of the batch picking is to group operations that may
+                (needs to) be done together in order to increase their efficiency.
+                It may also be useful to assign jobs (one person = one batch) or
+                help the timing management of operations (tasks to be done at 1pm).
+              </p>
+            </field>
+        </record>
+        <menuitem action="stock_picking_batch_action_out"
+            id="stock_picking_batch_menu_out"
+            parent="stock_picking_batch_menu_all" sequence="10"/>
+        <record id="stock_picking_batch_action_in" model="ir.actions.act_window">
+            <field name="name">Batch Receipts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.picking.batch</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{"search_default_in_progress":True,"default_code":"incoming"}</field>
+            <field name="domain">[('code','=','incoming')]</field>
+            <field name="search_view_id" ref="stock_picking_batch.stock_picking_batch_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                Create a new batch picking
+              </p>
+                <p>
+                The goal of the batch picking is to group operations that may
+                (needs to) be done together in order to increase their efficiency.
+                It may also be useful to assign jobs (one person = one batch) or
+                help the timing management of operations (tasks to be done at 1pm).
+              </p>
+            </field>
+        </record>
+        <menuitem action="stock_picking_batch_action_in"
+            id="stock_picking_batch_menu_in"
+            parent="stock_picking_batch_menu_all" sequence="12"/>
+        <record id="stock_picking_batch.stock_picking_batch_action" model="ir.actions.act_window">
+            <field name="context">{"search_default_in_progress":True,"default_code":False}</field>
+            <field name="domain">[('code','=',False)]</field>
+        </record>
+        <menuitem
+            action="stock_picking_batch.stock_picking_batch_action"
+            groups="base.group_no_one"
+            id="stock_picking_batch.stock_picking_batch_menu"
+            parent="stock_picking_batch_menu_all" sequence="14"/>
+        <!-- Stop:Batch Picking -->
+<!--        <record id="view_move_form" model="ir.ui.view">-->
+<!--            <field name="name">account.move.form</field>-->
+<!--            <field name="model">account.move</field>-->
+<!--            <field name="inherit_id" ref="account.view_move_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//sheet" position="after">-->
+<!--                    <div class="oe_chatter">-->
+<!--                        <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                        <field name="activity_ids" widget="mail_activity"/>-->
+<!--                        <field name="message_ids" widget="mail_thread"/>-->
+<!--                    </div>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+        <record id="view_location_form" model="ir.ui.view">
+            <field name="name">stock.location.form</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <field name="return_location" position="after">
+<!--                    <field name="department_id"/>-->
+                </field>
+            </field>
+        </record>
+        <menuitem id="base.menu_board_root" name="Quick Board"/>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.account</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath
+                    expr="//div[@id='invoicing_settings']/div[hasclass('o_setting_box')][last()]" position="after">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="goods_note"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="goods_note"/>
+                            <div class="text-muted">
+                                Use GRN before invoices for storable product.
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+<!--    INVOICE    <record id="invoice_supplier_form" model="ir.ui.view">-->
+<!--            <field name="name">account.invoice.supplier.form</field>-->
+<!--            <field name="model">account.invoice</field>-->
+<!--            <field name="inherit_id" ref="account.invoice_supplier_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath-->
+<!--                    expr="//form/sheet/div[h1[hasclass('mt0')][field[@name='number']]]" position="before">-->
+<!--                    <field invisible="1" name="id"/>-->
+<!--                    <field invisible="1" name="use_goods_note"/>-->
+<!--                    <div attrs="{'invisible':['|','|',('state','!=','draft'),('type','!=','in_invoice'),('use_goods_note','=',False)]}">-->
+<!--                        <span class="o_form_label">GRN</span>-->
+<!--                        <h1 class="mt0">-->
+<!--                            <field class="oe_inline" name="goods_note"/>-->
+<!--                        </h1>-->
+<!--                    </div>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//form/sheet/div[h1[hasclass('mt0')][field[@name='number']]]" position="attributes">-->
+<!--                    <attribute name="attrs">{'invisible':[('state','=','draft'),('type','=','in_invoice'),('use_goods_note','=',True)]}</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='invoice_line_ids']/tree/field[@name='discount']" position="attributes">-->
+<!--                    <attribute name="widget">integer</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="after">-->
+<!--                    <field name="view_quantity"/>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="attributes">-->
+<!--                    <attribute name="groups">base_rmdoo.group_account_vp</attribute>-->
+<!--                    <attribute name="string">Qty</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='invoice_line_ids']/tree/field[@name='uom_id']" position="after">-->
+<!--                    <field groups="uom.group_uom" name="view_uom_id"/>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='invoice_line_ids']/tree/field[@name='uom_id']" position="attributes">-->
+<!--                    <attribute name="groups">base_rmdoo.group_account_vp</attribute>-->
+<!--                    <attribute name="string">UoM</attribute>-->
+<!--                </xpath>-->
+<!--                <button name="action_invoice_open" position="attributes">-->
+<!--                    <attribute name="states"/>-->
+<!--                    <attribute name="attrs">{'invisible':['|',('state','!=','draft'),('id','=',False)]}</attribute>-->
+<!--                </button>-->
+<!--            </field>-->
+<!--        </record>-->
+<!-- INVOICE       <record id="invoice_form" model="ir.ui.view">-->
+<!--            <field name="name">account.invoice.form</field>-->
+<!--            <field name="model">account.invoice</field>-->
+<!--            <field name="inherit_id" ref="account.invoice_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='invoice_line_ids']/tree/field[@name='discount']" position="attributes">-->
+<!--                    <attribute name="widget">integer</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="after">-->
+<!--                    <field name="view_quantity"/>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="attributes">-->
+<!--                    <attribute name="groups">base_rmdoo.group_account_vp</attribute>-->
+<!--                    <attribute name="string">Qty</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='invoice_line_ids']/tree/field[@name='uom_id']" position="after">-->
+<!--                    <field groups="uom.group_uom" name="view_uom_id"/>-->
+<!--                </xpath>-->
+<!--                <xpath-->
+<!--                    expr="//field[@name='invoice_line_ids']/tree/field[@name='uom_id']" position="attributes">-->
+<!--                    <attribute name="groups">base_rmdoo.group_account_vp</attribute>-->
+<!--                    <attribute name="string">UoM</attribute>-->
+<!--                </xpath>-->
+<!--                <button name="action_invoice_open" position="attributes">-->
+<!--                    <attribute name="states"/>-->
+<!--                    <attribute name="attrs">{'invisible':['|',('state','!=','draft'),('id','=',False)]}</attribute>-->
+<!--                </button>-->
+<!--            </field>-->
+<!--        </record>-->
+        <!-- no content -->
+        <record id="no_content_views" model="ir.ui.view">
+            <field name="name">Under Construction</field>
+            <field name="model">no.content</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="dummy"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_no_content" model="ir.actions.act_window">
+            <field name="name">Under Development</field>
+            <field name="res_model">no.content</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="no_content_views"/>
+            <field name="help" type="html">
+                <p>
+                    <img
+                        src="data:image/png;base64,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" style="width:360px;height:150px;"/>
+                    <h2>Under Development by Our Team</h2>
+                </p>
+                <p>
+                    Click <a
+                        href="https://rmdoo.com/" target="_blank">here</a> for more details.
+                </p>
+            </field>
+        </record>
+        <!-- Action View for GRN/GDN INVOICE -->
+<!--        <record id="action_stock_operation_grn" model="ir.actions.act_window">-->
+<!--            <field name="name">Goods Received Notes</field>-->
+<!--            <field name="res_model">account.invoice</field>-->
+<!--            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>-->
+<!--            <field eval="False" name="view_id"/>-->
+<!--            <field name="domain">[('state','=','draft'),('type','=','in_invoice'),('use_goods_note','=',True)]</field>-->
+<!--            <field name="context">{'default_use_goods_note':True,'default_type':'in_invoice','type':'in_invoice','journal_type': 'purchase'}</field>-->
+<!--            <field name="search_view_id" ref="account.view_account_invoice_filter"/>-->
+<!--            <field name="help" type="html">-->
+<!--                <p class="o_view_nocontent_smiling_face">Record a GRN</p>-->
+<!--            </field>-->
+<!--        </record>-->
+        <!-- <record id="action_stock_operation_gdn" model="ir.actions.act_window">
+            <field name="name">Goods Delivered Notes</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('state','=','draft'),('type','=','out_invoice'),('use_goods_note','=',True)]</field>
+            <field name="context">{'default_use_goods_note':True,'default_type':'out_invoice','type':'out_invoice','journal_type':'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Record a GDN</p>
+            </field>
+        </record> -->
+        <!-- <record id="action_stock_operation_grn" model="ir.actions.act_window">
+            <field name="name">Goods Received Notes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_id" ref="account.invoice_supplier_form"/>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft'),('type','=','in_invoice'),('use_goods_note','=',True)]</field>
+        </record> -->
+        <!-- <record id="action_stock_operation_gdn" model="ir.actions.act_window">
+            <field name="name">Goods Delivered Notes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft'),('type','=','out_invoice'),('use_goods_note','=',True)]</field>
+        </record> -->
+        <!-- move line -->
+        <record id="view_move_line_tree" model="ir.ui.view">
+            <field name="name">stock.move.line.tree</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="qty_done" position="before">
+                    <field name="product_uom_qty" string="Quantity Reserved"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_hr_employee_form" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <field name="department_id" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+            </field>
+        </record>
+        <!-- Form Discount -->
+        <record id="discounts_form" model="ir.ui.view">
+            <field name="name">Purchase Discount Form</field>
+            <field name="model">res.discount</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="group_main">
+                            <group name="group_left">
+                                <field name="name" placeholder=""/>
+                                <field name="value" placeholder="0.00"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="discount_type" widget="radio"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="discount_tree" model="ir.ui.view">
+            <field name="name">Discount List</field>
+            <field name="model">res.discount</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="discount_type"/>
+                    <field name="value"/>
+                </tree>
+            </field>
+        </record>
+        <!-- Res View -->
+        <record id="discount_windows1" model="ir.actions.act_window">
+            <field name="name">Discount</field>
+            <field name="res_model">res.discount</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- Menuitem -->
+        <menuitem action="action_no_content"
+            id="menu_finance_entries_accounting_entries_memorable"
+            name="Journal Memorable"
+            parent="account.menu_finance_entries_accounting_miscellaneous" sequence="11"/>
+        <menuitem action="action_no_content"
+            id="menu_finance_entries_accounting_entries_recurring"
+            name="Journal Recurring"
+            parent="account.menu_finance_entries_accounting_miscellaneous" sequence="12"/>
+        <menuitem action="discount_windows1" groups="base.group_no_one"
+            id="menu_finance_discount" name="Discount" parent="account.menu_finance_configuration"/>
+        <!-- <menuitem action="action_no_content" id="menu_stock_close_inv"
+            name="Close Inventory"
+            parent="stock.menu_stock_warehouse_mgmt" sequence="150"/> -->
+        <!-- <menuitem action="action_stock_operation_gdn"
+            groups="group_stock_goods_delivered" id="menu_stock_gdn"
+            name="Goods Delivered Notes"
+            parent="stock.menu_stock_warehouse_mgmt" sequence="11"/> -->
+<!--        <menuitem action="action_stock_operation_grn"-->
+<!--            groups="group_stock_goods_received" id="menu_stock_grn"-->
+<!--            name="Goods Received Notes"-->
+<!--            parent="stock.menu_stock_warehouse_mgmt" sequence="12"/>-->
+        <!-- <menuitem action="action_no_content"
+            id="menu_stock_report_inquiry"
+            name="Inventory Stock Inquiries"
+            parent="stock.menu_warehouse_report" sequence="101"/> -->
+<!--        <menuitem action="stock.action_stock_quantity_history"-->
+<!--            id="stock.menu_valuation" name=" Inventory Report"-->
+<!--            parent="stock.menu_warehouse_report" sequence="102"/>-->
+        <menuitem
+            action="stock_account.action_stock_inventory_valuation"
+            id="stock_account.menu_valuation" name="Inventory Valuation"
+            parent="stock.menu_warehouse_report" sequence="103"/>
+        <menuitem
+            action="stock_forecast.action_stock_level_forecast_report_all_product"
+            id="stock_forecast.menu_forecast_inventory"
+            name="Forecasted Inventory"
+            parent="stock.menu_warehouse_report" sequence="104"/>
+        <menuitem action="stock.stock_move_action"
+            groups="stock.group_stock_manager"
+            id="stock.stock_move_menu" name="Stock Moves"
+            parent="stock.menu_warehouse_report" sequence="105" string="Stock Moves"/>
+        <menuitem action="stock.stock_move_line_action"
+            groups="stock.group_stock_manager"
+            id="stock.stock_move_line_menu" name="Product Moves"
+            parent="stock.menu_warehouse_report" sequence="106" string="Product Moves"/>
+        <!-- <menuitem action="action_no_content"
+            id="menu_report_stock_moves_inquiries"
+            name="Stock Moves Inquiries"
+            parent="stock.menu_warehouse_report" sequence="139"/> -->
+        <!-- <menuitem action="action_no_content"
+            id="menu_report_stock_product_inquiries"
+            name="Product Moves Inquiries"
+            parent="stock.menu_warehouse_report" sequence="141"/> -->
+        <menuitem action="action_no_content"
+            id="menu_stock_report_pivot" name="Pivot"
+            parent="stock.menu_warehouse_report" sequence="142"/>
+        <!-- <menuitem action="action_no_content"
+            id="menu_stock_report_pivot_item" name="Products"
+            parent="menu_stock_report_pivot" sequence="10"/> -->
+        <!-- <menuitem action="action_no_content"
+            id="menu_stock_report_pivot_grn" name="Received"
+            parent="menu_stock_report_pivot" sequence="11"/>
+        <menuitem action="action_no_content"
+            id="menu_stock_report_pivot_sales" name="Sales Delivered"
+            parent="menu_stock_report_pivot" sequence="12"/>
+        <menuitem action="action_no_content"
+            id="menu_stock_report_pivot_sales_return" name="Sales Return"
+            parent="menu_stock_report_pivot" sequence="13"/>
+        <menuitem action="action_no_content"
+            id="menu_stock_report_pivot_purchase_return" name="Purchase Return"
+            parent="menu_stock_report_pivot" sequence="14"/> -->
+        <!-- <menuitem action="action_no_content"
+            id="menu_stock_report_pivot_transfers" name="Internal Transfers"
+            parent="menu_stock_report_pivot" sequence="15"/>
+        <menuitem action="action_no_content"
+            id="menu_stock_report_pivot_wh_transfers"
+            name="Warehouse Transfers" parent="menu_stock_report_pivot" sequence="16"/>
+        <menuitem action="action_no_content"
+            id="menu_stock_report_pivot_manufacture" name="Manufactured"
+            parent="menu_stock_report_pivot" sequence="17"/>
+        <menuitem action="action_no_content"
+            id="menu_stock_report_pivot_adjustment" name="Adjustment Stock"
+            parent="menu_stock_report_pivot" sequence="18"/> -->
+        <!-- <menuitem action="action_no_content"
+            id="menu_stock_report_pivot_gdn" name="Goods Delivery Notes"
+            parent="menu_stock_report_pivot" sequence="14"/> -->
+        <!-- <menuitem action="action_no_content"
+            id="menu_stock_report_cost_price_list"
+            name="Inventory Cost n Price List"
+            parent="stock.menu_warehouse_report" sequence="143"/> -->
+        <menuitem action="action_no_content"
+            id="menu_stock_report_historical_transaction"
+            name="Inventory Historical Transaction"
+            parent="stock.menu_warehouse_report" sequence="144"/>
+        <menuitem action="action_no_content"
+            id="menu_stock_report_item_age_composition"
+            name="Product Age Composition - Value"
+            parent="stock.menu_warehouse_report" sequence="145"/>
+        <!-- <menuitem action="action_no_content"
+            id="menu_stock_report_price_average_analysis"
+            name="Price Average Analysis"
+            parent="stock.menu_warehouse_report" sequence="146"/> -->
+        <!-- <menuitem action="action_no_content"
+            id="menu_stock_report_cost_per_goods" name="Cost Per Goods"
+            parent="stock.menu_warehouse_report" sequence="147"/>
+        <menuitem action="action_no_content"
+            id="menu_stock_report_cost_per_goods_costumer"
+            name="Cost Per Goods Per Costumer"
+            parent="stock.menu_warehouse_report" sequence="148"/> -->
+        <!-- <menuitem action="action_no_content"
+            id="menu_stock_report_gp_inventory_transfer"
+            name="GP by Inventory Transfer"
+            parent="stock.menu_warehouse_report" sequence="149"/> -->
+        <!-- <menuitem action="action_no_content"
+            id="menu_stock_report_product_valid" name="Product Valid"
+            parent="stock.menu_warehouse_report" sequence="151"/> -->
+        <!-- Menu Unactive -->
+        <menuitem groups="base.group_no_one" id="stock_debug"
+            name="Stock Debug" parent="stock.menu_warehouse_report" sequence="1500"/>
+    </data>
+</odoo>

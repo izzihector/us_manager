@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="pos_cash_in_out_odoo_template" inherit_id="point_of_sale.template" xml:space="preserve">
+
+	<!-- CashInButtonWidget -->
+	<!-- t t-name="CashInButtonWidget" name="Cash In Button Widget">
+		<t t-if="widget.pos.config.is_cash_in_out">
+			<div class="control-button" style="width:90px;">
+				<i class="fa fa-gift"></i>Put Money In (Cash In)
+			</div>
+		</t>
+	</t -->
+		 
+		 
+	<!-- CashOutButtonWidget -->
+	<t t-name="CashOutButtonWidget" name="Cash Out Button Widget">
+		<t t-if="widget.pos.config.is_cash_in_out">
+			<div class="control-button" style="width:50px;">
+				<i class="fa fa-gift"></i>Retirar $$
+			</div>
+		</t>
+	</t> 
+
+	<t t-name="CashInOutStatementButtonWidget" name="Cash In-Out Statement Button Widget">
+		<t t-if="widget.pos.config.is_print_statement">
+			<div class="control-button" style="width: 50%;">
+				<i class="fa fa-print"></i>Impr. Retiros
+			</div>
+		</t>
+	</t>   
+		 
+		 
+	<!-- CashOutPopupWidget -->
+	<t t-name="CashOutPopupWidget">
+		<div class="modal-dialog">
+			<div class="popup popup-confirm" style="height: 325px !important;">
+				<p class="title" style="background-color: rgb(110,200,155); color: #fff;">Retiro de efectivo</p>
+				<div class="body" style="width: 465px;height: 190px;">
+					<div>
+						<span id="error" class="alert" style="color: #ec1010; font-size: inherit; margin: 5px; text-align: center;">
+							Ingrese el importe a retirar
+						</span>
+					</div>
+					<table  style="width: 100%;height: 80%;">
+						<tr>
+							<td> Importe: </td>
+							<td><input id ="amount" type="text" class="input-field" required="required" name="amount"></input></td>
+						</tr>
+						<tr>
+							<td>Motivo:</td>
+							<td><textarea rows="3" required="required"  id ="reason" type="text" class="input-field" name="name" style="height: 40px; width: 74%;"></textarea></td>
+						</tr>
+												
+					</table>
+				</div>
+				<div class="footer" style="background-color: rgb(110,200,155); color: #fff;">
+					<div class="button cancel" style="background-color: #0075AC; color: #fff;">
+						Cancelar 
+					</div>
+					<div class="button confirm" id="apply_cash_out" style="background-color: #0075AC; color: #fff;">
+						Retirar Efectivo
+					</div>
+				</div>
+			</div>
+		</div>
+	</t>
+	<!-- CashInPopupWidget -->
+	<t t-name="CashInPopupWidget">
+		<div class="modal-dialog">
+			<div class="popup popup-confirm" style="height: 325px !important;">
+				<p class="title" style="background-color: rgb(110,200,155); color: #fff;">Ingresar Efectivo</p>
+				<div class="body" style="width: 465px;height: 190px;">
+					<div>
+						<span id="error1" class="alert" style="color: #ec1010; font-size: inherit; margin: 5px; text-align: center;">
+							Ingrese el importe a ingresar.
+						</span>
+					</div>
+					<table  style="width: 100%;height: 80%;">
+						<tr>
+							<td> Importe: </td>
+							<td><input id ="cash_amount" type="text" class="input-field" required="required" name="amount"></input></td>
+						</tr>
+						<tr>
+							<td>Motivo:</td>
+							<td><textarea rows="3" required="required"  id ="inreason" type="text" class="input-field" name="name" style="height: 40px; width: 74%;"></textarea></td>
+						</tr>
+												
+					</table>
+				</div>	 
+				<div class="footer" style="background-color: rgb(110,200,155); color: #fff;">
+					<div class="button cancel" style="background-color: #0075AC; color: #fff;">
+						Cancelar
+					</div>
+					<div class="button confirm" id="apply_cash_in" style="background-color: #0075AC; color: #fff;">
+						Ingresar Efectivo 
+					</div>
+				</div>
+			</div>
+		</div>
+	</t>
+
+	<t t-name="CashInOutReceiptScreenWidget">
+		<div class='receipt-screen screen'>
+			<div class='screen-content'>
+				<div class='top-content'>
+					<span class='button next' style="background-color:#6EC89B; color:white">
+						Salir
+						<i class='fa fa-close' style="margin-left:5px;"></i>
+					</span>
+				</div>
+				<div class="centered-content touch-scrollable">
+					<div class="button print-cash">
+						<i class='fa fa-print'></i> Imprimir Recibo
+					</div>
+					<div class="pos-cash-receipt-container" style="text-align: center;">
+					</div>
+				</div>
+			</div>
+		</div>
+	</t>
+
+	<t t-name="CashInOutReceipt">
+		<div class="pos-receipt-container">
+			<div >
+				<t t-esc="widget.pos.company.name"/><br />
+				<div class="receipt-phone">
+					Teléfono: <t t-esc="widget.pos.company.phone || ''"/><br />
+				</div>
+				<div class="receipt-user">
+					Cajero: <t t-esc="widget.pos.get_cashier().name"/><br />
+				</div>
+				
+				<div class="receipt-user">
+					Correo: <t t-esc="widget.pos.company.email || ''"/><br />
+				</div>
+
+				<div class="receipt-user">
+					Operación: <t t-esc="operation || ''"/><br />
+				</div>
+
+				<div class="receipt-user">
+					Propósito: <t t-esc="purpose || ''"/><br />
+				</div>
+
+				<div class="receipt-user">
+					Importe: <t t-esc="amount || ''"/><br />
+				</div>
+				<br/>
+				<div style="margin-top:70px;text-align: center;">
+				<p style="border-top: 2px dashed black;"></p>
+				<b><span>Firma</span></b>
+			</div>
+			</div>
+			
+		</div>
+	</t>
+		
+	<t t-name="CashInOutStatementPopupWidget">
+		<div class="modal-dialog">
+			<div class="popup popup-confirm" style="height: 400px !important;">
+				<p class="title" style="background-color: rgb(110,200,155); color: #fff;">Imprimir Retiros</p>
+				<div class="body" style="width: 465px;height: 230px;">
+					<div style="margin: 5px;">
+						<span id="statement_error" class="alert" style="color: #ec1010; font-size: inherit; text-align: center;">
+							Ingrese el importe a retirar.
+						</span>
+					</div>
+					<table  style="width: 90%;height: 80%;    margin-left: 30px;">
+						<tr>
+							<td style="text-align: left;">Cajero:</td>
+							<td style="padding: 10px;">
+								<select  style="padding: 10px;min-width: 235px;border-radius: 5px;"
+									id="cashier" class="cashier">
+									<option>Elija un Cajero</option>
+									<t t-foreach='widget.pos.users' t-as='user'>
+										<option t-att-value='user.id'> 
+											<t t-esc='user.name'/>
+										</option>
+									</t>
+								</select>
+							</td>
+						</tr>		
+						<tr>
+							<td style="text-align: left;"> Fecha de Inicio: </td>
+							<td style="padding: 10px;"><input type="date" name="st_date" id="stmt_st_date"/></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;">Fecha de Fin:</td>
+							<td style="padding: 10px;"><input type="date" name="ed_date" id="stmt_end_date"/></td>
+						</tr>
+									
+					</table>
+				</div>	 
+				<div class="footer" style="background-color: rgb(110,200,155); color: #fff;">
+					<div class="button cancel" style="background-color: #0075AC; color: #fff;">
+						Cancelar 
+					</div>
+					<div class="button do_print" id="do_print" style="background-color: #0075AC; color: #fff;">
+						Imprimir
+					</div>
+				</div>
+			</div>
+		</div>
+	</t>	 
+	
+
+	<t t-name="StatementReportScreenWidget">
+		<div class='receipt-screen screen'>
+			<div class='screen-content'>
+				<div class='top-content'>
+					<span class='button next' style="background-color:#6EC89B; color:white">
+						Salir
+						<i class='fa fa-close' style="margin-left:5px;"></i>
+					</span>
+				</div>
+				<div class="centered-content touch-scrollable">
+					<div class="button print-statement">
+						<i class='fa fa-print'></i> Imprimir Recibo
+					</div>
+					<div class="pos-statement-receipt-container" style="text-align: center;">
+					</div>
+				</div>
+			</div>
+		</div>
+	</t>
+
+	<t t-name="StatementSummaryReceipt">
+		<div class="pos-receipt-container">
+			
+			<div class="pos-center-align" style="text-align: center;">
+				
+				<t t-esc="date_o"/> <br/>
+				<t t-esc="widget.pos.company.name"/><br />
+				<div class="receipt-phone">
+					Teléfono: <t t-esc="widget.pos.company.phone || ''"/><br />
+				</div>
+				<div class="receipt-user">
+					Usuario: <t t-esc="widget.pos.get_cashier().name"/><br />
+				</div>
+				<div class="receipt-user">
+					Correo: <t t-esc="widget.pos.company.email || ''"/><br />
+				</div>
+				<br />
+				<t t-if="!order_current_session">
+					<div class="receipt-periods" style="width: 301px;">
+						Fecha de Inicio: <span t-esc="stmt_st_date"/><br/>
+						Fecha de Fin: <span t-esc="stmt_end_date"/>
+					</div>
+				</t>
+				<br/>
+
+				<table class='pos-center-align' style="margin-top: 10px;">
+				<colgroup>
+					<col width='30%' />
+					<col width='30%' />
+					<col width='30%' />
+				</colgroup>
+				<thead>
+					<tr style="border-bottom: 2px solid black;">
+						<th>Fecha</th>
+						<th class="pos-center-align">Crédito</th>
+						<th class="pos-right-align">Débito</th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr t-foreach="statement_data[2]" t-as="summery1">
+					<td>
+						<t t-esc="summery1.date"/>
+					</td>
+					<td class="pos-center-align">
+						<t t-esc="summery1.credit"/>
+					</td>
+					<td class="pos-right-align">
+						<t t-esc="summery1.debit"/>
+					</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 10px;"><b> Total:</b></td>
+					<td style="padding-top: 10px;" class="pos-center-align">
+						<b><t t-esc="statement_data[3]"/></b></td>
+					<td  style="padding-top: 10px;" class="pos-right-align">
+						<b><t t-esc="statement_data[4]"/></b></td>
+				</tr>
+				</tbody>
+			</table>
+			<br />
+			<br/>
+
+			<div style="margin-top:70px;text-align: center;">
+				<p style="border-top: 2px dashed black;"></p>
+				<b><span>Firma</span></b>
+			</div>
+			</div>
+				
+			
+
+			
+		</div>
+	</t>
+</templates>
+	
+	

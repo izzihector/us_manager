@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="bs_sarinah_portal.form_vendor_quant" model="ir.ui.view">
+      <field name="name">Vendor Quant Form View</field>
+      <field name="model">vendor.quant</field>
+      <field name="inherit_id" ref="vendor_product_management.vendor_quant_view_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//sheet" position="before">
+          <header>
+            <button name="action_validate" string="Validate" class="oe_highlight" states="draft" type="object"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,validate"/>
+          </header>
+        </xpath>
+        <xpath expr="//sheet/group" position="before">
+          <div class="oe_button_box" name="button_box">
+            <field name="picking_ids" invisible="1"/>
+            <button name="action_open_picking" attrs="{'invisible':[('picking_ids', '=', [])]}" class="oe_stat_button" icon="fa-paperclip" type="object">
+              <div class="o_form_field o_stat_info">
+                <span class="o_stat_text">Vendor DO</span>
+              </div>
+            </button>
+            <field name="inventory_ids" invisible="1"/>
+            <button name="action_open_inventory" attrs="{'invisible':[('inventory_ids', '=', [])]}" class="oe_stat_button" icon="fa-paperclip" type="object">
+              <div class="o_form_field o_stat_info">
+                <span class="o_stat_text">Inventory</span>
+                <span class="o_stat_text">Adjustment</span>
+              </div>
+            </button>
+          </div>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

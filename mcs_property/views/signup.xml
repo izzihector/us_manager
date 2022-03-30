@@ -1,0 +1,10 @@
+<odoo>
+    <template id="signup_fields" inherit_id="auth_signup.fields">
+        <xpath expr="//div[last()]" position="after">
+            <div class="form-group field-npwp_company">
+                <label for="npwp_company">NPWP Perusahaan</label>
+                <input type="text" name="npwp_company" id="npwp_company" class="form-control form-control-sm" required="True" />
+            </div>
+        </xpath>
+    </template>
+</odoo>
